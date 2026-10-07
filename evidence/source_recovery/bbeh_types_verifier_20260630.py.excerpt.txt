@@ -1,0 +1,122 @@
+POST-REQUEST VERBATIM EXCERPT OF PRE-EXISTING SOURCE
+Original repository: effacermonexistence/omar-benchmark-replay-live-source
+Original path: benchmark_executors/bbeh_executor_backed_routing.py
+Source commit: b38e6757673173df19216877368e020eb4b51fc5
+Source Git blob SHA-1: 2eb56b207971ac569865d256633c4b2d62f6ef23
+Source commit timestamp: 2026-06-30T23:41:59Z
+Selected original range: L18-L128; complete declarations through ExecutorVerifier.
+Whole source SHA-256: NOT_COMPUTED in this recovery; Git blob identity retained.
+This is source selection, not altered implementation. The committed June snapshot is not asserted to equal the entire initial pre-run frozen source.
+
+--- BEGIN VERBATIM SOURCE ---
+@dataclass(frozen=True)
+class ExecutorInput:
+    row_id: str
+    family: str
+    question_text: str
+    choices: dict[str, str] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class ExecutorOutput:
+    family: str
+    executor_name: str
+    parsed: bool
+    answer: Optional[str]
+    confidence: float
+    trace: list[str] = field(default_factory=list)
+    error: Optional[str] = None
+    abstain_reason: Optional[str] = None
+    used_capital_facts: bool = False
+    capital_fact_keys_used: tuple[str, ...] = ()
+    factual_lookup_used: bool = False
+    pure_symbolic_ast_only: bool = True
+    fact_table_version_hash: Optional[str] = None
+    fact_table_count: int = 0
+
+
+@dataclass(frozen=True)
+class VerifierOutput:
+    verified: bool
+    reason: str
+    normalized_answer: Optional[str]
+    trace_valid: bool
+
+
+@dataclass(frozen=True)
+class RouteDecision:
+    route_allowed: bool
+    family: str
+    executor_name: Optional[str]
+    reason: str
+    executor_output: Optional[ExecutorOutput]
+    verifier_output: Optional[VerifierOutput]
+    family_type: str
+    executor_type: Optional[str]
+
+
+@dataclass(frozen=True)
+class AdoptionDecision:
+    final_answer: str
+    final_source: str
+    override_attempted: bool
+    override_accepted: bool
+    override_rejected_reason: Optional[str]
+    executor_answer: Optional[str]
+    verifier_reason: str
+
+
+@dataclass(frozen=True)
+class RevasRouteRecord:
+    row_id: str
+    family: str
+    semantic_RCC_friendly: bool
+    semantic_route_class: str
+    semantic_route_reason: str
+    REVAS_supported: bool
+    REVAS_support_reason: str
+    executor_available: bool
+    executor_name: Optional[str]
+    parser_success: bool
+    verifier_success: bool
+    answer_format_valid: bool
+    adoption_gate_accepts: bool
+    final_answer: str
+    final_source: str
+    fallback_source: str
+    coverage_gap_category: str
+    executor_answer: Optional[str]
+    verifier_reason: str
+    used_capital_facts: bool = False
+    capital_fact_keys_used: tuple[str, ...] = ()
+    factual_lookup_used: bool = False
+    pure_symbolic_ast_only: bool = True
+    fact_table_version_hash: Optional[str] = None
+    fact_table_count: int = 0
+    trace: list[str] = field(default_factory=list)
+
+
+def normalize_answer(answer: Optional[str]) -> Optional[str]:
+    if answer is None:
+        return None
+    text = str(answer).strip()
+    text = re.sub(r"\s+", " ", text)
+    return text
+
+
+class ExecutorVerifier:
+    def verify(self, output: ExecutorOutput) -> VerifierOutput:
+        if not output.parsed:
+            return VerifierOutput(False, output.abstain_reason or output.error or "executor did not parse", None, bool(output.trace))
+        answer = normalize_answer(output.answer)
+        if not answer:
+            return VerifierOutput(False, "empty answer", None, bool(output.trace))
+        if output.confidence < 0.75:
+            return VerifierOutput(False, "confidence below threshold", answer, bool(output.trace))
+        if not output.trace:
+            return VerifierOutput(False, "missing trace", answer, False)
+        if output.error:
+            return VerifierOutput(False, output.error, answer, bool(output.trace))
+        return VerifierOutput(True, "verified", answer, True)
+--- END VERBATIM SOURCE ---
