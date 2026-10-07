@@ -5,6 +5,13 @@ on:
     paths:
       - '.github/workflows/c01-evidence-finalize.yml'
       - 'scripts/finalize_evidence_repair.py'
+      - 'README.md'
+      - 'SUBMISSION_INDEX.md'
+      - 'CANONICAL_EVIDENCE_SUMMARY.json'
+      - '08_REQUIREMENT_CROSSWALK.md'
+      - '07_COUNTERPARTY_EXPLANATIONS.md'
+      - '09_CHANGE_RECORD.md'
+      - 'PROVENANCE.md'
 permissions:
   contents: write
 jobs:
@@ -34,7 +41,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add reproduction/ provenance/source_recovery_20261007.json scripts/reproduce_bounded_adoption.py ARTIFACT_REGISTER.csv PACKAGE_SHA256SUMS.txt
-          git commit -m 'Refresh validated metadata after canonical evidence clarification'
+          git commit -m 'Refresh validated metadata for canonical submission package'
           AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
           git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH" push origin "HEAD:refs/heads/$BRANCH"
           git rev-parse HEAD
