@@ -169,7 +169,7 @@ def main() -> None:
     for label, source_rows, prefix in [('original', raw, ''), ('patched_offline', patch['rows'], 'patched_')]:
         checked, violations = [], []
         for row in source_rows:
-            accepted = row[prefix+'adoption_gate_accepts']
+            accepted = row['adoption_gate_accepts'] if not prefix else row['patched_final_source'] != row['fallback_source']
             final = row['patched_final_answer' if prefix else 'revas_final_answer_locked_before_scoring']
             baseline = row['base_answer_locked_before_scoring']
             if not accepted:
@@ -177,7 +177,7 @@ def main() -> None:
                 if final != baseline:
                     violations.append(row['row_id'])
         assert not violations, (label, violations)
-        corpus_results.append({'source': label, 'rows':len(source_rows), 'non_adopted_rows':len(checked), 'baseline_preservation_violations':violations, 'non_adopted_row_ids':checked})
+        corpus_results.append({'source': label, 'rows':len(source_rows), 'selected_preservation_rows':len(checked), 'selection_rule':('adoption_gate_accepts == false' if not prefix else 'patched_final_source == fallback_source; no patched gate flag is inferred'), 'baseline_preservation_violations':violations, 'non_adopted_row_ids':checked})
     counts = {'base':sum(r['patched_base_correct'] for r in patch['rows']), 'patched_final':sum(r['patched_final_correct'] for r in patch['rows']), 'accepted_C':sum(r['patched_accepted_C'] for r in patch['rows']), 'accepted_B':sum(r['patched_accepted_B'] for r in patch['rows'])}
     assert counts == {'base':91, 'patched_final':268, 'accepted_C':177, 'accepted_B':0}
     dump('whole_corpus_preservation.json', {

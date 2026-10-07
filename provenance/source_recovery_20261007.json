@@ -1,0 +1,35 @@
+{
+  "record_created_at": "2026-10-07T12:53:38.474170+00:00",
+  "classification": "POST_REQUEST_SOURCE_RECOVERY_METADATA",
+  "prior_acquisition_record_unchanged": true,
+  "recovered": [
+    {
+      "package_path": "evidence/source_recovery/bbeh_adoption_core_20260630.py.excerpt.txt",
+      "original_repository": "effacermonexistence/omar-benchmark-replay-live-source",
+      "original_path": "benchmark_executors/bbeh_executor_backed_routing.py",
+      "source_commit": "b38e6757673173df19216877368e020eb4b51fc5",
+      "source_git_blob_sha1": "2eb56b207971ac569865d256633c4b2d62f6ef23",
+      "original_timestamp": "2026-06-30T23:41:59Z",
+      "timestamp_kind": "source commit time, not independent execution attestation",
+      "source_selector": "L3497 through end; base_default_adoption and evaluate_revas_route",
+      "full_source_sha256": "NOT_COMPUTED; Git blob identity retained",
+      "public_sha256": "9199057c45c591d035344218459c7148ae450535bfdd884d8a52ca50a34d9268",
+      "public_bytes": 4795,
+      "publication_form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE"
+    },
+    {
+      "package_path": "evidence/source_recovery/bbeh_types_verifier_20260630.py.excerpt.txt",
+      "original_repository": "effacermonexistence/omar-benchmark-replay-live-source",
+      "original_path": "benchmark_executors/bbeh_executor_backed_routing.py",
+      "source_commit": "b38e6757673173df19216877368e020eb4b51fc5",
+      "source_git_blob_sha1": "2eb56b207971ac569865d256633c4b2d62f6ef23",
+      "original_timestamp": "2026-06-30T23:41:59Z",
+      "timestamp_kind": "source commit time, not independent execution attestation",
+      "source_selector": "L18-L128; declarations and ExecutorVerifier",
+      "full_source_sha256": "NOT_COMPUTED; Git blob identity retained",
+      "public_sha256": "23c373a48cb4e27dd248c7fa70723ec1304515666b6c497bbeca5ce33598b70e",
+      "public_bytes": 4019,
+      "publication_form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "created_at": "2026-10-07T12:53:38.514648+00:00",
+  "classification": "POST_REQUEST_SOURCE_ANALYSIS",
+  "historical_commit": "b38e6757673173df19216877368e020eb4b51fc5",
+  "current_source_pin": "8976dc12c2d398dd59e4e193c41fa36749dee996",
+  "comparison": {
+    "ExecutorInput": {
+      "ast_equal": true,
+      "june_ast_sha256": "d746832911dc2977b586b90b8d1b008e88a2fc9ae8621d4da3ed9ada2c7fb36a",
+      "current_ast_sha256": "d746832911dc2977b586b90b8d1b008e88a2fc9ae8621d4da3ed9ada2c7fb36a"
+    },
+    "ExecutorOutput": {
+      "ast_equal": true,
+      "june_ast_sha256": "3562dc9c16185835741bf3ca451ca40ce34569699716671c6ffd43d2ee4cd107",
+      "current_ast_sha256": "3562dc9c16185835741bf3ca451ca40ce34569699716671c6ffd43d2ee4cd107"
+    },
+    "VerifierOutput": {
+      "ast_equal": true,
+      "june_ast_sha256": "0883ef6b927ba51b8e6cd33f65daea09229d6289cdb77adab8c6ae46168314d2",
+      "current_ast_sha256": "0883ef6b927ba51b8e6cd33f65daea09229d6289cdb77adab8c6ae46168314d2"
+    },
+    "RouteDecision": {
+      "ast_equal": true,
+      "june_ast_sha256": "6e04005f9dc0a157974677d0c21dc4b21ece915a7d2d034510fa7ee6883f8246",
+      "current_ast_sha256": "6e04005f9dc0a157974677d0c21dc4b21ece915a7d2d034510fa7ee6883f8246"
+    },
+    "AdoptionDecision": {
+      "ast_equal": true,
+      "june_ast_sha256": "e1b796a904a7176fb505efdeb1c18787e750f613a2094a5c9c8b1ffabfcf1613",
+      "current_ast_sha256": "e1b796a904a7176fb505efdeb1c18787e750f613a2094a5c9c8b1ffabfcf1613"
+    },
+    "RevasRouteRecord": {
+      "ast_equal": true,
+      "june_ast_sha256": "e0ac4560ce86287d38de6642087bdfb964ed39ac8d92383e530be9c20ca2388b",
+      "current_ast_sha256": "e0ac4560ce86287d38de6642087bdfb964ed39ac8d92383e530be9c20ca2388b"
+    },
+    "normalize_answer": {
+      "ast_equal": true,
+      "june_ast_sha256": "0351f9b47ef2f76da3839177ec5f1994e81c39f8e909c2c6c31cf3a512bdcd05",
+      "current_ast_sha256": "0351f9b47ef2f76da3839177ec5f1994e81c39f8e909c2c6c31cf3a512bdcd05"
+    },
+    "ExecutorVerifier": {
+      "ast_equal": true,
+      "june_ast_sha256": "d5fc88094c96b64204f20d9952de1705372b5a6dda75ceae524e4417f711f276",
+      "current_ast_sha256": "d5fc88094c96b64204f20d9952de1705372b5a6dda75ceae524e4417f711f276"
+    },
+    "base_default_adoption": {
+      "ast_equal": true,
+      "june_ast_sha256": "1ecff130d82359fcdd84351df4df17fc8462dba56cbdec6e3ed0f1f271e11c60",
+      "current_ast_sha256": "1ecff130d82359fcdd84351df4df17fc8462dba56cbdec6e3ed0f1f271e11c60"
+    },
+    "evaluate_revas_route": {
+      "ast_equal": true,
+      "june_ast_sha256": "2a2a4e93ca7ae943401944f41e27b6e79832ae7eebe63df46c4df9ca0e7430c8",
+      "current_ast_sha256": "2a2a4e93ca7ae943401944f41e27b6e79832ae7eebe63df46c4df9ca0e7430c8"
+    }
+  },
+  "input_public_sha256": {
+    "evidence/source_recovery/bbeh_adoption_core_20260630.py.excerpt.txt": "9199057c45c591d035344218459c7148ae450535bfdd884d8a52ca50a34d9268",
+    "evidence/source_recovery/bbeh_types_verifier_20260630.py.excerpt.txt": "23c373a48cb4e27dd248c7fa70723ec1304515666b6c497bbeca5ce33598b70e",
+    "evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt": "51bc40f10467b630cf378556043d4888f801588b3b1331f4031c7a927b6b9884"
+  },
+  "whole_initial_freeze_source_hash_matched": false,
+  "boundary": "Semantic AST equality of listed declarations only; not identity of solver bodies, family policies, entire module, or initial pre-run freeze file."
+}

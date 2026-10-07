@@ -1,0 +1,301 @@
+{
+  "created_at": "2026-10-07T12:53:38.514648+00:00",
+  "workflow_revision": "5011302d121808961397fee7ab63b66e9ab03eb5",
+  "workflow_run_id": "37624304698",
+  "classification": "NEW_POST_REQUEST_EXECUTION_OF_UNCHANGED_EXISTING_COMPONENTS",
+  "input_classification": "NEW_CONTROLLED_TEST_INPUTS_NOT_HISTORICAL_OR_PRODUCTION_RECORDS",
+  "source_components": [
+    "ExecutorOutput",
+    "VerifierOutput",
+    "AdoptionDecision",
+    "normalize_answer",
+    "ExecutorVerifier",
+    "base_default_adoption"
+  ],
+  "source_pin": "8976dc12c2d398dd59e4e193c41fa36749dee996",
+  "mechanism_modified": false,
+  "full_module_or_route_executed": false,
+  "provider_calls": 0,
+  "new_benchmark_run": false,
+  "cases": [
+    {
+      "attempt_id": "component-reproduction-positive",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "(B)",
+        "confidence": 0.99,
+        "trace": [
+          "candidate trace"
+        ],
+        "error": null,
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": true,
+        "reason": "verified",
+        "normalized_answer": "(B)",
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(B)",
+        "final_source": "executor_override_accepted",
+        "override_attempted": true,
+        "override_accepted": true,
+        "override_rejected_reason": null,
+        "executor_answer": "(B)",
+        "verifier_reason": "verified"
+      },
+      "state_after": "(B)",
+      "record_sha256": "72cc05cba617f411b2d1aade340662538df60ba0b97c8c3805605905c499f786"
+    },
+    {
+      "attempt_id": "component-reproduction-failed_parse_nonempty",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": false,
+        "answer": "(B)",
+        "confidence": 0.99,
+        "trace": [
+          "ambiguous"
+        ],
+        "error": null,
+        "abstain_reason": "ambiguous parse",
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": false,
+        "reason": "ambiguous parse",
+        "normalized_answer": null,
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_executor_abstain",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "verifier rejected or executor abstained",
+        "executor_answer": "(B)",
+        "verifier_reason": "ambiguous parse"
+      },
+      "state_after": "(A)",
+      "record_sha256": "ac3ce2e45246837906c7b51586eb2aa45c6d617a04562e2955851770b4f9d677"
+    },
+    {
+      "attempt_id": "component-reproduction-failed_verifier_confidence",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "(B)",
+        "confidence": 0.5,
+        "trace": [
+          "trace"
+        ],
+        "error": null,
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": false,
+        "reason": "confidence below threshold",
+        "normalized_answer": "(B)",
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_executor_abstain",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "verifier rejected or executor abstained",
+        "executor_answer": "(B)",
+        "verifier_reason": "confidence below threshold"
+      },
+      "state_after": "(A)",
+      "record_sha256": "1272ff12338b96cf2138118077bb7624075225e094523f46829f54ca2d446a70"
+    },
+    {
+      "attempt_id": "component-reproduction-failed_adoption_confidence",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "(B)",
+        "confidence": 0.8,
+        "trace": [
+          "trace"
+        ],
+        "error": null,
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": true,
+        "reason": "verified",
+        "normalized_answer": "(B)",
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_low_confidence",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "executor confidence below adoption threshold",
+        "executor_answer": "(B)",
+        "verifier_reason": "verified"
+      },
+      "state_after": "(A)",
+      "record_sha256": "8e6fd6250259911b280d5c28c052d466103e5753a25118b12629b8cbaa7db594"
+    },
+    {
+      "attempt_id": "component-reproduction-empty_candidate",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "",
+        "confidence": 0.99,
+        "trace": [
+          "trace"
+        ],
+        "error": null,
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": false,
+        "reason": "empty answer",
+        "normalized_answer": null,
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_executor_abstain",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "verifier rejected or executor abstained",
+        "executor_answer": "",
+        "verifier_reason": "empty answer"
+      },
+      "state_after": "(A)",
+      "record_sha256": "8071b308b0b0e1bce981b169dbaa958eb1c324b452360140516746158f132e93"
+    },
+    {
+      "attempt_id": "component-reproduction-missing_trace",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "(B)",
+        "confidence": 0.99,
+        "trace": [],
+        "error": null,
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": false,
+        "reason": "missing trace",
+        "normalized_answer": "(B)",
+        "trace_valid": false
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_executor_abstain",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "verifier rejected or executor abstained",
+        "executor_answer": "(B)",
+        "verifier_reason": "missing trace"
+      },
+      "state_after": "(A)",
+      "record_sha256": "457fa07e4389cbc0e4f0986a1d869f7b79ed991eb965e71ecb070088b08ef6cf"
+    },
+    {
+      "attempt_id": "component-reproduction-executor_error",
+      "candidate": {
+        "family": "boolean expressions",
+        "executor_name": "controlled_component_input_not_solver_execution",
+        "parsed": true,
+        "answer": "(B)",
+        "confidence": 0.99,
+        "trace": [
+          "trace"
+        ],
+        "error": "controlled error input",
+        "abstain_reason": null,
+        "used_capital_facts": false,
+        "capital_fact_keys_used": [],
+        "factual_lookup_used": false,
+        "pure_symbolic_ast_only": true,
+        "fact_table_version_hash": null,
+        "fact_table_count": 0
+      },
+      "route_identity": "ExecutorVerifier.verify -> base_default_adoption",
+      "baseline_before": "(A)",
+      "verifier": {
+        "verified": false,
+        "reason": "controlled error input",
+        "normalized_answer": "(B)",
+        "trace_valid": true
+      },
+      "adoption": {
+        "final_answer": "(A)",
+        "final_source": "base_preserved_executor_abstain",
+        "override_attempted": true,
+        "override_accepted": false,
+        "override_rejected_reason": "verifier rejected or executor abstained",
+        "executor_answer": "(B)",
+        "verifier_reason": "controlled error input"
+      },
+      "state_after": "(A)",
+      "record_sha256": "30db2adcfe227912dc74d37e7912bc612f843c7dbdcc960070158d3cb9888c4b"
+    }
+  ],
+  "boundary": "Reproduction begins at existing ExecutorOutput -> verifier -> adoption component. Does not establish solver accuracy, all caller behavior, non-finite inputs, crash recovery, or authenticated persistence."
+}

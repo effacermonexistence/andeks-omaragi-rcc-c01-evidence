@@ -1,0 +1,858 @@
+{
+  "created_at": "2026-10-07T12:53:38.514648+00:00",
+  "classification": "POST_REQUEST_STATIC_SOURCE_AND_FINITE_BOOLEAN_ANALYSIS",
+  "outer_gate_fields": [
+    "semantic_friendly",
+    "executor_available",
+    "parser_success",
+    "verifier_success",
+    "format_valid",
+    "adoption_accepts"
+  ],
+  "truth_table_cases": 64,
+  "failed_conjunctions_preserving_baseline": 63,
+  "outer_return_count": 1,
+  "final_answer_assignment_count": 1,
+  "return_fields": {
+    "final_answer": "final_answer",
+    "final_source": "final_source"
+  },
+  "runner_final_assignment_line": 242,
+  "runner_first_gold_access_line": 245,
+  "runner_record_answer_expression": "final_answer",
+  "truth_table": [
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": false,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": false,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": false,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": false,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": false,
+        "adoption_accepts": true
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": false
+      },
+      "supported": false,
+      "final_answer": "BASE",
+      "final_source": "base1_answer"
+    },
+    {
+      "conditions": {
+        "semantic_friendly": true,
+        "executor_available": true,
+        "parser_success": true,
+        "verifier_success": true,
+        "format_valid": true,
+        "adoption_accepts": true
+      },
+      "supported": true,
+      "final_answer": "CANDIDATE",
+      "final_source": "executor_override_accepted"
+    }
+  ],
+  "scope": "Bounded returned per-row value and its shown historical recorder; not all deployments, arbitrary code mutation, storage authorization, or all external writers."
+}
