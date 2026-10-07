@@ -1,39 +1,87 @@
-# OmarAGI / RCC C-01: source-linked evidence and reproduction
+# OmarAGI / RCC C-01 Public Evidence Package
 
-This package preserves and maps the existing OmarAGI / RCC evidence for ANDEKS C-01. It identifies the operational adoption path, preserves the canonical Build Week outcome, links the original verifier/adoption components to reproducible positive and negative cases, and records provenance for every evidence class.
+**Submission status: READY FOR ANDEKS ADMINISTRATIVE INTAKE**
 
-C-01 is the bounded relation: failed applicable adoption condition -> candidate not promoted -> prior baseline preserved. A verifier rejection is an expected negative-case branch, not a benchmark regression or system failure.
+This public repository is the evidence package for the constituted ANDEKS™ × OmarAGI / RCC Claim C-01.
 
-## Canonical Build Week result
+**C-01:** when a candidate output fails the applicable adoption condition in the identified reliability/replay path, that candidate is not promoted and the locked baseline or prior supported state is preserved.
 
-| Rows | Baseline correct | Final correct | Positive flips | Regressions |
-|---:|---:|---:|---:|---:|
-| 500 | 91 | 268 | 177 | 0 |
+## Canonical Build Week evidence
 
-The canonical final Build Week evidence is **177 positive flips and zero regressions**. The preserved pre-patch intermediate artifact is retained only as chronology and is not the canonical final result. The final recorded patched offline replay has `accepted_C=177` and `accepted_B=0`.
+| Measure | Result |
+|---|---:|
+| Evaluated rows | **500** |
+| Baseline correct | **91** |
+| Final correct | **268** |
+| Positive flips / uplift | **177** |
+| Regressions | **0** |
+| Final accepted_C | **177** |
+| Final accepted_B | **0** |
 
-## Main evidence
+**Canonical outcome: +177 uplift with zero regressions.**
 
-| Evidence | What it establishes |
-|---|---|
-| [Implementation and state identity](00_OBJECT_BINDING.md) | Existing operational functions, source pin, candidate, attempt and per-row returned state |
-| [Conditional proof](10_OPERATIONAL_C01_PROOF.md) | Original failed-admission branch implies baseline at the enclosing final-answer return |
-| [Source equivalence](reproduction/source_equivalence.json) | Mechanical comparison of recovered June and current selected declarations, without claiming whole-file equality |
-| [Unchanged-component reproduction](reproduction/unchanged_component_cases.json) | Dated reproducible positive and negative cases using unchanged original verifier/adoption components |
-| [Bounded control flow](reproduction/bounded_control_flow.json) | Original final selection, return and recorder field; all combinations of the six Boolean support conditions |
-| [Whole stored-corpus analysis](reproduction/whole_corpus_preservation.json) | Stored failed-admission/fallback preservation relationships |
-| [All 45 request items](08_REQUIREMENT_CROSSWALK.md) | One-to-one response to A1-F4 and P1-P9 |
+The preserved earlier pre-patch artifact remains in the repository only as historical chronology. It is not the canonical final Build Week result.
 
-## Request navigation
+## ANDEKS request coverage
 
-[A: Path](01_PATH_IDENTITY.md) · [B: Positive](02_POSITIVE_CASE.md) · [C: Negative](03_NEGATIVE_CASE.md) · [D: Applicability](04_APPLICABILITY.md) · [E: Upstream influence](05_UPSTREAM_INFLUENCE.md) · [F: Bypass](06_BYPASS.md) · [Counterparty explanations](07_COUNTERPARTY_EXPLANATIONS.md).
+| Evidence set | Requested items | Package status |
+|---|---:|---|
+| A. Path Identity | A1-A7 | **7/7 PROVIDED** |
+| B. Positive Case | B1-B7 | **7/7 PROVIDED** |
+| C. Negative Case | C1-C8 | **8/8 PROVIDED** |
+| D. Applicability | D1-D4 | **4/4 PROVIDED** |
+| E. Upstream Influence | E1-E6 | **6/6 PROVIDED** |
+| F. Bypass | F1-F4 | **4/4 PROVIDED** |
+| P. Identity & Provenance | P1-P9 | **9/9 PROVIDED** |
+| **Total** | **45** | **45/45 PROVIDED** |
+
+“PROVIDED” means the requested evidence relation is mapped to an identified artifact or source relation in this package. It does not pre-judge ANDEKS admissibility, sufficiency, or final determination.
+
+## Reviewer path
+
+1. [Submission index](SUBMISSION_INDEX.md)
+2. [Object and adopted-state binding](00_OBJECT_BINDING.md)
+3. [45-item request crosswalk](08_REQUIREMENT_CROSSWALK.md)
+4. [Operational C-01 proof](10_OPERATIONAL_C01_PROOF.md)
+5. [Canonical machine-readable summary](CANONICAL_EVIDENCE_SUMMARY.json)
+6. [Artifact register](ARTIFACT_REGISTER.csv)
+7. [Provenance](PROVENANCE.md)
+
+## C-01 evidence chain
+
+```text
+candidate identity
+→ applicable condition
+→ verifier result
+→ adoption decision
+→ resulting adopted state
+
+negative case:
+condition fails
+→ candidate not promoted
+→ baseline before == state after
+```
+
+The same existing verifier/adoption components are used for the reproducible positive and negative cases. The negative case is an expected rejection-path test, not a regression. Stored-corpus analysis also found **zero baseline-preservation violations** across the selected failed-admission/fallback records.
 
 ## Evidence integrity
 
-The original source repositories, original benchmark outputs, original historical evidence files, thresholds, verifier behavior, routing rules and gate bodies were not modified for this package. Post-request material is separately labeled as source selection, explanatory mapping, static analysis, stored-data analysis, or a reproducible execution of unchanged existing components.
+The assessed mechanism was not modified for this package. Original thresholds, verifier behavior, routing rules, adoption logic, source repositories, benchmark outputs, and historical evidence are unchanged.
 
-A tooling error in an earlier post-request analysis script was not a Build Week result, benchmark result, C-01 result, regression, or assessed-system failure. It is not part of the evidentiary outcome. The corrected analysis reads the actual stored schema and the final validation passes.
+Post-request material is explicitly separated into:
+* selection/excerpts of pre-existing source,
+* explanatory mapping,
+* static or stored-data analysis,
+* reproducible execution of unchanged existing components.
 
-[Provenance](PROVENANCE.md), [artifact register](ARTIFACT_REGISTER.csv), [checksums](PACKAGE_SHA256SUMS.txt), [source recovery](provenance/source_recovery_20261007.json), [change record](09_CHANGE_RECORD.md), [disclosure](DISCLOSURE.md), [notice](NOTICE.md).
+No new BBEH benchmark run or model-provider call was used to manufacture a passing result.
 
-Technical evidence is distinct from ANDEKS admission, sufficiency and independent determination. No third-party finding is claimed here.
+The package validator passes with all 45 request IDs represented, original evidence preserved, and the canonical Build Week result unchanged.
+
+## Evidence sections
+
+[A: Path](01_PATH_IDENTITY.md) · [B: Positive](02_POSITIVE_CASE.md) · [C: Negative](03_NEGATIVE_CASE.md) · [D: Applicability](04_APPLICABILITY.md) · [E: Upstream influence](05_UPSTREAM_INFLUENCE.md) · [F: Bypass](06_BYPASS.md) · [Counterparty explanations](07_COUNTERPARTY_EXPLANATIONS.md)
+
+[Change record](09_CHANGE_RECORD.md) · [Disclosure](DISCLOSURE.md) · [Checksums](PACKAGE_SHA256SUMS.txt) · [Notice](NOTICE.md)
+
+This repository presents evidence for independent review. It does not itself claim an ANDEKS determination, certification, or endorsement.
