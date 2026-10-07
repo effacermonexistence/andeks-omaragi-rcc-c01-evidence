@@ -1,5 +1,9 @@
 # C-01 request crosswalk: all 45 items
 
+**Coverage status: 45/45 REQUESTED ITEMS PROVIDED.**
+
+No requested A1-F4 or P1-P9 item is left unanswered in this package. “Provided” means mapped to an identified evidence artifact, source relation, reproducible unchanged-component record, or provenance record. ANDEKS independently determines admissibility, sufficiency, and the final C-01 determination.
+
 Post-request response to the exact 6 October request. Primary identification: [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md). Technical argument: [10_OPERATIONAL_C01_PROOF.md](10_OPERATIONAL_C01_PROOF.md). No assessor verdict is asserted.
 
 Evidence abbreviations: O = [operational source](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt); J = [June recovered component](evidence/source_recovery/bbeh_adoption_core_20260630.py.excerpt.txt); N = [new unchanged-component execution](reproduction/unchanged_component_cases.json); T = [control-flow/boolean analysis](reproduction/bounded_control_flow.json); H = [whole stored-corpus analysis](reproduction/whole_corpus_preservation.json); V = [version comparison](reproduction/source_equivalence.json). These are distinct evidence classes, not one invented execution.
