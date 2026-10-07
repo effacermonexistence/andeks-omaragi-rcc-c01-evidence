@@ -1,0 +1,72 @@
+POST-REQUEST VERBATIM SOURCE EXCERPT; NOT A NEW IMPLEMENTATION
+Source repository: effacermonexistence/omar-benchmark-replay-live-source
+Source path: benchmark_executors/bbeh_executor_backed_routing.py
+Source commit: b38e6757673173df19216877368e020eb4b51fc5
+Source commit time: 2026-06-30T23:41:59Z
+Full source Git blob SHA-1: 2eb56b207971ac569865d256633c4b2d62f6ef23
+Full source SHA-256: NOT_COMPUTED; Git blob identity is supplied instead.
+Source range: L3497 through end of file.
+Recovered through authenticated source-repository read on 2026-10-07.
+This is the committed June snapshot, not a claim that its whole-file hash equals the initial pre-run freeze hash. Solver internals are omitted. No source code was modified.
+
+--- BEGIN VERBATIM SOURCE ---
+def base_default_adoption(base_answer: str, executor_output: ExecutorOutput, verifier_output: VerifierOutput, *, confidence_threshold: float = 0.9) -> AdoptionDecision:
+    attempted = True
+    if not executor_output.parsed or not verifier_output.verified:
+        return AdoptionDecision(base_answer, "base_preserved_executor_abstain", attempted, False, "verifier rejected or executor abstained", executor_output.answer, verifier_output.reason)
+    if executor_output.confidence < confidence_threshold:
+        return AdoptionDecision(base_answer, "base_preserved_low_confidence", attempted, False, "executor confidence below adoption threshold", executor_output.answer, verifier_output.reason)
+    return AdoptionDecision(verifier_output.normalized_answer or str(executor_output.answer), "executor_override_accepted", attempted, True, None, executor_output.answer, verifier_output.reason)
+
+
+def evaluate_revas_route(item: ExecutorInput, base_answer: str, *, fallback_source: str = "base1_answer", fact_policy: str = "fact_aware") -> RevasRouteRecord:
+    semantic_friendly, semantic_class, semantic_reason, planned_executor = semantic_route_class_for_family(item.family)
+    executor = executor_for_family(item.family, fact_policy=fact_policy)
+    executor_available = executor is not None
+    output: Optional[ExecutorOutput] = None
+    verifier = VerifierOutput(False, "executor unavailable", None, False)
+    if executor_available:
+        output = executor.run(item)
+        verifier = ExecutorVerifier().verify(output)
+    parser_success = bool(output and output.parsed)
+    verifier_success = bool(verifier.verified)
+    format_valid = answer_format_is_valid(verifier.normalized_answer if verifier.normalized_answer is not None else (output.answer if output else None))
+    adoption = base_default_adoption(base_answer, output or ExecutorOutput(item.family, planned_executor or "none", False, None, 0.0, ["executor unavailable"], None, "executor unavailable"), verifier)
+    adoption_accepts = adoption.override_accepted
+    revas_supported = all([semantic_friendly, executor_available, parser_success, verifier_success, format_valid, adoption_accepts])
+    gap = coverage_gap_for_record(semantic_friendly, semantic_class, executor_available, parser_success, verifier_success, format_valid, adoption_accepts)
+    final_answer = adoption.final_answer if revas_supported else base_answer
+    final_source = adoption.final_source if revas_supported else fallback_source
+    support_reason = "REVAS override supported" if revas_supported else gap
+    trace = []
+    if output:
+        trace.extend(output.trace)
+    return RevasRouteRecord(
+        row_id=item.row_id,
+        family=item.family,
+        semantic_RCC_friendly=semantic_friendly,
+        semantic_route_class=semantic_class,
+        semantic_route_reason=semantic_reason,
+        REVAS_supported=revas_supported,
+        REVAS_support_reason=support_reason,
+        executor_available=executor_available,
+        executor_name=executor.executor_name if executor else planned_executor,
+        parser_success=parser_success,
+        verifier_success=verifier_success,
+        answer_format_valid=format_valid,
+        adoption_gate_accepts=adoption_accepts,
+        final_answer=final_answer,
+        final_source=final_source,
+        fallback_source=fallback_source,
+        coverage_gap_category=gap,
+        executor_answer=output.answer if output else None,
+        verifier_reason=verifier.reason,
+        used_capital_facts=output.used_capital_facts if output else False,
+        capital_fact_keys_used=output.capital_fact_keys_used if output else (),
+        factual_lookup_used=output.factual_lookup_used if output else False,
+        pure_symbolic_ast_only=output.pure_symbolic_ast_only if output else True,
+        fact_table_version_hash=output.fact_table_version_hash if output else capital_fact_table_hash(),
+        fact_table_count=output.fact_table_count if output else capital_fact_table_count(),
+        trace=trace,
+    )
+--- END VERBATIM SOURCE ---
