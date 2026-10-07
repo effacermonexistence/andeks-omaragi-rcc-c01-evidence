@@ -52,11 +52,10 @@ def main():
         if item["publication_form"] == "PRESERVED_PRE_EXISTING_COPY":
             assert digest(path) == item["source_sha256"]
         if item["publication_form"] == "REDACTED_PUBLIC_COPY_OF_PRE_EXISTING_EVIDENCE":
-            reconstructed = path.read_bytes().replace(
-                b"[REDACTED_LOCAL_WORKSPACE]",
-                b"/Users/effacermonexistencecodex/Code/omar-migration/omar-os1",
-            )
-            assert hashlib.sha256(reconstructed).hexdigest() == item["source_sha256"]
+            # Original-path reconstruction is checked privately during
+            # acquisition; the public validator must not undo the redaction.
+            assert b"[REDACTED_LOCAL_WORKSPACE]" in path.read_bytes()
+            assert item["public_sha256"] != item["source_sha256"]
 
     report = load("evidence/path_identity/public_replay/examples/example_report.json")
     fixture = load("evidence/path_identity/public_replay/samples/public_demo_replay.json")
