@@ -1,0 +1,211 @@
+{
+  "all_cells_structurally_guarded": true,
+  "cell_count": 51,
+  "lane_count": 17,
+  "lanes": [
+    {
+      "certified_pre_score_adoption": true,
+      "family": "control_layer",
+      "lane": "ZebraLogic_BYOK",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": false,
+      "family": "control_layer",
+      "lane": "AgentDojo_Tool_Knowledge_BYOK",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": false,
+      "family": "control_layer",
+      "lane": "BIPIA_BYOK",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": false,
+      "family": "control_layer",
+      "lane": "HaluEval_BYOK",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": false,
+      "family": "control_layer",
+      "lane": "TruthfulQA_BYOK",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": true,
+      "family": "dedicated_matched_live",
+      "lane": "BBEH_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "certified_pre_score_adoption": false,
+      "family": "dedicated_matched_live",
+      "lane": "HorizonMath_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "AIME_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "GPQA_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "BBH_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "MuSR_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "HealthBench_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "HealthBench_hard_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "HealthBench_consensus_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "HLE_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "Facts_Grounding_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    },
+    {
+      "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+      "certified_pre_score_adoption": false,
+      "family": "reconstructed_matched_live",
+      "lane": "MMLU_Pro_MatchedLive",
+      "providers": [
+        "openai",
+        "mistral",
+        "anthropic"
+      ],
+      "strict_zero_downlift_floor": true
+    }
+  ],
+  "provider_count": 3,
+  "providers": [
+    "openai",
+    "mistral",
+    "anthropic"
+  ],
+  "schema_version": "omar-byok-zero-downlift-matrix-v1"
+}

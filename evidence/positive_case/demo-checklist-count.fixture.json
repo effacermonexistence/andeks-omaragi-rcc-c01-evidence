@@ -1,0 +1,18 @@
+{
+  "case_id": "demo-checklist-count",
+  "prompt": "A deployment checklist has three required gates: tests, secret scan, and rollback plan. How many gates are required?",
+  "baseline_output": "4",
+  "governed_candidate": "3",
+  "route_request": {
+    "enabled": true,
+    "reason": "bounded arithmetic verification is supported by the public demo"
+  },
+  "runtime_verification": {
+    "method": "arithmetic_expression",
+    "expression": "1 + 1 + 1"
+  },
+  "post_lock_scoring": {
+    "method": "numeric_match",
+    "expected": "3"
+  }
+}

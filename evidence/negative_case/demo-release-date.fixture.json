@@ -1,0 +1,18 @@
+{
+  "case_id": "demo-release-date",
+  "prompt": "The sanitized release note states: release date 2026-08-15. Return only the date.",
+  "baseline_output": "2026-08-15",
+  "governed_candidate": "2026-08-16",
+  "route_request": {
+    "enabled": true,
+    "reason": "bounded source-evidence verification is supported by the public demo"
+  },
+  "runtime_verification": {
+    "method": "source_contains",
+    "source_text": "Sanitized release note: release date 2026-08-15."
+  },
+  "post_lock_scoring": {
+    "method": "exact_match",
+    "expected": "2026-08-15"
+  }
+}

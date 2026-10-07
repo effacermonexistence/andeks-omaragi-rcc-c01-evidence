@@ -1,0 +1,329 @@
+POST-REQUEST PUBLIC SOURCE EXCERPT — NOT THE COMPLETE ORIGINAL FILE
+Original: effacermonexistence/omar-benchmark-replay-live-source :: benchmark_executors/bbeh_executor_backed_routing.py
+Pinned commit: 8976dc12c2d398dd59e4e193c41fa36749dee996
+Source file SHA-256: 0ddabd8cad2c5bb7b20107753f033c16af66f650caa9a4d695fccf7a6e01fed1
+Original ranges: L18-L142, L3420-L3611
+No assessed mechanism was changed. Only the listed verbatim source ranges are reproduced.
+Omitted: unrelated application, product, prompts, solver implementations and infrastructure.
+This excerpt is documentary evidence, not a standalone executable replacement.
+
+--- VERBATIM ORIGINAL LINES 18-142 ---
+@dataclass(frozen=True)
+class ExecutorInput:
+    row_id: str
+    family: str
+    question_text: str
+    choices: dict[str, str] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class ExecutorOutput:
+    family: str
+    executor_name: str
+    parsed: bool
+    answer: Optional[str]
+    confidence: float
+    trace: list[str] = field(default_factory=list)
+    error: Optional[str] = None
+    abstain_reason: Optional[str] = None
+    used_capital_facts: bool = False
+    capital_fact_keys_used: tuple[str, ...] = ()
+    factual_lookup_used: bool = False
+    pure_symbolic_ast_only: bool = True
+    fact_table_version_hash: Optional[str] = None
+    fact_table_count: int = 0
+
+
+@dataclass(frozen=True)
+class VerifierOutput:
+    verified: bool
+    reason: str
+    normalized_answer: Optional[str]
+    trace_valid: bool
+
+
+@dataclass(frozen=True)
+class RouteDecision:
+    route_allowed: bool
+    family: str
+    executor_name: Optional[str]
+    reason: str
+    executor_output: Optional[ExecutorOutput]
+    verifier_output: Optional[VerifierOutput]
+    family_type: str
+    executor_type: Optional[str]
+
+
+@dataclass(frozen=True)
+class AdoptionDecision:
+    final_answer: str
+    final_source: str
+    override_attempted: bool
+    override_accepted: bool
+    override_rejected_reason: Optional[str]
+    executor_answer: Optional[str]
+    verifier_reason: str
+
+
+@dataclass(frozen=True)
+class RevasRouteRecord:
+    row_id: str
+    family: str
+    semantic_RCC_friendly: bool
+    semantic_route_class: str
+    semantic_route_reason: str
+    REVAS_supported: bool
+    REVAS_support_reason: str
+    executor_available: bool
+    executor_name: Optional[str]
+    parser_success: bool
+    verifier_success: bool
+    answer_format_valid: bool
+    adoption_gate_accepts: bool
+    final_answer: str
+    final_source: str
+    fallback_source: str
+    coverage_gap_category: str
+    executor_answer: Optional[str]
+    verifier_reason: str
+    used_capital_facts: bool = False
+    capital_fact_keys_used: tuple[str, ...] = ()
+    factual_lookup_used: bool = False
+    pure_symbolic_ast_only: bool = True
+    fact_table_version_hash: Optional[str] = None
+    fact_table_count: int = 0
+    trace: list[str] = field(default_factory=list)
+
+
+def normalize_answer(answer: Optional[str]) -> Optional[str]:
+    if answer is None:
+        return None
+    text = str(answer).strip()
+    text = re.sub(r"\s+", " ", text)
+    return text
+
+
+class ExecutorVerifier:
+    def verify(self, output: ExecutorOutput) -> VerifierOutput:
+        if not output.parsed:
+            return VerifierOutput(False, output.abstain_reason or output.error or "executor did not parse", None, bool(output.trace))
+        answer = normalize_answer(output.answer)
+        if not answer:
+            return VerifierOutput(False, "empty answer", None, bool(output.trace))
+        if output.confidence < 0.75:
+            return VerifierOutput(False, "confidence below threshold", answer, bool(output.trace))
+        if not output.trace:
+            return VerifierOutput(False, "missing trace", answer, False)
+        if output.error:
+            return VerifierOutput(False, output.error, answer, bool(output.trace))
+        return VerifierOutput(True, "verified", answer, True)
+
+
+class BaseExecutor:
+    family = ""
+    executor_name = "base_executor"
+
+    def run(self, item: ExecutorInput) -> ExecutorOutput:  # pragma: no cover - abstract guard
+        return self.abstain("not implemented")
+
+    def abstain(
+        self,
+        reason: str,
+        trace: Optional[list[str]] = None,
+        *,
+        fact_trace: Optional["CapitalFactTrace"] = None,
+
+--- VERBATIM ORIGINAL LINES 3420-3611 ---
+
+EXECUTOR_BY_FAMILY = {
+    "boolean expressions": BooleanExpressionExecutor(),
+    "multistep arithmetic": MultistepArithmeticExecutor(),
+    "dyck languages": DyckLanguageExecutor(),
+    "shuffled objects": ShuffledObjectsExecutor(),
+    "temporal sequence": TemporalDateTimeExecutor(),
+    "time arithmetic": TemporalDateTimeExecutor(),
+    "buggy tables": BuggyTablesExecutor(),
+    "word sorting": WordSortingExecutor(),
+    "object counting": ObjectCountingExecutor(),
+    "web of lies": WebOfLiesExecutor(),
+    "hyperbaton": HyperbatonExecutor(),
+    "object properties": ObjectPropertiesExecutor(),
+    "spatial reasoning": SpatialReasoningExecutor(),
+}
+
+# These executors remain available for direct diagnostics, but their current
+# verifier contracts do not prove that every parsed answer is safe to replace
+# a model baseline.  A BYOK route therefore preserves the baseline for the
+# whole family until the verifier is hardened.  This is a family-level floor
+# rule, never a row-id or scorer-visible best-of rule.
+BASELINE_ONLY_UNTIL_VERIFIER_HARDENED = {
+    "object counting",
+    "object properties",
+    "spatial reasoning",
+    "temporal sequence",
+    "word sorting",
+}
+
+
+def executor_for_family(family: str, *, fact_policy: str = "fact_aware") -> Optional[BaseExecutor]:
+    if family in BASELINE_ONLY_UNTIL_VERIFIER_HARDENED:
+        return None
+    if family == "boolean expressions":
+        return BooleanExpressionExecutor(allow_capital_facts=fact_policy != "pure_symbolic_only")
+    return EXECUTOR_BY_FAMILY.get(family)
+
+SYMBOLIC_EXECUTOR_FAMILIES = set(EXECUTOR_BY_FAMILY)
+SEMANTIC_ADJUDICATOR_FAMILIES = {
+    "sarc triples": "decomposition_adjudicator",
+}
+DENY_FAMILIES = {
+    "sportqa",
+    "boardgame qa",
+}
+
+PROMPT_ONLY_RISKY_FAMILIES = {
+    "zebra puzzles",
+    "spatial reasoning",
+    "causal understanding",
+    "disambiguation qa",
+}
+
+
+def semantic_route_class_for_family(family: str) -> tuple[bool, str, str, Optional[str]]:
+    if family in BASELINE_ONLY_UNTIL_VERIFIER_HARDENED:
+        return (
+            False,
+            "baseline_only_verifier_gap",
+            "executor exists, but its verifier is not yet floor-safe for BYOK adoption",
+            EXECUTOR_BY_FAMILY[family].executor_name,
+        )
+    if family in SYMBOLIC_EXECUTOR_FAMILIES:
+        return True, "solver_friendly", f"executable structure candidate for {family}", EXECUTOR_BY_FAMILY[family].executor_name
+    if family in SEMANTIC_ADJUDICATOR_FAMILIES:
+        return True, "semantic_adjudication_friendly", "semantic compositional family; needs adjudicator before override", SEMANTIC_ADJUDICATOR_FAMILIES[family]
+    if family in DENY_FAMILIES:
+        return False, "deny_base_only", "known B-risk family; preserve base until verifier-backed adjudicator exists", None
+    if family in PROMPT_ONLY_RISKY_FAMILIES:
+        return False, "prompt_only_risky", "could invite prompt-only reasoning without verifier; primary path denied", None
+    return False, "unsupported", "unsupported family for current REVAS branch", None
+
+
+def answer_format_is_valid(answer: Optional[str]) -> bool:
+    if not normalize_answer(answer):
+        return False
+    return True
+
+
+def coverage_gap_for_record(
+    semantic_RCC_friendly: bool,
+    semantic_route_class: str,
+    executor_available: bool,
+    parser_success: bool,
+    verifier_success: bool,
+    answer_format_valid: bool,
+    adoption_gate_accepts: bool,
+) -> str:
+    if semantic_route_class == "deny_base_only":
+        return "deny_due_to_known_B_risk"
+    if semantic_route_class == "prompt_only_risky":
+        return "prompt_only_risky_no_primary"
+    if semantic_route_class == "baseline_only_verifier_gap":
+        return "baseline_preserved_until_verifier_hardened"
+    if not semantic_RCC_friendly:
+        return "unsupported_family"
+    if not executor_available:
+        return "friendly_but_no_executor"
+    if not parser_success:
+        return "friendly_but_parse_failed"
+    if not verifier_success:
+        return "friendly_but_no_verifier"
+    if not answer_format_valid:
+        return "friendly_but_answer_shape_invalid"
+    if not adoption_gate_accepts:
+        return "friendly_but_adoption_rejected"
+    return "none"
+
+
+def route_for_row(item: ExecutorInput, *, fact_policy: str = "fact_aware") -> RouteDecision:
+    executor = executor_for_family(item.family, fact_policy=fact_policy)
+    if executor is None:
+        if item.family in SEMANTIC_ADJUDICATOR_FAMILIES:
+            return RouteDecision(
+                False,
+                item.family,
+                None,
+                "semantic compositional family; use base/base adjudication until safe adjudicator exists",
+                None,
+                None,
+                "semantic_compositional",
+                SEMANTIC_ADJUDICATOR_FAMILIES[item.family],
+            )
+        family_type = "deny" if item.family in DENY_FAMILIES else "deny"
+        return RouteDecision(False, item.family, None, "executor unavailable; preserve base", None, None, family_type, None)
+    output = executor.run(item)
+    verifier = ExecutorVerifier().verify(output)
+    if output.parsed and verifier.verified:
+        return RouteDecision(True, item.family, executor.executor_name, "executor available and parseable", output, verifier, "symbolic_executor", executor.executor_name)
+    return RouteDecision(False, item.family, executor.executor_name, f"executor unavailable for this row: {verifier.reason}", output, verifier, "symbolic_executor", executor.executor_name)
+
+
+def base_default_adoption(base_answer: str, executor_output: ExecutorOutput, verifier_output: VerifierOutput, *, confidence_threshold: float = 0.9) -> AdoptionDecision:
+    attempted = True
+    if not executor_output.parsed or not verifier_output.verified:
+        return AdoptionDecision(base_answer, "base_preserved_executor_abstain", attempted, False, "verifier rejected or executor abstained", executor_output.answer, verifier_output.reason)
+    if executor_output.confidence < confidence_threshold:
+        return AdoptionDecision(base_answer, "base_preserved_low_confidence", attempted, False, "executor confidence below adoption threshold", executor_output.answer, verifier_output.reason)
+    return AdoptionDecision(verifier_output.normalized_answer or str(executor_output.answer), "executor_override_accepted", attempted, True, None, executor_output.answer, verifier_output.reason)
+
+
+def evaluate_revas_route(item: ExecutorInput, base_answer: str, *, fallback_source: str = "base1_answer", fact_policy: str = "fact_aware") -> RevasRouteRecord:
+    semantic_friendly, semantic_class, semantic_reason, planned_executor = semantic_route_class_for_family(item.family)
+    executor = executor_for_family(item.family, fact_policy=fact_policy)
+    executor_available = executor is not None
+    output: Optional[ExecutorOutput] = None
+    verifier = VerifierOutput(False, "executor unavailable", None, False)
+    if executor_available:
+        output = executor.run(item)
+        verifier = ExecutorVerifier().verify(output)
+    parser_success = bool(output and output.parsed)
+    verifier_success = bool(verifier.verified)
+    format_valid = answer_format_is_valid(verifier.normalized_answer if verifier.normalized_answer is not None else (output.answer if output else None))
+    adoption = base_default_adoption(base_answer, output or ExecutorOutput(item.family, planned_executor or "none", False, None, 0.0, ["executor unavailable"], None, "executor unavailable"), verifier)
+    adoption_accepts = adoption.override_accepted
+    revas_supported = all([semantic_friendly, executor_available, parser_success, verifier_success, format_valid, adoption_accepts])
+    gap = coverage_gap_for_record(semantic_friendly, semantic_class, executor_available, parser_success, verifier_success, format_valid, adoption_accepts)
+    final_answer = adoption.final_answer if revas_supported else base_answer
+    final_source = adoption.final_source if revas_supported else fallback_source
+    support_reason = "REVAS override supported" if revas_supported else gap
+    trace = []
+    if output:
+        trace.extend(output.trace)
+    return RevasRouteRecord(
+        row_id=item.row_id,
+        family=item.family,
+        semantic_RCC_friendly=semantic_friendly,
+        semantic_route_class=semantic_class,
+        semantic_route_reason=semantic_reason,
+        REVAS_supported=revas_supported,
+        REVAS_support_reason=support_reason,
+        executor_available=executor_available,
+        executor_name=executor.executor_name if executor else planned_executor,
+        parser_success=parser_success,
+        verifier_success=verifier_success,
+        answer_format_valid=format_valid,
+        adoption_gate_accepts=adoption_accepts,
+        final_answer=final_answer,
+        final_source=final_source,
+        fallback_source=fallback_source,
+        coverage_gap_category=gap,
+        executor_answer=output.answer if output else None,
+        verifier_reason=verifier.reason,
+        used_capital_facts=output.used_capital_facts if output else False,
+        capital_fact_keys_used=output.capital_fact_keys_used if output else (),
+        factual_lookup_used=output.factual_lookup_used if output else False,
+        pure_symbolic_ast_only=output.pure_symbolic_ast_only if output else True,
+        fact_table_version_hash=output.fact_table_version_hash if output else capital_fact_table_hash(),
+        fact_table_count=output.fact_table_count if output else capital_fact_table_count(),
+        trace=trace,
+    )

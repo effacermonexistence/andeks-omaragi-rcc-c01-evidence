@@ -1,0 +1,257 @@
+POST-REQUEST PUBLIC SOURCE EXCERPT — NOT THE COMPLETE ORIGINAL FILE
+Original: effacermonexistence/omar-benchmark-replay-live-source :: benchmark_replay_harness.py
+Pinned commit: 8976dc12c2d398dd59e4e193c41fa36749dee996
+Source file SHA-256: c587c7921ee488c3519866bba241bc13f7d5c38e6e1786ef8c13d2dfc349e46e
+Original ranges: L12-L17, L1555-L1793
+No assessed mechanism was changed. Only the listed verbatim source ranges are reproduced.
+Omitted: unrelated application, product, prompts, solver implementations and infrastructure.
+This excerpt is documentary evidence, not a standalone executable replacement.
+
+--- VERBATIM ORIGINAL LINES 12-17 ---
+HARNESS_VERSION = "omar-replay-harness-lock-v1.0.0"
+BASELINE_FALLBACK_ADOPTION_GATE = "baseline_preserving_model_substitute_guard"
+RECONSTRUCTED_FALLBACK_ADOPTION_GATE = "baseline_preserving_reconstructed_drift_guard"
+STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE = "strict_gold_blind_baseline_floor_v1"
+BASELINE_FALLBACK_PROMPT_MODE = "baseline_fallback_no_rcc_prompt_final"
+ALWAYS_ON_RCC_PROMPT_MODE = "always_on_rcc_candidate"
+
+--- VERBATIM ORIGINAL LINES 1555-1793 ---
+def apply_model_substitute_baseline_safe_adoption(
+    *,
+    baseline: dict[str, Any],
+    routed_candidate: dict[str, Any],
+    baseline_grade: dict[str, Any],
+    routed_candidate_grade: dict[str, Any],
+    route_record: dict[str, Any],
+    harness: dict[str, Any],
+    selected_model: str,
+    historical_model: str,
+    routed_call_path: str,
+    pre_score_verifier_certificate: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    # A benchmark grade is post-lock evidence.  It may score a candidate, but it
+    # may never authorize that candidate.  The old implementation compared the
+    # baseline and candidate grades here and then described the decision as
+    # gold-blind.  That was a scorer-visible best-of gate and could not support
+    # accepted_B=0 on unseen rows.  Until a caller supplies a separately audited
+    # pre-score verifier certificate, model-only candidates remain diagnostic
+    # and the baseline is the only admissible final.
+    certificate = pre_score_verifier_certificate if isinstance(pre_score_verifier_certificate, dict) else {}
+    certified_safe_adoption = bool(
+        certificate.get("certified_safe_adoption")
+        and certificate.get("gold_accessed") is False
+        and certificate.get("scorer_visible") is False
+        and certificate.get("row_id_visible") is False
+        and certificate.get("decision_frozen_before_scoring") is True
+    )
+    if certified_safe_adoption:
+        verifier_id = str(certificate.get("verifier_id") or "pre_score_structural_verifier")
+        final_omar = {
+            **routed_candidate,
+            "adopted_from": "routed_candidate_pre_score_verifier",
+            "routed_candidate_executed": bool(routed_candidate.get("ok")),
+            "adoption_gate": STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE,
+            "adoption_decision": "routed_candidate",
+            "adoption_signal_used": verifier_id,
+            "adoption_gold_blind": True,
+            "scorer_visible_to_adoption": False,
+            "adoption_decision_frozen_before_scoring": True,
+            "candidate_grade_diagnostic_only": True,
+            "pre_score_verifier_certificate": certificate,
+            "model_substitute": selected_model,
+            "historical_model": historical_model,
+        }
+        final_grade = {
+            **routed_candidate_grade,
+            "adopted_from": "routed_candidate_pre_score_verifier",
+            "baseline_grade_diagnostic_only": baseline_grade.get("grade"),
+            "adoption_gate": STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE,
+            "pre_score_verifier_id": verifier_id,
+        }
+        route_record.update(
+            {
+                "adoption_gate_active": True,
+                "adoption_policy": "adopt_only_with_audited_pre_score_verifier_else_baseline",
+                "adoption_decision": "routed_candidate",
+                "adoption_signal_used": verifier_id,
+                "adoption_gold_blind": True,
+                "scorer_visible_to_adoption": False,
+                "adoption_decision_frozen_before_scoring": True,
+                "candidate_grade_diagnostic_only": True,
+                "final_omar_rcc_source": "routed_candidate_pre_score_verifier",
+                "routed_candidate_logged": True,
+                "routed_candidate_executed": bool(routed_candidate.get("ok")),
+                "rcc_prompt_executed": True,
+                "model_substitute_baseline_safe_guard": True,
+                "pre_score_verifier_certificate": certificate,
+                "prompt_mode": "routed_candidate_pre_score_verified",
+            }
+        )
+        route_record["short_reason"] = (
+            f"{route_record.get('short_reason')}; candidate adopted by {verifier_id} before benchmark scoring"
+        )
+        harness["omar_rcc_call_path"] = routed_call_path
+        harness["routed_candidate_call_path"] = routed_call_path
+        harness["adoption_gate"] = STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE
+        harness["adoption_policy"] = "adopt_only_with_audited_pre_score_verifier_else_baseline"
+        harness["adoption_decision_frozen_before_scoring"] = True
+        harness["pre_score_verifier_certificate"] = certificate
+        harness["candidate_grade_diagnostic_only"] = True
+        harness["prompt_mode"] = "routed_candidate_pre_score_verified"
+        harness["rcc_prompt_executed"] = True
+        return final_omar, final_grade
+
+    final_omar = {
+        **baseline,
+        "adopted_from": "baseline_fallback",
+        "routed_candidate_executed": bool(routed_candidate.get("ok")),
+        "adoption_gate": STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE,
+        "adoption_decision": "baseline_fallback",
+        "adoption_signal_used": "no_pre_score_verifier_certificate",
+        "adoption_gold_blind": True,
+        "scorer_visible_to_adoption": False,
+        "adoption_decision_frozen_before_scoring": True,
+        "candidate_grade_diagnostic_only": True,
+        "pre_score_verifier_certificate": certificate or None,
+        "model_substitute": selected_model,
+        "historical_model": historical_model,
+    }
+    final_grade = {
+        **baseline_grade,
+        "adopted_from": "baseline_fallback",
+        "routed_candidate_grade": routed_candidate_grade.get("grade"),
+        "routed_candidate_score": routed_candidate_grade.get("score"),
+        "candidate_grade_diagnostic_only": True,
+        "adoption_gate": STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE,
+    }
+    route_record.update(
+        {
+            "adoption_gate_active": True,
+            "adoption_policy": "strict_gold_blind_baseline_floor_no_uncertified_override",
+            "adoption_decision": "baseline_fallback",
+            "adoption_signal_used": "no_pre_score_verifier_certificate",
+            "adoption_gold_blind": True,
+            "scorer_visible_to_adoption": False,
+            "adoption_decision_frozen_before_scoring": True,
+            "candidate_grade_diagnostic_only": True,
+            "pre_score_verifier_certificate": certificate or None,
+            "final_omar_rcc_source": "baseline_fallback",
+            "routed_candidate_logged": True,
+            "routed_candidate_executed": bool(routed_candidate.get("ok")),
+            "rcc_prompt_executed": True,
+            "model_substitute_baseline_safe_guard": True,
+            "prompt_mode": "routed_candidate_diagnostic_strict_baseline_floor",
+        }
+    )
+    route_record["short_reason"] = (
+        f"{route_record.get('short_reason')}; strict gold-blind floor preserved baseline because no pre-score verifier certificate exists"
+    )
+    harness["omar_rcc_call_path"] = "strict_gold_blind_baseline_floor_final"
+    harness["routed_candidate_call_path"] = routed_call_path
+    harness["adoption_gate"] = STRICT_GOLD_BLIND_BASELINE_FLOOR_GATE
+    harness["adoption_policy"] = "strict_gold_blind_baseline_floor_no_uncertified_override"
+    harness["adoption_decision_frozen_before_scoring"] = True
+    harness["candidate_grade_diagnostic_only"] = True
+    harness["prompt_mode"] = "routed_candidate_diagnostic_strict_baseline_floor"
+    harness["rcc_prompt_executed"] = True
+    return final_omar, final_grade
+
+
+def apply_baseline_fallback_without_rcc(
+    *,
+    baseline: dict[str, Any],
+    baseline_grade: dict[str, Any],
+    route_record: dict[str, Any],
+    harness: dict[str, Any],
+    selected_model: str,
+    historical_model: str,
+    adoption_signal: str,
+    adoption_policy: str,
+    adoption_gate: str = BASELINE_FALLBACK_ADOPTION_GATE,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    final_omar = {
+        **baseline,
+        "adopted_from": "baseline_fallback",
+        "routed_candidate_executed": False,
+        "adoption_gate": adoption_gate,
+        "adoption_decision": "baseline_fallback",
+        "adoption_signal_used": adoption_signal,
+        "adoption_gold_blind": True,
+        "scorer_visible_to_adoption": False,
+        "model_substitute": selected_model if selected_model != historical_model else None,
+        "historical_model": historical_model,
+    }
+    final_grade = {
+        **baseline_grade,
+        "adopted_from": "baseline_fallback",
+        "routed_candidate_grade": None,
+        "routed_candidate_score": None,
+        "adoption_gate": adoption_gate,
+    }
+    route_record.update(
+        {
+            "adoption_gate_active": True,
+            "adoption_policy": adoption_policy,
+            "adoption_decision": "baseline_fallback",
+            "adoption_signal_used": adoption_signal,
+            "adoption_gold_blind": True,
+            "scorer_visible_to_adoption": False,
+            "final_omar_rcc_source": "baseline_fallback",
+            "routed_candidate_logged": False,
+            "routed_candidate_executed": False,
+            "rcc_prompt_executed": False,
+            "prompt_mode": BASELINE_FALLBACK_PROMPT_MODE,
+        }
+    )
+    route_record["short_reason"] = (
+        f"{route_record.get('short_reason')}; baseline fallback final active; RCC prompt not executed"
+    )
+    harness["omar_rcc_call_path"] = "baseline_safe_no_rcc_prompt_final"
+    harness["routed_candidate_call_path"] = "not_executed_baseline_fallback"
+    harness["adoption_gate"] = adoption_gate
+    harness["adoption_policy"] = adoption_policy
+    harness["prompt_mode"] = BASELINE_FALLBACK_PROMPT_MODE
+    harness["rcc_prompt_executed"] = False
+    return final_omar, final_grade
+
+
+def assert_baseline_fallback_invariants(output: dict[str, Any]) -> None:
+    route = output.get("route") or {}
+    harness = output.get("harness") or {}
+    if route.get("adoption_decision") != "baseline_fallback":
+        return
+    sample_id = str(output.get("sample_id") or "")
+    if str(route.get("sample_id") or sample_id) != sample_id:
+        raise AssertionError("Fallback route sample_id does not match output sample_id")
+    if str(harness.get("sample_id") or sample_id) != sample_id:
+        raise AssertionError("Fallback harness sample_id does not match output sample_id")
+    if str(harness.get("routed_candidate_call_path") or "") != "not_executed_baseline_fallback":
+        raise AssertionError("Fallback mode executed or exposed an RCC routed candidate path")
+    if harness.get("rcc_prompt_executed") is not False:
+        raise AssertionError("Fallback mode must mark rcc_prompt_executed=false")
+    if str(harness.get("omar_rcc_call_path") or "") not in {
+        "baseline_safe_no_rcc_prompt_final",
+    }:
+        raise AssertionError("Fallback final path may be executing the RCC prompt")
+    final = output.get("omar_rcc") or {}
+    baseline = output.get("baseline") or {}
+    if final.get("adopted_from") != "baseline_fallback":
+        raise AssertionError("Fallback final output is not marked as baseline_fallback")
+    if final.get("text") != baseline.get("text"):
+        raise AssertionError("Fallback final text differs from baseline text")
+    final_grade = output.get("omar_rcc_grade") or {}
+    baseline_grade = output.get("baseline_grade") or {}
+    if final_grade.get("score") != baseline_grade.get("score"):
+        raise AssertionError("Fallback final score differs from baseline score")
+
+
+def assert_no_negative_final_delta_in_baseline_fallback(summary: dict[str, Any]) -> None:
+    if not summary.get("adoption_gate_active"):
+        return
+    if summary.get("adoption_decision") != "baseline_fallback":
+        return
+    final_gain = summary.get("final_adopted_absolute_gain")
+    if final_gain is not None and float(final_gain) < 0:
+        raise AssertionError("Negative final delta is not allowed in baseline-fallback routed mode")
+    if summary.get("candidate_negative_vs_baseline") and summary.get("candidate_score_is_final_score"):
+        raise AssertionError("Negative candidate cannot be treated as final under baseline-fallback mode")

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omaragi-reliability-replay"
+version = "1.1.0"
+description = "OmarAGI Reliability BYOK Replay: a sanitized deterministic replay of the public decision path used around live BYOK model runs."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "OmarAGI" }]
+keywords = ["ai", "byok", "reliability", "verification", "developer-tools", "replay"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://omaragi.com"
+Repository = "https://github.com/effacermonexistence/omaragi-reliability-replay"
+
+[project.scripts]
+omaragi-replay = "omaragi_reliability_replay.cli:main"
+
+[tool.setuptools]
+packages = ["omaragi_reliability_replay"]

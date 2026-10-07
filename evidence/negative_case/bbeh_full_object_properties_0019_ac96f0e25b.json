@@ -1,0 +1,68 @@
+{
+  "row_index": 13,
+  "row_id": "bbeh_full_object_properties_0019_ac96f0e25b",
+  "family": "object properties",
+  "question_sha256": "ac96f0e25bdcda8f6ec83752dbf3a9ff4812218711aaf2bde09ea41b84a660c2",
+  "base_answer_locked_before_scoring": "12",
+  "revas_final_answer_locked_before_scoring": "12",
+  "executor_answer_locked_before_scoring": null,
+  "gold": "13",
+  "base_correct": 0,
+  "executor_correct": null,
+  "revas_final_correct": 0,
+  "accepted_C_vs_base": false,
+  "accepted_B_vs_base": false,
+  "semantic_RCC_friendly": true,
+  "semantic_route_class": "solver_friendly",
+  "REVAS_override_supported": false,
+  "REVAS_support_reason": "friendly_but_parse_failed",
+  "executor_available": true,
+  "executor_name": "object_collection_state_simulator",
+  "parser_success": false,
+  "verifier_success": false,
+  "answer_format_valid": false,
+  "adoption_gate_accepts": false,
+  "final_source": "base1_answer",
+  "fallback_source": "base1_answer",
+  "coverage_gap_category": "friendly_but_parse_failed",
+  "used_capital_facts": false,
+  "capital_fact_keys_used": [],
+  "factual_lookup_used": false,
+  "pure_symbolic_ast_only": true,
+  "fact_table_version_hash": "c8b68ce2be7a72b5f474084c290c9da11a5b38d1099145bc1559fdb27cfa33c9",
+  "fact_table_count": 12,
+  "trace": [
+    "object-properties sister concrete color not uniquely inferred"
+  ],
+  "api_meta": {
+    "base1": {
+      "ok": true,
+      "kind": "base1",
+      "latency_ms": 527,
+      "usage": {
+        "prompt_tokens": 1348,
+        "completion_tokens": 1,
+        "total_tokens": 1349,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_returned": "gpt-4o-2024-08-06",
+      "finish_reason": "stop"
+    },
+    "base2_calls": 0,
+    "llm_gate_calls": 0,
+    "rcc_llm_calls": 0,
+    "forced_rcc_calls": 0
+  },
+  "gold_hidden_until_after_final_lock": true,
+  "scorer_visible_to_route_executor_adoption": false,
+  "claim_allowed": false
+}

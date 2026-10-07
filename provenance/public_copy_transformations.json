@@ -1,0 +1,105 @@
+{
+  "created_utc": "2026-10-07T10:56:22.928984+00:00",
+  "status": "POST_REQUEST_PUBLICATION_METADATA_NOT_NEW_RUNTIME_EVIDENCE",
+  "transformations": [
+    {
+      "package_path": "evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_summary.json",
+      "form": "REDACTED_PUBLIC_COPY_OF_PRE_EXISTING_EVIDENCE",
+      "selector": "Only original local workspace prefix replaced; evidentiary fields untouched.",
+      "source_sha256": "ba6a8ddd63ed824a1310f5b0d18df039b93b623bbffb6404996aaa5a5eeb5ce4",
+      "public_sha256": "39f35b3b4ba65a7ecc1755262a3e2774018c66b88357a7a25209863e3c9a3b94"
+    },
+    {
+      "package_path": "evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_manifest_executed.json",
+      "form": "REDACTED_PUBLIC_COPY_OF_PRE_EXISTING_EVIDENCE",
+      "selector": "Only original local workspace prefix replaced; evidentiary fields untouched.",
+      "source_sha256": "1f913378fbc4aa9bcd1447de738ec834dea59c5df3b4db8ed830cedfd3e38116",
+      "public_sha256": "2835578f1dd2f65eb60be659ac40c24143adc69eea8b1b530b2009745f945b96"
+    },
+    {
+      "package_path": "evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_freeze_manifest.json",
+      "form": "REDACTED_PUBLIC_COPY_OF_PRE_EXISTING_EVIDENCE",
+      "selector": "Only original local workspace prefix replaced; evidentiary fields untouched.",
+      "source_sha256": "5f63c8bc3eccce2b5f385f1435208c9ca8edded72a9e507be1bb47782b049ccc",
+      "public_sha256": "ab3f65bc19e770f3948b62e5c8722543fcced171e1cf7d05151d6b7c5222eef8"
+    },
+    {
+      "package_path": "evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt",
+      "form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE",
+      "selector": "L18-L142;L3420-L3611",
+      "source_sha256": "0ddabd8cad2c5bb7b20107753f033c16af66f650caa9a4d695fccf7a6e01fed1",
+      "public_sha256": "51bc40f10467b630cf378556043d4888f801588b3b1331f4031c7a927b6b9884"
+    },
+    {
+      "package_path": "evidence/bypass/benchmark_replay_harness.py.excerpt.txt",
+      "form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE",
+      "selector": "L12-L17;L1555-L1793",
+      "source_sha256": "c587c7921ee488c3519866bba241bc13f7d5c38e6e1786ef8c13d2dfc349e46e",
+      "public_sha256": "e2d43c5dfda8ff062796649a7ac19b19ba92d74b086caab59199a2d58997eaf3"
+    },
+    {
+      "package_path": "evidence/bypass/app.py.excerpt.txt",
+      "form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE",
+      "selector": "L12419-L12457;L16613-L16812",
+      "source_sha256": "78d0d3e9389d2e9779ebe81b8beb14041042d5391b753206547b149278c2d178",
+      "public_sha256": "b381451bacf5eb85503544449d0bdaae00c4df18aad61281060e04042b5323e1"
+    },
+    {
+      "package_path": "evidence/bypass/reconstructed_matched_live_harness.py.excerpt.txt",
+      "form": "POST_REQUEST_VERBATIM_EXCERPT_OF_PRE_EXISTING_SOURCE",
+      "selector": "L490-L503;L526-L566",
+      "source_sha256": "07c5463aa1083aab68fc911ebc7e308dae340d0276743d1c594fb54bd00b83a2",
+      "public_sha256": "dfbf4db829c5cacf78d9cbba90a6962d9c776a8bfd584162e340e2d6f885e1ed"
+    },
+    {
+      "package_path": "evidence/positive_case/demo-checklist-count.record.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "/cases/0; case_id=demo-checklist-count",
+      "source_sha256": "36c36f5c7af617b84548665a909e2a86bdb813edfface1b6d13cf4c59414b238",
+      "public_sha256": "4e9b79ab50e8c73d4e56c3af1c393a695d5f2f2b613c1a29107e67fc9e509c82"
+    },
+    {
+      "package_path": "evidence/positive_case/demo-checklist-count.fixture.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "/cases/0; case_id=demo-checklist-count",
+      "source_sha256": "ded5d4407dcc045d553d5bc9b468beb964a8dacda263b089869d66c319968172",
+      "public_sha256": "bcc3b62ae48400b17375e5826da3fd6370503ccde5cf668294bbfb782e320f75"
+    },
+    {
+      "package_path": "evidence/negative_case/demo-release-date.record.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "/cases/1; case_id=demo-release-date",
+      "source_sha256": "36c36f5c7af617b84548665a909e2a86bdb813edfface1b6d13cf4c59414b238",
+      "public_sha256": "1072c614d58bf7cfeebd1910bdf261622dc44f6175b0d0d2083b7bbef32ad378"
+    },
+    {
+      "package_path": "evidence/negative_case/demo-release-date.fixture.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "/cases/1; case_id=demo-release-date",
+      "source_sha256": "ded5d4407dcc045d553d5bc9b468beb964a8dacda263b089869d66c319968172",
+      "public_sha256": "6e817531a591f8b3e36f043d9e994d39d8109b75e92e547c50cf32ade86176bb"
+    },
+    {
+      "package_path": "evidence/positive_case/bbeh_full_boolean_expressions_0035_2ed600e2a1.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "JSONL line 2; row_index=1; row_id=bbeh_full_boolean_expressions_0035_2ed600e2a1",
+      "source_sha256": "08e1f46ad6c9ca11ff845f5dfc9f31a9d0ca76c19eba7dcfcf7d012aeacb8128",
+      "public_sha256": "7ebfccd05c739e9eca3aa7e9d12bd77c4df8df4cded3740e5e730139c60938ab"
+    },
+    {
+      "package_path": "evidence/negative_case/bbeh_full_object_properties_0019_ac96f0e25b.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "JSONL line 14; row_index=13; row_id=bbeh_full_object_properties_0019_ac96f0e25b",
+      "source_sha256": "08e1f46ad6c9ca11ff845f5dfc9f31a9d0ca76c19eba7dcfcf7d012aeacb8128",
+      "public_sha256": "480b616ca31161735f7eb9c6913898c25e3d0a00d743d6f0c128eb0132c4ff57"
+    },
+    {
+      "package_path": "evidence/negative_case/bbeh_full_word_sorting_0132_4195006c6a.patched-record.json",
+      "form": "POST_REQUEST_SELECTION_OF_PRE_EXISTING_RECORD",
+      "selector": "/rows/44; row_id=bbeh_full_word_sorting_0132_4195006c6a",
+      "source_sha256": "666bbb430cda98732ff025dabf93ce7e5b84eb9c6177fac46b0cc7182a8bdde4",
+      "public_sha256": "afe5b2a0ad06633e8e2e51cfeeea7b48c97dd3f2ee28f11bb05063b6fb32be58"
+    }
+  ],
+  "raw_private_artifacts_not_uploaded": "Entire app, entire benchmark harness, solver internals, complete source checkout, account data, infrastructure and credential state."
+}

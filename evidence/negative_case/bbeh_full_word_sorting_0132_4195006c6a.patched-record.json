@@ -1,0 +1,92 @@
+{
+  "row_index": 44,
+  "row_id": "bbeh_full_word_sorting_0132_4195006c6a",
+  "family": "word sorting",
+  "question_sha256": "4195006c6ac9c09f837be054f9c7d10b5e5c537dfa3b528c3b9ce207b9318262",
+  "base_answer_locked_before_scoring": "No",
+  "revas_final_answer_locked_before_scoring": "4",
+  "executor_answer_locked_before_scoring": "4",
+  "gold": "No",
+  "base_correct": 1,
+  "executor_correct": 0,
+  "revas_final_correct": 0,
+  "accepted_C_vs_base": false,
+  "accepted_B_vs_base": true,
+  "semantic_RCC_friendly": true,
+  "semantic_route_class": "solver_friendly",
+  "REVAS_override_supported": true,
+  "REVAS_support_reason": "REVAS override supported",
+  "executor_available": true,
+  "executor_name": "word_sorting_key_engine",
+  "parser_success": true,
+  "verifier_success": true,
+  "answer_format_valid": true,
+  "adoption_gate_accepts": true,
+  "final_source": "executor_override_accepted",
+  "fallback_source": "base1_answer",
+  "coverage_gap_category": "none",
+  "used_capital_facts": false,
+  "capital_fact_keys_used": [],
+  "factual_lookup_used": false,
+  "pure_symbolic_ast_only": true,
+  "fact_table_version_hash": "c8b68ce2be7a72b5f474084c290c9da11a5b38d1099145bc1559fdb27cfa33c9",
+  "fact_table_count": 12,
+  "trace": [
+    "trace_mistake_scan=first_letter_group_consistency",
+    "Thought 1: skipped_non_ordering_inventory",
+    "Thought 3: skipped_non_ordering_inventory",
+    "Thought 4: word paddy placed in group 1, expected 16"
+  ],
+  "api_meta": {
+    "base1": {
+      "ok": true,
+      "kind": "base1",
+      "latency_ms": 1024,
+      "usage": {
+        "prompt_tokens": 1102,
+        "completion_tokens": 1,
+        "total_tokens": 1103,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_returned": "gpt-4o-2024-08-06",
+      "finish_reason": "stop"
+    },
+    "base2_calls": 0,
+    "llm_gate_calls": 0,
+    "rcc_llm_calls": 0,
+    "forced_rcc_calls": 0
+  },
+  "gold_hidden_until_after_final_lock": true,
+  "scorer_visible_to_route_executor_adoption": false,
+  "claim_allowed": false,
+  "patched_final_answer": "No",
+  "patched_final_source": "base1_answer",
+  "patched_executor_answer": null,
+  "patched_base_correct": 1,
+  "patched_final_correct": 1,
+  "patched_executor_correct": null,
+  "patched_accepted_C": false,
+  "patched_accepted_B": false,
+  "patched_executor_name": "word_sorting_key_engine",
+  "patched_trace": [
+    "trace_mistake_scan=letter_group_consistency",
+    "Thought 1: active_letter_pos=1",
+    "Thought 1: skipped_non_ordering_inventory",
+    "Thought 3: active_letter_pos=2",
+    "Thought 3: skipped_non_ordering_inventory",
+    "Thought 5: active_letter_pos=3",
+    "Thought 5: skipped_non_ordering_inventory",
+    "Thought 7: active_letter_pos=2",
+    "Thought 7: skipped_non_ordering_inventory",
+    "Thought 9: skipped_non_ordering_inventory"
+  ]
+}

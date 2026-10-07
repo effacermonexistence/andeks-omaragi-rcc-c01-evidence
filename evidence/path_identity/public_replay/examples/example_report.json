@@ -1,0 +1,879 @@
+{
+  "schema_version": "omaragi-reliability-replay-report-v3",
+  "title": "OmarAGI Reliability BYOK Replay — Public Demonstration Sample",
+  "artifact_kind": "omaragi_reliability_replay_public_demo",
+  "synthetic": true,
+  "policy_label": "This is a simplified public demonstration policy, not OmarAGI production logic.",
+  "runtime_boundary": {
+    "live_product": "OmarAGI BYOK reliability workflow with a user-supplied API key and actual model execution.",
+    "public_repository": "Sanitized deterministic offline replay with a target-blind runtime verifier, pre-score decision lock, and no credentials, external calls, or live generation.",
+    "evidence_status": "Synthetic benchmark-shaped architecture demonstration; not benchmark evidence or independent validation."
+  },
+  "claim_boundary": "Public demonstration sample only. The included cases are synthetic; this report and its artifact score are not benchmark evidence or a disclosure of private production logic, and they do not prove universal uplift.",
+  "summary": {
+    "case_count": 5,
+    "baseline_correct": 2,
+    "baseline_score_percent": 40.0,
+    "governed_correct": 4,
+    "governed_score_percent": 80.0,
+    "absolute_delta_correct": 2,
+    "delta_percentage_points": 40.0,
+    "direction": "uplift",
+    "adoption_count": 2,
+    "preserved_baseline_count": 3,
+    "beneficial_flip_count": 2,
+    "harmful_flip_count": 0,
+    "floor_preserved_count": 5,
+    "unchanged_correct_count": 2,
+    "unchanged_incorrect_count": 1,
+    "artifact_score": {
+      "label": "public_demonstration_artifact_score",
+      "benchmark_metric": false,
+      "mean": 84.0,
+      "minimum": 40,
+      "maximum": 100
+    }
+  },
+  "cases": [
+    {
+      "case_id": "demo-checklist-count",
+      "prompt": "A deployment checklist has three required gates: tests, secret scan, and rollback plan. How many gates are required?",
+      "baseline_output": "4",
+      "governed_candidate": "3",
+      "router_result": {
+        "allowed": true,
+        "decision": "route_allowed",
+        "reason": "bounded arithmetic verification is supported by the public demo"
+      },
+      "executor_result": {
+        "status": "executed",
+        "executor": "public_sanitized_executor",
+        "mode": "deterministic_replay",
+        "generated_live": false,
+        "input_source": "sanitized_replay_artifact",
+        "output": "3",
+        "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+      },
+      "runtime_verifier_result": {
+        "status": "verified",
+        "passed": true,
+        "method": "arithmetic_expression",
+        "target_accessed": false,
+        "reason": "candidate matches the independently evaluated expression"
+      },
+      "adoption_gate_result": {
+        "decision": "candidate_adopted",
+        "source": "executor_output",
+        "final_answer": "3",
+        "reason": "router allowed execution and the target-blind runtime verifier passed"
+      },
+      "decision_lock": {
+        "status": "locked",
+        "lock_version": "public-decision-lock-v1",
+        "hash_algorithm": "sha256",
+        "decision_sha256": "bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad",
+        "locked_before_scoring": true,
+        "scorer_accessed": false,
+        "gold_accessed": false,
+        "reason": "route, execution, verification, and adoption were frozen before scoring"
+      },
+      "post_lock_scorer_result": {
+        "status": "scored_after_decision_lock",
+        "scorer": "public_demo_post_lock_scorer",
+        "lock_verified": true,
+        "decision_sha256": "bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad",
+        "baseline": {
+          "passed": false,
+          "method": "numeric_match",
+          "reason": "numeric values differ or are ambiguous"
+        },
+        "final": {
+          "passed": true,
+          "method": "numeric_match",
+          "reason": "numeric values match"
+        },
+        "reason": "target-based scoring executed after route and adoption were locked"
+      },
+      "artifact_score": {
+        "label": "public_demonstration_artifact_score",
+        "benchmark_metric": false,
+        "baseline_passed": false,
+        "final_passed": true,
+        "beneficial_flip": true,
+        "harmful_flip": false,
+        "floor_preserved": true,
+        "candidate_adopted": true,
+        "score": 100,
+        "reason": "verified candidate adoption improved an incorrect baseline"
+      },
+      "final_answer": "3",
+      "baseline_correct": false,
+      "final_correct": true,
+      "outcome": "beneficial_flip",
+      "beneficial_flip": true,
+      "harmful_flip": false,
+      "preserved_baseline": false,
+      "event_log": [
+        {
+          "step": 1,
+          "stage": "route",
+          "allowed": true,
+          "decision": "route_allowed",
+          "reason": "bounded arithmetic verification is supported by the public demo"
+        },
+        {
+          "step": 2,
+          "stage": "execute",
+          "status": "executed",
+          "executor": "public_sanitized_executor",
+          "mode": "deterministic_replay",
+          "generated_live": false,
+          "input_source": "sanitized_replay_artifact",
+          "output": "3",
+          "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+        },
+        {
+          "step": 3,
+          "stage": "runtime_verify",
+          "status": "verified",
+          "passed": true,
+          "method": "arithmetic_expression",
+          "target_accessed": false,
+          "reason": "candidate matches the independently evaluated expression"
+        },
+        {
+          "step": 4,
+          "stage": "adoption_gate",
+          "decision": "candidate_adopted",
+          "source": "executor_output",
+          "final_answer": "3",
+          "reason": "router allowed execution and the target-blind runtime verifier passed"
+        },
+        {
+          "step": 5,
+          "stage": "decision_lock",
+          "status": "locked",
+          "lock_version": "public-decision-lock-v1",
+          "hash_algorithm": "sha256",
+          "decision_sha256": "bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad",
+          "locked_before_scoring": true,
+          "scorer_accessed": false,
+          "gold_accessed": false,
+          "reason": "route, execution, verification, and adoption were frozen before scoring"
+        },
+        {
+          "step": 6,
+          "stage": "post_lock_score",
+          "status": "scored_after_decision_lock",
+          "scorer": "public_demo_post_lock_scorer",
+          "lock_verified": true,
+          "decision_sha256": "bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad",
+          "baseline": {
+            "passed": false,
+            "method": "numeric_match",
+            "reason": "numeric values differ or are ambiguous"
+          },
+          "final": {
+            "passed": true,
+            "method": "numeric_match",
+            "reason": "numeric values match"
+          },
+          "reason": "target-based scoring executed after route and adoption were locked"
+        },
+        {
+          "step": 7,
+          "stage": "artifact_score",
+          "label": "public_demonstration_artifact_score",
+          "benchmark_metric": false,
+          "baseline_passed": false,
+          "final_passed": true,
+          "beneficial_flip": true,
+          "harmful_flip": false,
+          "floor_preserved": true,
+          "candidate_adopted": true,
+          "score": 100,
+          "reason": "verified candidate adoption improved an incorrect baseline"
+        },
+        {
+          "step": 8,
+          "stage": "log",
+          "status": "recorded",
+          "case_id": "demo-checklist-count",
+          "policy": "This is a simplified public demonstration policy, not OmarAGI production logic."
+        }
+      ]
+    },
+    {
+      "case_id": "demo-release-date",
+      "prompt": "The sanitized release note states: release date 2026-08-15. Return only the date.",
+      "baseline_output": "2026-08-15",
+      "governed_candidate": "2026-08-16",
+      "router_result": {
+        "allowed": true,
+        "decision": "route_allowed",
+        "reason": "bounded source-evidence verification is supported by the public demo"
+      },
+      "executor_result": {
+        "status": "executed",
+        "executor": "public_sanitized_executor",
+        "mode": "deterministic_replay",
+        "generated_live": false,
+        "input_source": "sanitized_replay_artifact",
+        "output": "2026-08-16",
+        "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+      },
+      "runtime_verifier_result": {
+        "status": "verified",
+        "passed": false,
+        "method": "source_contains",
+        "target_accessed": false,
+        "reason": "candidate is not present in the supplied source evidence"
+      },
+      "adoption_gate_result": {
+        "decision": "baseline_preserved",
+        "source": "baseline_output",
+        "final_answer": "2026-08-15",
+        "reason": "baseline preserved because routing or runtime verification did not pass"
+      },
+      "decision_lock": {
+        "status": "locked",
+        "lock_version": "public-decision-lock-v1",
+        "hash_algorithm": "sha256",
+        "decision_sha256": "ead95e882a69abce3b8f3cc77a591df0134fc148b33124588f6f454e851d2eb8",
+        "locked_before_scoring": true,
+        "scorer_accessed": false,
+        "gold_accessed": false,
+        "reason": "route, execution, verification, and adoption were frozen before scoring"
+      },
+      "post_lock_scorer_result": {
+        "status": "scored_after_decision_lock",
+        "scorer": "public_demo_post_lock_scorer",
+        "lock_verified": true,
+        "decision_sha256": "ead95e882a69abce3b8f3cc77a591df0134fc148b33124588f6f454e851d2eb8",
+        "baseline": {
+          "passed": true,
+          "method": "exact_match",
+          "reason": "normalized exact match"
+        },
+        "final": {
+          "passed": true,
+          "method": "exact_match",
+          "reason": "normalized exact match"
+        },
+        "reason": "target-based scoring executed after route and adoption were locked"
+      },
+      "artifact_score": {
+        "label": "public_demonstration_artifact_score",
+        "benchmark_metric": false,
+        "baseline_passed": true,
+        "final_passed": true,
+        "beneficial_flip": false,
+        "harmful_flip": false,
+        "floor_preserved": true,
+        "candidate_adopted": false,
+        "score": 90,
+        "reason": "correct baseline preserved against a rejected or denied candidate"
+      },
+      "final_answer": "2026-08-15",
+      "baseline_correct": true,
+      "final_correct": true,
+      "outcome": "unchanged_correct",
+      "beneficial_flip": false,
+      "harmful_flip": false,
+      "preserved_baseline": true,
+      "event_log": [
+        {
+          "step": 1,
+          "stage": "route",
+          "allowed": true,
+          "decision": "route_allowed",
+          "reason": "bounded source-evidence verification is supported by the public demo"
+        },
+        {
+          "step": 2,
+          "stage": "execute",
+          "status": "executed",
+          "executor": "public_sanitized_executor",
+          "mode": "deterministic_replay",
+          "generated_live": false,
+          "input_source": "sanitized_replay_artifact",
+          "output": "2026-08-16",
+          "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+        },
+        {
+          "step": 3,
+          "stage": "runtime_verify",
+          "status": "verified",
+          "passed": false,
+          "method": "source_contains",
+          "target_accessed": false,
+          "reason": "candidate is not present in the supplied source evidence"
+        },
+        {
+          "step": 4,
+          "stage": "adoption_gate",
+          "decision": "baseline_preserved",
+          "source": "baseline_output",
+          "final_answer": "2026-08-15",
+          "reason": "baseline preserved because routing or runtime verification did not pass"
+        },
+        {
+          "step": 5,
+          "stage": "decision_lock",
+          "status": "locked",
+          "lock_version": "public-decision-lock-v1",
+          "hash_algorithm": "sha256",
+          "decision_sha256": "ead95e882a69abce3b8f3cc77a591df0134fc148b33124588f6f454e851d2eb8",
+          "locked_before_scoring": true,
+          "scorer_accessed": false,
+          "gold_accessed": false,
+          "reason": "route, execution, verification, and adoption were frozen before scoring"
+        },
+        {
+          "step": 6,
+          "stage": "post_lock_score",
+          "status": "scored_after_decision_lock",
+          "scorer": "public_demo_post_lock_scorer",
+          "lock_verified": true,
+          "decision_sha256": "ead95e882a69abce3b8f3cc77a591df0134fc148b33124588f6f454e851d2eb8",
+          "baseline": {
+            "passed": true,
+            "method": "exact_match",
+            "reason": "normalized exact match"
+          },
+          "final": {
+            "passed": true,
+            "method": "exact_match",
+            "reason": "normalized exact match"
+          },
+          "reason": "target-based scoring executed after route and adoption were locked"
+        },
+        {
+          "step": 7,
+          "stage": "artifact_score",
+          "label": "public_demonstration_artifact_score",
+          "benchmark_metric": false,
+          "baseline_passed": true,
+          "final_passed": true,
+          "beneficial_flip": false,
+          "harmful_flip": false,
+          "floor_preserved": true,
+          "candidate_adopted": false,
+          "score": 90,
+          "reason": "correct baseline preserved against a rejected or denied candidate"
+        },
+        {
+          "step": 8,
+          "stage": "log",
+          "status": "recorded",
+          "case_id": "demo-release-date",
+          "policy": "This is a simplified public demonstration policy, not OmarAGI production logic."
+        }
+      ]
+    },
+    {
+      "case_id": "demo-human-review-hold",
+      "prompt": "May this invented high-impact action proceed without human review?",
+      "baseline_output": "no",
+      "governed_candidate": "yes",
+      "router_result": {
+        "allowed": false,
+        "decision": "route_denied",
+        "reason": "sanitized case requires a human-review hold"
+      },
+      "executor_result": {
+        "status": "skipped_by_route",
+        "executor": "public_sanitized_executor",
+        "mode": "deterministic_replay",
+        "generated_live": false,
+        "input_source": "sanitized_replay_artifact",
+        "output": "",
+        "reason": "router denied execution before candidate loading"
+      },
+      "runtime_verifier_result": {
+        "status": "not_run",
+        "passed": false,
+        "method": "source_contains",
+        "target_accessed": false,
+        "reason": "router denied execution before runtime verification"
+      },
+      "adoption_gate_result": {
+        "decision": "baseline_preserved",
+        "source": "baseline_output",
+        "final_answer": "no",
+        "reason": "baseline preserved because routing or runtime verification did not pass"
+      },
+      "decision_lock": {
+        "status": "locked",
+        "lock_version": "public-decision-lock-v1",
+        "hash_algorithm": "sha256",
+        "decision_sha256": "df88afdcd775fd1fadf7e7e6dc2a4c872582d23845d2cc40f6a0b3193c9d6c8b",
+        "locked_before_scoring": true,
+        "scorer_accessed": false,
+        "gold_accessed": false,
+        "reason": "route, execution, verification, and adoption were frozen before scoring"
+      },
+      "post_lock_scorer_result": {
+        "status": "scored_after_decision_lock",
+        "scorer": "public_demo_post_lock_scorer",
+        "lock_verified": true,
+        "decision_sha256": "df88afdcd775fd1fadf7e7e6dc2a4c872582d23845d2cc40f6a0b3193c9d6c8b",
+        "baseline": {
+          "passed": true,
+          "method": "exact_match",
+          "reason": "normalized exact match"
+        },
+        "final": {
+          "passed": true,
+          "method": "exact_match",
+          "reason": "normalized exact match"
+        },
+        "reason": "target-based scoring executed after route and adoption were locked"
+      },
+      "artifact_score": {
+        "label": "public_demonstration_artifact_score",
+        "benchmark_metric": false,
+        "baseline_passed": true,
+        "final_passed": true,
+        "beneficial_flip": false,
+        "harmful_flip": false,
+        "floor_preserved": true,
+        "candidate_adopted": false,
+        "score": 90,
+        "reason": "correct baseline preserved against a rejected or denied candidate"
+      },
+      "final_answer": "no",
+      "baseline_correct": true,
+      "final_correct": true,
+      "outcome": "unchanged_correct",
+      "beneficial_flip": false,
+      "harmful_flip": false,
+      "preserved_baseline": true,
+      "event_log": [
+        {
+          "step": 1,
+          "stage": "route",
+          "allowed": false,
+          "decision": "route_denied",
+          "reason": "sanitized case requires a human-review hold"
+        },
+        {
+          "step": 2,
+          "stage": "execute",
+          "status": "skipped_by_route",
+          "executor": "public_sanitized_executor",
+          "mode": "deterministic_replay",
+          "generated_live": false,
+          "input_source": "sanitized_replay_artifact",
+          "output": "",
+          "reason": "router denied execution before candidate loading"
+        },
+        {
+          "step": 3,
+          "stage": "runtime_verify",
+          "status": "not_run",
+          "passed": false,
+          "method": "source_contains",
+          "target_accessed": false,
+          "reason": "router denied execution before runtime verification"
+        },
+        {
+          "step": 4,
+          "stage": "adoption_gate",
+          "decision": "baseline_preserved",
+          "source": "baseline_output",
+          "final_answer": "no",
+          "reason": "baseline preserved because routing or runtime verification did not pass"
+        },
+        {
+          "step": 5,
+          "stage": "decision_lock",
+          "status": "locked",
+          "lock_version": "public-decision-lock-v1",
+          "hash_algorithm": "sha256",
+          "decision_sha256": "df88afdcd775fd1fadf7e7e6dc2a4c872582d23845d2cc40f6a0b3193c9d6c8b",
+          "locked_before_scoring": true,
+          "scorer_accessed": false,
+          "gold_accessed": false,
+          "reason": "route, execution, verification, and adoption were frozen before scoring"
+        },
+        {
+          "step": 6,
+          "stage": "post_lock_score",
+          "status": "scored_after_decision_lock",
+          "scorer": "public_demo_post_lock_scorer",
+          "lock_verified": true,
+          "decision_sha256": "df88afdcd775fd1fadf7e7e6dc2a4c872582d23845d2cc40f6a0b3193c9d6c8b",
+          "baseline": {
+            "passed": true,
+            "method": "exact_match",
+            "reason": "normalized exact match"
+          },
+          "final": {
+            "passed": true,
+            "method": "exact_match",
+            "reason": "normalized exact match"
+          },
+          "reason": "target-based scoring executed after route and adoption were locked"
+        },
+        {
+          "step": 7,
+          "stage": "artifact_score",
+          "label": "public_demonstration_artifact_score",
+          "benchmark_metric": false,
+          "baseline_passed": true,
+          "final_passed": true,
+          "beneficial_flip": false,
+          "harmful_flip": false,
+          "floor_preserved": true,
+          "candidate_adopted": false,
+          "score": 90,
+          "reason": "correct baseline preserved against a rejected or denied candidate"
+        },
+        {
+          "step": 8,
+          "stage": "log",
+          "status": "recorded",
+          "case_id": "demo-human-review-hold",
+          "policy": "This is a simplified public demonstration policy, not OmarAGI production logic."
+        }
+      ]
+    },
+    {
+      "case_id": "demo-required-fields",
+      "prompt": "Name both required public log fields: route decision and adoption decision.",
+      "baseline_output": "route decision",
+      "governed_candidate": "route decision; adoption decision",
+      "router_result": {
+        "allowed": true,
+        "decision": "route_allowed",
+        "reason": "required-field verification is supported by the public demo"
+      },
+      "executor_result": {
+        "status": "executed",
+        "executor": "public_sanitized_executor",
+        "mode": "deterministic_replay",
+        "generated_live": false,
+        "input_source": "sanitized_replay_artifact",
+        "output": "route decision; adoption decision",
+        "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+      },
+      "runtime_verifier_result": {
+        "status": "verified",
+        "passed": true,
+        "method": "contains_all",
+        "target_accessed": false,
+        "reason": "all runtime-required fields are present"
+      },
+      "adoption_gate_result": {
+        "decision": "candidate_adopted",
+        "source": "executor_output",
+        "final_answer": "route decision; adoption decision",
+        "reason": "router allowed execution and the target-blind runtime verifier passed"
+      },
+      "decision_lock": {
+        "status": "locked",
+        "lock_version": "public-decision-lock-v1",
+        "hash_algorithm": "sha256",
+        "decision_sha256": "0864f09aee3068252ee52b0b5aa6a1061a7accedf65062c8c4db8030585380d2",
+        "locked_before_scoring": true,
+        "scorer_accessed": false,
+        "gold_accessed": false,
+        "reason": "route, execution, verification, and adoption were frozen before scoring"
+      },
+      "post_lock_scorer_result": {
+        "status": "scored_after_decision_lock",
+        "scorer": "public_demo_post_lock_scorer",
+        "lock_verified": true,
+        "decision_sha256": "0864f09aee3068252ee52b0b5aa6a1061a7accedf65062c8c4db8030585380d2",
+        "baseline": {
+          "passed": false,
+          "method": "contains_all",
+          "reason": "missing terms: adoption decision"
+        },
+        "final": {
+          "passed": true,
+          "method": "contains_all",
+          "reason": "all required terms present"
+        },
+        "reason": "target-based scoring executed after route and adoption were locked"
+      },
+      "artifact_score": {
+        "label": "public_demonstration_artifact_score",
+        "benchmark_metric": false,
+        "baseline_passed": false,
+        "final_passed": true,
+        "beneficial_flip": true,
+        "harmful_flip": false,
+        "floor_preserved": true,
+        "candidate_adopted": true,
+        "score": 100,
+        "reason": "verified candidate adoption improved an incorrect baseline"
+      },
+      "final_answer": "route decision; adoption decision",
+      "baseline_correct": false,
+      "final_correct": true,
+      "outcome": "beneficial_flip",
+      "beneficial_flip": true,
+      "harmful_flip": false,
+      "preserved_baseline": false,
+      "event_log": [
+        {
+          "step": 1,
+          "stage": "route",
+          "allowed": true,
+          "decision": "route_allowed",
+          "reason": "required-field verification is supported by the public demo"
+        },
+        {
+          "step": 2,
+          "stage": "execute",
+          "status": "executed",
+          "executor": "public_sanitized_executor",
+          "mode": "deterministic_replay",
+          "generated_live": false,
+          "input_source": "sanitized_replay_artifact",
+          "output": "route decision; adoption decision",
+          "reason": "sanitized pre-generated candidate loaded by the offline public executor"
+        },
+        {
+          "step": 3,
+          "stage": "runtime_verify",
+          "status": "verified",
+          "passed": true,
+          "method": "contains_all",
+          "target_accessed": false,
+          "reason": "all runtime-required fields are present"
+        },
+        {
+          "step": 4,
+          "stage": "adoption_gate",
+          "decision": "candidate_adopted",
+          "source": "executor_output",
+          "final_answer": "route decision; adoption decision",
+          "reason": "router allowed execution and the target-blind runtime verifier passed"
+        },
+        {
+          "step": 5,
+          "stage": "decision_lock",
+          "status": "locked",
+          "lock_version": "public-decision-lock-v1",
+          "hash_algorithm": "sha256",
+          "decision_sha256": "0864f09aee3068252ee52b0b5aa6a1061a7accedf65062c8c4db8030585380d2",
+          "locked_before_scoring": true,
+          "scorer_accessed": false,
+          "gold_accessed": false,
+          "reason": "route, execution, verification, and adoption were frozen before scoring"
+        },
+        {
+          "step": 6,
+          "stage": "post_lock_score",
+          "status": "scored_after_decision_lock",
+          "scorer": "public_demo_post_lock_scorer",
+          "lock_verified": true,
+          "decision_sha256": "0864f09aee3068252ee52b0b5aa6a1061a7accedf65062c8c4db8030585380d2",
+          "baseline": {
+            "passed": false,
+            "method": "contains_all",
+            "reason": "missing terms: adoption decision"
+          },
+          "final": {
+            "passed": true,
+            "method": "contains_all",
+            "reason": "all required terms present"
+          },
+          "reason": "target-based scoring executed after route and adoption were locked"
+        },
+        {
+          "step": 7,
+          "stage": "artifact_score",
+          "label": "public_demonstration_artifact_score",
+          "benchmark_metric": false,
+          "baseline_passed": false,
+          "final_passed": true,
+          "beneficial_flip": true,
+          "harmful_flip": false,
+          "floor_preserved": true,
+          "candidate_adopted": true,
+          "score": 100,
+          "reason": "verified candidate adoption improved an incorrect baseline"
+        },
+        {
+          "step": 8,
+          "stage": "log",
+          "status": "recorded",
+          "case_id": "demo-required-fields",
+          "policy": "This is a simplified public demonstration policy, not OmarAGI production logic."
+        }
+      ]
+    },
+    {
+      "case_id": "demo-empty-candidate",
+      "prompt": "A demonstration invoice has a 100.00 subtotal and a 25.00 fee. Return only the total.",
+      "baseline_output": "120.00",
+      "governed_candidate": "",
+      "router_result": {
+        "allowed": false,
+        "decision": "route_denied",
+        "reason": "candidate is empty"
+      },
+      "executor_result": {
+        "status": "skipped_by_route",
+        "executor": "public_sanitized_executor",
+        "mode": "deterministic_replay",
+        "generated_live": false,
+        "input_source": "sanitized_replay_artifact",
+        "output": "",
+        "reason": "router denied execution before candidate loading"
+      },
+      "runtime_verifier_result": {
+        "status": "not_run",
+        "passed": false,
+        "method": "arithmetic_expression",
+        "target_accessed": false,
+        "reason": "router denied execution before runtime verification"
+      },
+      "adoption_gate_result": {
+        "decision": "baseline_preserved",
+        "source": "baseline_output",
+        "final_answer": "120.00",
+        "reason": "baseline preserved because routing or runtime verification did not pass"
+      },
+      "decision_lock": {
+        "status": "locked",
+        "lock_version": "public-decision-lock-v1",
+        "hash_algorithm": "sha256",
+        "decision_sha256": "f49a823a850612cfdab8046b0dede3156b578f595902531fa8f95150ae228fee",
+        "locked_before_scoring": true,
+        "scorer_accessed": false,
+        "gold_accessed": false,
+        "reason": "route, execution, verification, and adoption were frozen before scoring"
+      },
+      "post_lock_scorer_result": {
+        "status": "scored_after_decision_lock",
+        "scorer": "public_demo_post_lock_scorer",
+        "lock_verified": true,
+        "decision_sha256": "f49a823a850612cfdab8046b0dede3156b578f595902531fa8f95150ae228fee",
+        "baseline": {
+          "passed": false,
+          "method": "numeric_match",
+          "reason": "numeric values differ or are ambiguous"
+        },
+        "final": {
+          "passed": false,
+          "method": "numeric_match",
+          "reason": "numeric values differ or are ambiguous"
+        },
+        "reason": "target-based scoring executed after route and adoption were locked"
+      },
+      "artifact_score": {
+        "label": "public_demonstration_artifact_score",
+        "benchmark_metric": false,
+        "baseline_passed": false,
+        "final_passed": false,
+        "beneficial_flip": false,
+        "harmful_flip": false,
+        "floor_preserved": true,
+        "candidate_adopted": false,
+        "score": 40,
+        "reason": "incorrect baseline preserved because no verified improvement was available"
+      },
+      "final_answer": "120.00",
+      "baseline_correct": false,
+      "final_correct": false,
+      "outcome": "unchanged_incorrect",
+      "beneficial_flip": false,
+      "harmful_flip": false,
+      "preserved_baseline": true,
+      "event_log": [
+        {
+          "step": 1,
+          "stage": "route",
+          "allowed": false,
+          "decision": "route_denied",
+          "reason": "candidate is empty"
+        },
+        {
+          "step": 2,
+          "stage": "execute",
+          "status": "skipped_by_route",
+          "executor": "public_sanitized_executor",
+          "mode": "deterministic_replay",
+          "generated_live": false,
+          "input_source": "sanitized_replay_artifact",
+          "output": "",
+          "reason": "router denied execution before candidate loading"
+        },
+        {
+          "step": 3,
+          "stage": "runtime_verify",
+          "status": "not_run",
+          "passed": false,
+          "method": "arithmetic_expression",
+          "target_accessed": false,
+          "reason": "router denied execution before runtime verification"
+        },
+        {
+          "step": 4,
+          "stage": "adoption_gate",
+          "decision": "baseline_preserved",
+          "source": "baseline_output",
+          "final_answer": "120.00",
+          "reason": "baseline preserved because routing or runtime verification did not pass"
+        },
+        {
+          "step": 5,
+          "stage": "decision_lock",
+          "status": "locked",
+          "lock_version": "public-decision-lock-v1",
+          "hash_algorithm": "sha256",
+          "decision_sha256": "f49a823a850612cfdab8046b0dede3156b578f595902531fa8f95150ae228fee",
+          "locked_before_scoring": true,
+          "scorer_accessed": false,
+          "gold_accessed": false,
+          "reason": "route, execution, verification, and adoption were frozen before scoring"
+        },
+        {
+          "step": 6,
+          "stage": "post_lock_score",
+          "status": "scored_after_decision_lock",
+          "scorer": "public_demo_post_lock_scorer",
+          "lock_verified": true,
+          "decision_sha256": "f49a823a850612cfdab8046b0dede3156b578f595902531fa8f95150ae228fee",
+          "baseline": {
+            "passed": false,
+            "method": "numeric_match",
+            "reason": "numeric values differ or are ambiguous"
+          },
+          "final": {
+            "passed": false,
+            "method": "numeric_match",
+            "reason": "numeric values differ or are ambiguous"
+          },
+          "reason": "target-based scoring executed after route and adoption were locked"
+        },
+        {
+          "step": 7,
+          "stage": "artifact_score",
+          "label": "public_demonstration_artifact_score",
+          "benchmark_metric": false,
+          "baseline_passed": false,
+          "final_passed": false,
+          "beneficial_flip": false,
+          "harmful_flip": false,
+          "floor_preserved": true,
+          "candidate_adopted": false,
+          "score": 40,
+          "reason": "incorrect baseline preserved because no verified improvement was available"
+        },
+        {
+          "step": 8,
+          "stage": "log",
+          "status": "recorded",
+          "case_id": "demo-empty-candidate",
+          "policy": "This is a simplified public demonstration policy, not OmarAGI production logic."
+        }
+      ]
+    }
+  ]
+}

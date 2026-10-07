@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.2",
+  "artifact_kind": "omaragi_reliability_replay_public_demo",
+  "title": "OmarAGI Reliability BYOK Replay — Public Demonstration Sample",
+  "synthetic": true,
+  "public_only": true,
+  "description": "Five invented cases demonstrating target-separated runtime verification, guarded adoption, a pre-score decision lock, post-lock scoring, and transparent artifact logging. They are not benchmark records or live BYOK executions.",
+  "cases": [
+    {
+      "case_id": "demo-checklist-count",
+      "prompt": "A deployment checklist has three required gates: tests, secret scan, and rollback plan. How many gates are required?",
+      "baseline_output": "4",
+      "governed_candidate": "3",
+      "route_request": {
+        "enabled": true,
+        "reason": "bounded arithmetic verification is supported by the public demo"
+      },
+      "runtime_verification": {
+        "method": "arithmetic_expression",
+        "expression": "1 + 1 + 1"
+      },
+      "post_lock_scoring": {
+        "method": "numeric_match",
+        "expected": "3"
+      }
+    },
+    {
+      "case_id": "demo-release-date",
+      "prompt": "The sanitized release note states: release date 2026-08-15. Return only the date.",
+      "baseline_output": "2026-08-15",
+      "governed_candidate": "2026-08-16",
+      "route_request": {
+        "enabled": true,
+        "reason": "bounded source-evidence verification is supported by the public demo"
+      },
+      "runtime_verification": {
+        "method": "source_contains",
+        "source_text": "Sanitized release note: release date 2026-08-15."
+      },
+      "post_lock_scoring": {
+        "method": "exact_match",
+        "expected": "2026-08-15"
+      }
+    },
+    {
+      "case_id": "demo-human-review-hold",
+      "prompt": "May this invented high-impact action proceed without human review?",
+      "baseline_output": "no",
+      "governed_candidate": "yes",
+      "route_request": {
+        "enabled": false,
+        "reason": "sanitized case requires a human-review hold"
+      },
+      "runtime_verification": {
+        "method": "source_contains",
+        "source_text": "Human review is required before this invented high-impact action may proceed."
+      },
+      "post_lock_scoring": {
+        "method": "exact_match",
+        "expected": "no"
+      }
+    },
+    {
+      "case_id": "demo-required-fields",
+      "prompt": "Name both required public log fields: route decision and adoption decision.",
+      "baseline_output": "route decision",
+      "governed_candidate": "route decision; adoption decision",
+      "route_request": {
+        "enabled": true,
+        "reason": "required-field verification is supported by the public demo"
+      },
+      "runtime_verification": {
+        "method": "contains_all",
+        "required_terms": [
+          "route decision",
+          "adoption decision"
+        ]
+      },
+      "post_lock_scoring": {
+        "method": "contains_all",
+        "required_terms": [
+          "route decision",
+          "adoption decision"
+        ]
+      }
+    },
+    {
+      "case_id": "demo-empty-candidate",
+      "prompt": "A demonstration invoice has a 100.00 subtotal and a 25.00 fee. Return only the total.",
+      "baseline_output": "120.00",
+      "governed_candidate": "",
+      "route_request": {
+        "enabled": true,
+        "reason": "bounded arithmetic verification requested"
+      },
+      "runtime_verification": {
+        "method": "arithmetic_expression",
+        "expression": "100 + 25"
+      },
+      "post_lock_scoring": {
+        "method": "numeric_match",
+        "expected": "125.00"
+      }
+    }
+  ]
+}

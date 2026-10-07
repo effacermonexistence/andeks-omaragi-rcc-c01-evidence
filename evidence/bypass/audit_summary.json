@@ -1,0 +1,40 @@
+{
+  "hashes": {
+    "app.py": "03f75ed8f6f2269ab1b3eb79360106291ffe3b779326e60e821afc64a7937c82",
+    "benchmark_replay_harness.py": "1ed1a8e302063ce2f3d32dab2b08350b094e23e74409ea9923f4919e4754a3c6",
+    "patch_diff": "5900b4cb7e8fe2649fc88fc5798ab6e8e251d236f2a95dd490306b62f16fce05",
+    "reconstructed_matched_live_harness.py": "a7981e283765148bfa603ca90676438005a3da091f9c08d3dbd56d68e7214dba",
+    "runners.py": "74990770815843e7c3fe1b4cedba5b4836810c755b0275a69076df4e3dff5e96",
+    "tests/test_byok_zero_downlift_global_gate.py": "6baf8cfca9640de058a13d556c3dd997c052e0279dc4ed2d4c962a38e1f3f6e4"
+  },
+  "invariant": {
+    "canonical_accepted_B_required": 0,
+    "canonical_security_B_required": 0,
+    "missing_evidence": "fail_closed",
+    "nonzero_evidence": "fail_closed",
+    "scorer_visible_to_adoption": false,
+    "uncertified_candidate": "diagnostic_only_baseline_canonical"
+  },
+  "repository_wide_disclosure": {
+    "errors": 50,
+    "failures": 77,
+    "reason": "broad unrelated UI/R2/network/integration surfaces outside changed scope",
+    "release_gate": false,
+    "tests_run": 1005
+  },
+  "schema_version": "omar-byok-global-zero-downlift-audit-v1",
+  "scope": {
+    "providers": 3,
+    "public_lanes": 17,
+    "route_cells": 51
+  },
+  "source_parent": "c5945656cbcce8164c5f84a399d72b9d25f4c732",
+  "verification": {
+    "all_51_cells_structurally_guarded": true,
+    "focused_tests_passed": 113,
+    "focused_tests_run": 113,
+    "fresh_external_provider_matrix_executed": false,
+    "matrix_preflight": "PASS",
+    "py_compile": "PASS"
+  }
+}

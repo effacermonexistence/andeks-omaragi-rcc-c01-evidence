@@ -1,0 +1,67 @@
+POST-REQUEST PUBLIC SOURCE EXCERPT — NOT THE COMPLETE ORIGINAL FILE
+Original: effacermonexistence/omar-benchmark-replay-live-source :: reconstructed_matched_live_harness.py
+Pinned commit: 8976dc12c2d398dd59e4e193c41fa36749dee996
+Source file SHA-256: 07c5463aa1083aab68fc911ebc7e308dae340d0276743d1c594fb54bd00b83a2
+Original ranges: L490-L503, L526-L566
+No assessed mechanism was changed. Only the listed verbatim source ranges are reproduced.
+Omitted: unrelated application, product, prompts, solver implementations and infrastructure.
+This excerpt is documentary evidence, not a standalone executable replacement.
+
+--- VERBATIM ORIGINAL LINES 490-503 ---
+
+# Global delivery law for reconstructed model-only lanes.  The routed candidate
+# remains a separately scored benchmark object, so its uplift or regression is
+# never erased.  It may replace the canonical delivered baseline only when a
+# dedicated harness supplies an audited pre-score verifier certificate.
+for _reconstructed_spec in RECONSTRUCTED_MATCHED_LIVE_SPECS.values():
+    _reconstructed_spec["baseline_preserving_adoption_gate"] = True
+    _reconstructed_spec["adoption_policy"] = "strict_gold_blind_baseline_floor_no_uncertified_override"
+    _reconstructed_spec["adoption_policy_description"] = (
+        "Strict gold-blind baseline delivery floor: execute and score the routed "
+        "candidate as the benchmark result, but preserve baseline as the canonical "
+        "delivered final when no audited pre-score verifier certificate exists."
+    )
+
+
+--- VERBATIM ORIGINAL LINES 526-566 ---
+def architecture_contract() -> dict[str, Any]:
+    return {
+        "architecture_goal": MATCHEDLIVE_ARCHITECTURE_GOAL,
+        "allowed_common_contract_surfaces": list(ALLOWED_COMMON_CONTRACT_SURFACES),
+        "display_only_shared_components": list(DISPLAY_ONLY_SHARED_COMPONENTS),
+        "forbidden_unification_surfaces": list(FORBIDDEN_UNIFICATION_SURFACES),
+        "result_changing_components": list(RESULT_CHANGING_COMPONENTS),
+        "shared_component_result_rule": SHARED_COMPONENT_RESULT_RULE,
+        "dedicated_matchedlive_harnesses": list(DEDICATED_MATCHEDLIVE_HARNESSES),
+        "registry_scope": "reconstructed_or_recovered_lanes_only",
+        "dedicated_harness_policy": "Dedicated benchmark harnesses are preferred when they protect claim integrity.",
+    }
+
+
+def spec_isolation_contract(lane_key: str) -> dict[str, Any]:
+    spec = RECONSTRUCTED_MATCHED_LIVE_SPECS[lane_key]
+    source_fields = [
+        key
+        for key in ("sample_file", "sample_path", "fallback_source_subset", "fetch_via_recovered_script", "sample_manifest")
+        if spec.get(key)
+    ]
+    return {
+        "lane_key": lane_key,
+        "architecture_goal": MATCHEDLIVE_ARCHITECTURE_GOAL,
+        "sample_source_fields": source_fields,
+        "sample_selection_method": sample_selection_policy(lane_key, min(20, len(reconstructed_samples(lane_key)))),
+        "prompt_wrapper_source": spec.get("prompt_wrapper_source"),
+        "route_package_mapping": spec.get("route_package_source"),
+        "scorer_or_grader": spec.get("scorer_or_grader"),
+        "generation_settings": generation_profile(spec),
+        "adoption_policy": spec.get("adoption_policy") or "routed_candidate_direct_no_baseline_fallback_gate",
+        "gate_policy": spec.get("expected_numeric_band") or GATE_SOURCE_MISSING,
+        "report_label_policy": spec.get("display_label") or f"{spec.get('benchmark')} - Reconstructed Matched Live Reproduction Attempt",
+        "missing_exact_fields": list(spec.get("missing_exact_fields") or []),
+        "final_classification_rules": {
+            "exactness_status": spec.get("exactness_status") or RECONSTRUCTED_STATUS,
+            "investigation_status": spec.get("investigation_status") or "",
+            "negative_smoke_class": spec.get("final_class_if_negative_smoke") or "ROUTE_PASS_SMOKE_NEGATIVE / NEEDS_INVESTIGATION",
+        },
+        "isolation_boundary": "benchmark_specific_spec_controls_truth_bearing_layers",
+    }

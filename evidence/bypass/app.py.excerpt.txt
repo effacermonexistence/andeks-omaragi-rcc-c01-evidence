@@ -1,0 +1,251 @@
+POST-REQUEST PUBLIC SOURCE EXCERPT — NOT THE COMPLETE ORIGINAL FILE
+Original: effacermonexistence/omar-benchmark-replay-live-source :: app.py
+Pinned commit: 8976dc12c2d398dd59e4e193c41fa36749dee996
+Source file SHA-256: 78d0d3e9389d2e9779ebe81b8beb14041042d5391b753206547b149278c2d178
+Original ranges: L12419-L12457, L16613-L16812
+No assessed mechanism was changed. Only the listed verbatim source ranges are reproduced.
+Omitted: unrelated application, product, prompts, solver implementations and infrastructure.
+This excerpt is documentary evidence, not a standalone executable replacement.
+
+--- VERBATIM ORIGINAL LINES 12419-12457 ---
+def byok_zero_downlift_invariant_guard(sample_status: dict[str, Any]) -> dict[str, Any] | None:
+    """Fail closed when a canonical BYOK final regresses any paired row."""
+
+    try:
+        accepted_b = int(sample_status.get("accepted_B_vs_baseline"))
+        graded_pairs = int(sample_status.get("graded_pair_count"))
+    except (TypeError, ValueError):
+        return {
+            "error": "BYOK_ZERO_DOWNLIFT_EVIDENCE_MISSING",
+            "proof_status": "FAILED CLOSED",
+            "verdict": "Zero-downlift evidence missing",
+            "decision_label": "ZERO_DOWNLIFT_FAIL_CLOSED",
+            "zero_downlift_invariant_pass": False,
+            "message": "Canonical final-vs-baseline row accounting is missing; the run cannot complete as zero-downlift.",
+        }
+    if graded_pairs <= 0:
+        return {
+            "error": "BYOK_ZERO_DOWNLIFT_EVIDENCE_MISSING",
+            "proof_status": "FAILED CLOSED",
+            "verdict": "Zero-downlift evidence missing",
+            "decision_label": "ZERO_DOWNLIFT_FAIL_CLOSED",
+            "zero_downlift_invariant_pass": False,
+            "message": "No paired canonical final-vs-baseline grades exist; the run cannot complete as zero-downlift.",
+        }
+    if accepted_b <= 0:
+        return None
+    return {
+        "error": "BYOK_ACCEPTED_B_NONZERO",
+        "proof_status": "FAILED CLOSED",
+        "verdict": "Downlift detected",
+        "decision_label": "ZERO_DOWNLIFT_FAIL_CLOSED",
+        "accepted_B": accepted_b,
+        "accepted_B_vs_baseline": accepted_b,
+        "zero_downlift_invariant_pass": False,
+        "message": (
+            f"Canonical final regressed {accepted_b} paired row(s). "
+            "The run is retained for diagnosis but cannot complete or publish as zero-downlift."
+        ),
+    }
+
+--- VERBATIM ORIGINAL LINES 16613-16812 ---
+def write_control_layer_zero_downlift_adoption(
+    *,
+    lane_key: str,
+    spec: dict[str, Any],
+    run_dir: Path,
+    summary_payload: dict[str, Any],
+    executed_case_count: int,
+) -> dict[str, Any]:
+    """Write the canonical post-run adoption record.
+
+    The record is frozen by lane policy, not selected by benchmark correctness.
+    A control-runner output without an audited pre-score certificate remains
+    visible as the raw routed candidate, while the exact paired baseline is the
+    separate pre-score floor and canonical final.
+    """
+
+    headline = control_layer_run_headline_metrics(summary_payload)
+    baseline_metric = headline[0] if headline is not None else spec.get("baseline_metric")
+    raw_routed_candidate_metric = (
+        headline[1] if headline is not None else spec.get("omar_metric")
+    )
+    metric_lower_is_better = bool(headline[3]) if headline is not None else False
+    certified = bool(spec.get("certified_pre_score_adoption"))
+    runner_accepted_c = summary_payload.get("accepted_C")
+    runner_accepted_b = summary_payload.get("accepted_B")
+    runner_security_b = summary_payload.get("security_B")
+    runner_raw_accepted_c = summary_payload.get(
+        "raw_candidate_accepted_C", runner_accepted_c
+    )
+    runner_raw_accepted_b = summary_payload.get(
+        "raw_candidate_accepted_B", runner_accepted_b
+    )
+    runner_canonical_accepted_c = summary_payload.get(
+        "canonical_final_accepted_C", runner_accepted_c
+    )
+    runner_canonical_accepted_b = summary_payload.get(
+        "canonical_final_accepted_B", runner_accepted_b
+    )
+    if lane_key == "ZebraLogic_BYOK":
+        runner_accepted_b = summary_payload.get("accepted_B")
+    elif lane_key == "BIPIA_BYOK":
+        audit = summary_payload.get("audit") if isinstance(summary_payload.get("audit"), dict) else {}
+        runner_accepted_c = audit.get("accepted_C", runner_accepted_c)
+        runner_accepted_b = audit.get("accepted_B")
+        runner_security_b = audit.get("security_B")
+        runner_raw_accepted_c = runner_accepted_c
+        runner_raw_accepted_b = runner_accepted_b
+        runner_canonical_accepted_c = runner_accepted_c
+        runner_canonical_accepted_b = runner_accepted_b
+
+    certified_evidence_complete = bool(
+        certified
+        and runner_canonical_accepted_b is not None
+        and (lane_key != "BIPIA_BYOK" or runner_security_b is not None)
+    )
+    if certified:
+        pre_score_floor_candidate_metric = summary_payload.get(
+            "canonical_final_metric", raw_routed_candidate_metric
+        )
+        canonical_accepted_b = (
+            int(runner_canonical_accepted_b)
+            if runner_canonical_accepted_b is not None
+            else None
+        )
+        canonical_security_b = int(runner_security_b or 0)
+        final_metric = pre_score_floor_candidate_metric
+        final_source = "certified_pre_score_verifier_candidate"
+        adoption_decision = "certified_candidate"
+        adoption_signal = "audited_pre_score_deterministic_verifier"
+    else:
+        pre_score_floor_candidate_metric = baseline_metric
+        canonical_accepted_b = 0 if baseline_metric is not None else None
+        canonical_security_b = 0 if baseline_metric is not None else None
+        final_metric = baseline_metric
+        final_source = "baseline_fallback"
+        adoption_decision = "baseline_fallback"
+        adoption_signal = "no_pre_score_verifier_certificate"
+
+    if certified:
+        zero_downlift_pass: bool | None = bool(
+            certified_evidence_complete
+            and canonical_accepted_b == 0
+            and canonical_security_b == 0
+        )
+        zero_downlift_claim_status = "verified" if zero_downlift_pass else "failed_closed"
+    else:
+        zero_downlift_pass = baseline_metric is not None
+        zero_downlift_claim_status = (
+            "canonical_floor_verified_by_fixed_pre_score_fallback"
+            if zero_downlift_pass
+            else "failed_closed_missing_baseline_metric"
+        )
+
+    payload = {
+        "schema_version": "omar-zero-downlift-adoption-v1",
+        "lane_key": lane_key,
+        "executed_case_count": int(executed_case_count),
+        "strict_zero_downlift_floor": True,
+        "certified_pre_score_adoption": certified,
+        "adoption_gate": "audited_pre_score_verifier" if certified else "strict_gold_blind_baseline_floor_v1",
+        "adoption_policy": spec.get("control_output_policy") or "candidate_measured_delivery_floor_separate",
+        "adoption_decision": adoption_decision,
+        "adoption_signal_used": adoption_signal,
+        "adoption_gold_blind": True,
+        "scorer_visible_to_adoption": False,
+        "adoption_decision_frozen_before_scoring": True,
+        "baseline_metric": baseline_metric,
+        "metric_lower_is_better": metric_lower_is_better,
+        "raw_routed_candidate_metric": raw_routed_candidate_metric,
+        "pre_score_floor_candidate_metric": pre_score_floor_candidate_metric,
+        # Compatibility field: routed candidate now means the actually
+        # executed raw runner candidate, never the baseline fallback.
+        "routed_candidate_metric": raw_routed_candidate_metric,
+        "unverified_model_draft_metric_diagnostic_only": (
+            None if certified else raw_routed_candidate_metric
+        ),
+        # Legacy field retained for old artifact readers.
+        "routed_candidate_metric_diagnostic_only": (
+            None if certified else raw_routed_candidate_metric
+        ),
+        "canonical_final_metric": final_metric,
+        "canonical_final_source": final_source,
+        "candidate_accepted_C": (
+            int(runner_raw_accepted_c)
+            if runner_raw_accepted_c is not None
+            else None
+        ),
+        "candidate_accepted_B": (
+            int(runner_raw_accepted_b)
+            if runner_raw_accepted_b is not None
+            else None
+        ),
+        # A runner may expose a rowwise "canonical" candidate even when this
+        # outer delivery gate has no audited pre-score certificate for it.
+        # Preserve that runner evidence under an explicitly diagnostic name;
+        # never relabel it as certified merely because the field exists.
+        "runner_reported_canonical_candidate_accepted_C_diagnostic_only": (
+            int(runner_canonical_accepted_c)
+            if runner_canonical_accepted_c is not None
+            else None
+        ),
+        "runner_reported_canonical_candidate_accepted_B_diagnostic_only": (
+            int(runner_canonical_accepted_b)
+            if runner_canonical_accepted_b is not None
+            else None
+        ),
+        # Compatibility keys remain present, but certification is asserted
+        # only for lanes whose frozen contract actually supplies an audited
+        # pre-score verifier certificate.
+        "certified_final_accepted_C": (
+            int(runner_canonical_accepted_c)
+            if certified and runner_canonical_accepted_c is not None
+            else None
+        ),
+        "certified_final_accepted_B": (
+            int(runner_canonical_accepted_b)
+            if certified and runner_canonical_accepted_b is not None
+            else None
+        ),
+        "candidate_security_B": (
+            int(runner_security_b) if runner_security_b is not None else None
+        ),
+        "candidate_zero_downlift_observed": (
+            None
+            if runner_raw_accepted_b is None
+            else int(runner_raw_accepted_b) == 0
+        ),
+        "unverified_model_draft_accepted_C_diagnostic_only": (
+            None
+            if certified or runner_raw_accepted_c is None
+            else int(runner_raw_accepted_c)
+        ),
+        "unverified_model_draft_accepted_B_diagnostic_only": (
+            None
+            if certified or runner_raw_accepted_b is None
+            else int(runner_raw_accepted_b)
+        ),
+        "unverified_model_draft_security_B_diagnostic_only": (
+            None if certified or runner_security_b is None else int(runner_security_b)
+        ),
+        "canonical_final_accepted_B": canonical_accepted_b,
+        "canonical_final_security_B": canonical_security_b,
+        "accepted_B": canonical_accepted_b,
+        "security_B": canonical_security_b,
+        "runner_reported_accepted_B_diagnostic_only": runner_raw_accepted_b,
+        "runner_reported_security_B_diagnostic_only": runner_security_b,
+        "certified_invariant_evidence_complete": certified_evidence_complete,
+        "zero_downlift_claim_status": zero_downlift_claim_status,
+        "zero_downlift_invariant_pass": zero_downlift_pass,
+        "claim_boundary": (
+            "The raw routed candidate is always reported exactly as executed. "
+            "An uncertified candidate cannot replace the pre-score baseline floor or canonical final unless an audited "
+            "gold-blind verifier certifies adoption. Raw scores remain diagnostic evidence, never a post-score adoption oracle."
+        ),
+    }
+    (run_dir / "zero_downlift_adoption.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    return payload
