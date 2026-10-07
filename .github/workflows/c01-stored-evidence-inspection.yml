@@ -1,14 +1,18 @@
-name: C01 stored evidence inspection
+name: C01 stored evidence and unchanged-component checks
 on:
   push:
     branches: [c01-source-evidence-repair-20261007]
+    paths:
+      - '.github/workflows/c01-stored-evidence-inspection.yml'
+      - 'scripts/reproduce_bounded_adoption.py'
+      - 'evidence/source_recovery/**'
 permissions:
   contents: read
 jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Read pinned public evidence
+      - name: Read exact public evidence revision
         env:
           REPO: ${{ github.repository }}
           REVISION: ${{ github.sha }}
@@ -18,20 +22,5 @@ jobs:
           git remote add origin "https://github.com/$REPO.git"
           git fetch --depth=1 origin "$REVISION"
           git checkout --detach FETCH_HEAD
-      - name: Inspect existing rows only
-        run: |
-          python3 - <<'PY'
-          import json, hashlib
-          from pathlib import Path
-          root = Path('evidence/negative_case/bbeh_history')
-          raw = [json.loads(s) for s in (root/'bbeh500_full_gold_blind_run_outputs.jsonl').read_text().splitlines() if s.strip()]
-          patch = json.loads((root/'bbeh500_after_word_sorting_floor_patch_offline_replay.json').read_text())
-          freeze = json.loads((root/'bbeh500_full_gold_blind_freeze_manifest.json').read_text())
-          def subset(r):
-              return {k:v for k,v in r.items() if ('answer' in k or 'source' in k or 'verif' in k or 'gate' in k or 'row_' in k or 'parsed' in k or 'confiden' in k)}
-          rejected = [r for r in raw if r.get('executor_answer_locked_before_scoring') not in (None,'') and not r.get('adoption_gate_accepts')]
-          print('STORED_ROW_INSPECTION', json.dumps({'rows':len(raw),'nonempty_rejected_count':len(rejected),'nonempty_rejected': [subset(r) for r in rejected[:12]],'patch_top_keys':list(patch),'patch_summary':patch.get('summary'), 'patch_first_row_keys':list(patch.get('rows',[{}])[0]),'frozen_executor_hash':freeze.get('executor_code_hash'),'frozen_test_hash':freeze.get('test_file_hash')},ensure_ascii=True))
-          print('PATCH_METADATA',json.dumps({k:v for k,v in patch.items() if k not in ('rows','summary')},ensure_ascii=True)[:10000])
-          print('PATCH_FIRST_ROW',json.dumps(subset(patch['rows'][0]),ensure_ascii=True))
-          print('EXISTING_DOCUMENTS', '\n'.join(p.name for p in root.iterdir()))
-          PY
+      - name: Compare original source and reproduce unchanged adoption components
+        run: python3 scripts/reproduce_bounded_adoption.py
