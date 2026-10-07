@@ -1,0 +1,45 @@
+{
+  "package": "ANDEKS OmarAGI RCC C-01 Public Evidence Package",
+  "repository": "effacermonexistence/andeks-omaragi-rcc-c01-evidence",
+  "claim_id": "C-01",
+  "claim": "failed applicable adoption condition -> candidate not promoted -> locked baseline/prior supported state preserved",
+  "request_coverage": {
+    "A": "7/7",
+    "B": "7/7",
+    "C": "8/8",
+    "D": "4/4",
+    "E": "6/6",
+    "F": "4/4",
+    "P": "9/9",
+    "total": "45/45"
+  },
+  "canonical_build_week": {
+    "rows": 500,
+    "baseline_correct": 91,
+    "final_correct": 268,
+    "positive_flips": 177,
+    "regressions": 0,
+    "accepted_C": 177,
+    "accepted_B": 0,
+    "classification": "canonical final patched offline replay evidence"
+  },
+  "c01_support": {
+    "unchanged_component_cases": 7,
+    "reproducible_positive_cases": 1,
+    "reproducible_nonpromotion_cases": 6,
+    "boolean_support_combinations_checked": 64,
+    "failing_boolean_combinations_preserving_baseline": 63,
+    "stored_original_failed_admission_rows_checked": 276,
+    "stored_original_preservation_violations": 0,
+    "stored_patched_fallback_rows_checked": 278,
+    "stored_patched_preservation_violations": 0
+  },
+  "integrity": {
+    "assessed_mechanism_modified": false,
+    "benchmark_rerun_for_submission": false,
+    "provider_calls_for_submission_reproduction": 0,
+    "original_historical_evidence_modified": false,
+    "post_request_material_separately_classified": true
+  },
+  "assessor_boundary": "Evidence package only. ANDEKS independently determines admissibility, sufficiency and final determination."
+}
