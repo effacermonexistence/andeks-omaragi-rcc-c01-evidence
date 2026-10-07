@@ -1,34 +1,28 @@
-# C: negative case and state preservation
+# C: failed condition, non-promotion and baseline preservation
 
-Post-request mapping of existing records. The request permits existing or reproducible cases from the same implemented path; it does not impose an additional production-only or non-empty-only rule. Applicability to the agreed object is handled in [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md).
+## Same original components as the positive reproduction
 
-## C1-C8: R case `demo-release-date`
+The [new unchanged-component record](reproduction/unchanged_component_cases.json) includes `component-reproduction-failed_parse_nonempty`. Candidate answer is `(B)`, its parsed flag is false, the existing verifier returns failure, the existing gate returns `override_accepted=false`, and its final answer remains baseline `(A)`. No verifier result is mocked; the original verifier is executed on the disclosed input.
 
-| ID | Requested relation | Existing response |
-|---|---|---|
-| C1 | Candidate identity | Case `demo-release-date`; candidate `2026-08-16` |
-| C2 | Route identity | Same R `_run_case` as the positive case; route allowed, executor executed |
-| C3 | Applicable adoption condition | Allowed route and passed `source_contains`, using the supplied release-note source |
-| C4 | Condition failure | `passed=false`; candidate is absent from supplied source evidence |
-| C5 | Rejection/non-promotion | `baseline_preserved`, `source=baseline_output` |
-| C6 | Immediately prior baseline | `2026-08-15` |
-| C7 | Corresponding after-state | `final_answer=2026-08-15`, `preserved_baseline=true`; differs from the rejected candidate |
-| C8 | Replayable artifacts where necessary | Original fixture/report, existing engine/policy and failed-verification test |
+| Required item | Evidence |
+|---|---|
+| C1 | Serialized candidate object and new attempt ID; nonempty answer `(B)` |
+| C2 | Same source declarations and verifier/adoption route as B |
+| C3 | Existing parsed/verified admission condition; no threshold or policy change |
+| C4 | Actual `VerifierOutput.verified=false` and reason |
+| C5 | Actual non-promotion decision, `override_accepted=false` |
+| C6 | `baseline_before=(A)` |
+| C7 | `state_after=(A)`, different from rejected candidate `(B)` |
+| C8 | Original source, runner, timestamps, input/output record and content digest |
 
-[Selected fixture](evidence/negative_case/demo-release-date.fixture.json), [selected recorded case](evidence/negative_case/demo-release-date.record.json), [complete report](evidence/path_identity/public_replay/examples/example_report.json), [existing tests](evidence/path_identity/public_replay/tests/test_replay.py).
+Additional controlled cases exercise low verifier confidence, low adoption confidence, empty candidate, missing trace and executor error. These are **new test inputs executing unchanged component behavior**, not previously recorded production incidents. In particular, the low-adoption-confidence case separates verifier success from adoption-condition failure.
 
-The condition source is `Sanitized release note: release date 2026-08-15.` The stored decision hash is `ead95e882a69abce3b8f3cc77a591df0134fc148b33124588f6f454e851d2eb8`. The existing test checks `final_answer == baseline_output`; the separate denied-route test covers skipped execution. These are pre-existing synthetic reference records/test definitions, not production logs or newly run tests.
+The [source proof and outer-expression analysis](10_OPERATIONAL_C01_PROOF.md) show why a failed inner adoption cannot become a different enclosing final answer: the outer conjunction includes adoption acceptance; a false conjunction selects the same `base_answer`.
 
-## Separate H operational abstention/fallback
+## Existing operational records, fully retained
 
-[Historical row](evidence/negative_case/bbeh_full_object_properties_0019_ac96f0e25b.json), row index 13 / JSONL line 14, records baseline `12`, attempted `object_collection_state_simulator`, executor answer `null`, failed parser/verifier/shape, `friendly_but_parse_failed`, adoption false, and final/fallback source `base1_answer`. Final answer remains `12`. The source trace explains that a concrete color was not uniquely inferred. Post-lock gold is `13`: preservation is not a claim of correctness.
+[Original BBEH fallback row](evidence/negative_case/bbeh_full_object_properties_0019_ac96f0e25b.json) records a named executor's abstention, verifier/adoption failure and baseline `12` preserved as final `12`. Its missing executor answer is not invented. [Whole-corpus preservation analysis](reproduction/whole_corpus_preservation.json) checks every original stored failed-admission row, and separately every patched record explicitly marked with the fallback source. The patched file does not contain a patched gate flag, so none is inferred or fabricated.
 
-[Original outputs](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl) and [final patched artifact](evidence/negative_case/bbeh_history/bbeh500_after_word_sorting_floor_patch_offline_replay.json) preserve these records. This is real abstention/fallback evidence, not an emitted non-empty candidate being rejected. Whether that object satisfies C1/C4 for the agreed path is a bounded identity/applicability question, not resolved by mixing it with R.
+The [final patched offline record](evidence/negative_case/bbeh_history/bbeh500_after_word_sorting_floor_patch_offline_replay.json) remains 500 rows, baseline 91, final 268, accepted_C 177 and accepted_B 0. The initial stored accepted_B=1 is preserved as a different historical state. Correctness of accepted candidates and preservation after failed admission are different propositions.
 
-## Historical repair and final result
-
-[Initial report](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_report.md) retains accepted_C=178 and accepted_B=1. The [pre-request patch report](evidence/negative_case/bbeh_history/bbeh500_word_sorting_accepted_B_patch_report.md) and final offline artifact retain 500 rows, baseline 91, final 268, accepted_C=177 and accepted_B=0.
-
-The [word-sorting patched record](evidence/negative_case/bbeh_full_word_sorting_0132_4195006c6a.patched-record.json) preserves initial candidate `4` and patched final `No`. The patched executor answer is `null`; the record does not show the patched executor generating `4` and subsequently rejecting it.
-
-A complete operational record of non-empty-candidate verification failure with same-attempt before/after state was not located in the acquired package. This is G04 / `NOT AVAILABLE` for that particular evidence shape, not an extra mandatory criterion or a finding against C-01. Exact historical replay/version linkage, where necessary, is G02.
+The prior absence of a historical nonempty rejected candidate in these 500 rows remains a fact. It is no longer substituted for the broader question of whether the unchanged operational components can reproduce that relation. The request permits reproducible cases; a new dated component execution is not disguised as an old full-production trace.

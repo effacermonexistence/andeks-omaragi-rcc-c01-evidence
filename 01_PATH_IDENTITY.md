@@ -1,29 +1,19 @@
-# A: path identity
+# A: operational path identity
 
-Post-request mapping. Read [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md) before treating an evidence path as the constituted object.
+Read [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md). All source identities are fixed; no assessed mechanism was edited.
 
-## A1-A7: primary reference read-through R
+| Item | Identified existing location |
+|---|---|
+| A1 | One row's `ExecutorOutput` enters `ExecutorVerifier.verify` and then `base_default_adoption` within `evaluate_revas_route` |
+| A2 | Candidate object carries family, executor name, parsed flag, optional answer, confidence, trace/error; run/row identity is supplied by `ExecutorInput` and recorded `row_id` |
+| A3 | Existing family policy, `ExecutorVerifier.verify` predicates, `base_default_adoption` default threshold, and the enclosing six-condition support conjunction |
+| A4 | `ExecutorVerifier.verify`; verification result is `VerifierOutput` |
+| A5 | `base_default_adoption` produces an intermediate decision; `evaluate_revas_route` makes the final supported-candidate versus baseline selection |
+| A6 | `RevasRouteRecord.final_answer` / `final_source` for this invocation; `base_answer` is the prior baseline |
+| A7 | Returned record, linked by the existing recorder to its row's stored final answer/source; later scoring is not a second answer selector |
 
-Source: `omaragi-reliability-replay @ f141fd09217279ca48f2cfbecc532fed8ecaa6e9`. The primary case pair is `demo-checklist-count` and `demo-release-date`, selected from the same existing fixture/report and same `_run_case` implementation.
+[Existing operational declarations and complete adoption functions](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt), [historical recorder](evidence/upstream_influence/run_bbeh500_full_gold_blind.py), [mechanical control-flow analysis](reproduction/bounded_control_flow.json).
 
-| ID | Identified element | Preserved evidence |
-|---|---|---|
-| A1 | One validated case enters `_run_case`; runtime fields are projected before routing | [engine.py](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py) |
-| A2 | `governed_candidate` -> `execute_candidate.output`; case ID plus source pin and parent record identify the attempt | [fixture](evidence/path_identity/public_replay/samples/public_demo_replay.json), [policy.py](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py) |
-| A3 | `route_request`, `runtime_verification` and the policy's `allowed AND passed` condition | Same fixture and policy |
-| A4 | `verify_execution` -> `verify_runtime_output` | Same policy |
-| A5 | `apply_adoption_gate` selects executor output or baseline | Same policy |
-| A6 | In R, `adoption_gate_result.final_answer`, subsequently copied to the returned case's `final_answer`; not a whole-machine state | Same engine/policy and [complete report](evidence/path_identity/public_replay/examples/example_report.json) |
-| A7 | Adoption result and decision payload receipt; subsequent scoring does not reselect the answer in this invocation | Same engine and policy |
+The new controlled cases execute the verifier/adoption components, not the complete solver or live product. Their connection to the enclosing output is separately checked from the unmodified source. The [proof note](10_OPERATIONAL_C01_PROOF.md) states the exact conditional argument.
 
-A6 identifies R exactly; it does **not** establish the historical binding between R and the already confirmed C-01 object. That binding is G01 in the [gap register](07_COUNTERPARTY_EXPLANATIONS.md).
-
-The ordinary sequence is baseline -> route -> executor -> runtime verifier -> adoption gate -> decision receipt -> post-lock scorer. The receipt hashes a payload; it is not an independently authenticated immutable ledger. Baseline preservation does not imply baseline correctness.
-
-## H and D are supporting paths, not interchangeable stages of R
-
-H's [original runner](evidence/upstream_influence/run_bbeh500_full_gold_blind.py) assigns baseline and evaluates the route before final answer/source assignment and scoring. Its [stored rows](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl) identify historical outcomes. The [executor excerpt](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt) is from the later source pin; no equality with the historical executor hash is asserted.
-
-D's [certificate/fallback excerpt](evidence/bypass/benchmark_replay_harness.py.excerpt.txt) returns row-level `final_omar`; the [control/completion excerpt](evidence/bypass/app.py.excerpt.txt) also writes a summary receipt and evaluates completion/publication status. These states are not R's case output or a retroactive replacement of H's recorded adoption.
-
-For all three, a complete inventory of writers to an independently persisted shared canonical state is not supplied merely by identifying a local return value. See [F1-F4](06_BYPASS.md).
+The original [public reference engine](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py) remains available as a different, explicitly synthetic reference implementation. It is no longer used to fill an operational source gap by analogy.

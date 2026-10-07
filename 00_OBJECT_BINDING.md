@@ -1,31 +1,34 @@
-# C-01 object, path and state binding
+# C-01: implementation, attempt and state identity
 
-Post-request clarification of the existing evidence package. This document does not constitute a new assessment object or record assessor acceptance.
+Post-request implementation identification under Evidence Request A1-A7 and section 14. This is not a new assessor constitution or a claim that a function name was historically written in the confirmation email.
 
-## Governing object
+## Operational implementation being identified
 
-The 5 October 2026 Assessment Object Confirmation Record, sections 4, 5 and 11, identifies a specific implemented reliability/replay adoption path. The 6 October 2026 Bounded Evidence Request, sections 3, 4 and 6, carries that object forward. The Evidence Package cannot replace that object merely by choosing an easier example.
+The operational BBEH adoption mechanism represented by the owner's existing reliability/replay records is in `benchmark_executors/bbeh_executor_backed_routing.py` in source repository `effacermonexistence/omar-benchmark-replay-live-source` at pin `8976dc12c2d398dd59e4e193c41fa36749dee996`.
 
-C-01 concerns the relation: identifiable candidate -> applicable condition -> verifier result -> adoption decision -> corresponding adopted state; on failure, non-promotion and preservation of the prior baseline.
+The candidate is the `ExecutorOutput` for one identified row/attempt. The prior baseline is that invocation's `base_answer`. The component relation is `ExecutorVerifier.verify` -> `base_default_adoption`; the enclosing `evaluate_revas_route` applies the final support conjunction and returns `RevasRouteRecord.final_answer` and `final_source`.
 
-## Exact evidence identities
+**Adopted state for this identified bounded path:** that per-attempt returned answer/source, represented in the historical recorder by `revas_final_answer_locked_before_scoring` and `final_source`. A downstream summary metric, a whole machine, an arbitrary external database and the reference demo's separate answer are not this state.
 
-| Evidence path | Fixed source/version | Candidate and attempt identity | Output state and end boundary | Role in this package |
-|---|---|---|---|---|
-| R: public reference replay | `omaragi-reliability-replay @ f141fd09217279ca48f2cfbecc532fed8ecaa6e9`; preserved `engine.py` and `policy.py` | `case_id` plus the pinned fixture/report and one `_run_case` invocation; `governed_candidate` becomes `executor_result.output` | `adoption_gate_result.final_answer`, copied to the case's `final_answer`; decision payload receipt is recorded before scoring | Primary read-through for the explicitly linked positive and negative case mechanics. Existing synthetic reference implementation, not a production execution record. |
-| H: historical BBEH | `omar-benchmark-replay-live-source @ 8976dc12c2d398dd59e4e193c41fa36749dee996`; June run and later pre-request patched offline artifact are separate recorded states | Run identity, parent artifact, `row_id`, row position, question hash and recorded candidate | Historical `revas_final_answer_locked_before_scoring` / `final_source`; patched `patched_final_answer` / `patched_final_source` belong to the later offline replay | Separate operational historical evidence. Not the same execution or implementation as R. |
-| D: BYOK delivery/completion | Same source-2 pin; certificate/fallback, control-layer and completion excerpts; July audit is its own older snapshot | Lane/run/row/candidate/certificate inputs where recorded | Row-level `final_omar` is distinct from `zero_downlift_adoption.json` metrics and completion/publication status | Supplementary structural evidence. A publication failure is not retroactive non-adoption. |
+[Operational source excerpt](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt), [existing recorder](evidence/upstream_influence/run_bbeh500_full_gold_blind.py), [source-linked proof](10_OPERATIONAL_C01_PROOF.md), [new unchanged-component cases](reproduction/unchanged_component_cases.json).
 
-The R state is one returned answer, not all machine, account, database or downstream state. A receipt hash identifies content; it does not by itself create authenticated immutable storage. H and D are not aliases of that R state.
+## Start and end
 
-## Binding status
+Start: the identifiable candidate object for the row enters the existing verification/adoption segment with its baseline. The reproduction isolates these original components; it does not execute or claim to reproduce candidate generation by the solver.
 
-**A6 / G01: NOT AVAILABLE in the reviewed source chain:** an explicit historical binding of the already confirmed C-01 object to exactly one of these repository/function/version/state identities was not established by this package review. R is the primary *reference read-through*, not a newly declared substitute for the agreed operational object. H and D cannot silently fill a missing R relation, or vice versa.
+End: the enclosing function returns the selected answer/source; the shown recorder stores that answer without another selection after scoring. The component-level reproduction ends at `AdoptionDecision`; the enclosing return relation is established separately by its unchanged source and finite-expression analysis. These evidence forms are combined by explicit function/dataflow links, not mislabeled as a single production execution.
 
-The existing object must be linked to its actual path before sufficiency is claimed. If that path is R, its pre-existing synthetic cases are evaluated on that basis. If it is H or D, their own versions, callers and states must supply the relation. No new production-only, non-empty-candidate-only or fresh-live-run requirement is introduced here.
+Attempt identity is source pin plus run/parent record and row ID for stored runs, and a new `component-reproduction-*` ID plus reproduction time/source identity for the new controlled component cases. Reuse of a candidate string alone does not establish identity of an attempt or a shared storage destination.
 
-## Version boundary
+## Evidence roles
 
-The September source-2 excerpt includes later family-level baseline-only restrictions. It is not asserted to match the June execution's recorded executor hash. The July 51-cell audit has its own recorded source hashes. See [PROVENANCE.md](PROVENANCE.md) and [09_CHANGE_RECORD.md](09_CHANGE_RECORD.md).
+| Class | Role |
+|---|---|
+| Operational current component/source | Primary implementation identification and branch/dataflow evidence |
+| Recovered June committed component | Version comparison with current component; not the entire initial pre-run frozen file |
+| Historical BBEH run and patched offline record | Existing operational outputs; different recorded states preserved |
+| New component reproduction | Dated execution of unchanged original verifier/adoption functions with disclosed controlled inputs |
+| R public reference demo | Supplementary illustration only; not substituted for the operational implementation |
+| D broader BYOK completion/certificate material | Supplementary context; separate states, not the basis for a same-state bypass claim about this operational return value |
 
-The full item response is [08_REQUIREMENT_CROSSWALK.md](08_REQUIREMENT_CROSSWALK.md). Open relations are mapped there and in [07_COUNTERPARTY_EXPLANATIONS.md](07_COUNTERPARTY_EXPLANATIONS.md), not concealed by a package-level completion percentage.
+This clarification removes the earlier artificial requirement that exact implementation names must already have appeared in an older email. It does not claim assessor acceptance of this mapping. If the assessor identifies a factual mismatch with the already constituted object, that mismatch must be resolved without silently substituting another path.

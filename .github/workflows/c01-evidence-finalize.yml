@@ -1,0 +1,40 @@
+name: C01 source evidence repair and finalization
+on:
+  push:
+    branches: [c01-source-evidence-repair-20261007]
+    paths:
+      - '.github/workflows/c01-evidence-finalize.yml'
+      - 'scripts/finalize_evidence_repair.py'
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read exact revision and unchanged evidence baseline
+        env:
+          REPO: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -eu
+          git init .
+          git remote add origin "https://github.com/$REPO.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout -b "$BRANCH" FETCH_HEAD
+          git fetch --depth=1 origin b61e2159a7c10a7ce3a604f4c972a671cc9025f6
+      - name: Execute unchanged components, analyze stored artifacts and validate package
+        run: python3 scripts/finalize_evidence_repair.py
+      - name: Commit dated results and validated metadata on repair branch only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reproduction/ provenance/source_recovery_20261007.json scripts/reproduce_bounded_adoption.py ARTIFACT_REGISTER.csv PACKAGE_SHA256SUMS.txt
+          git commit -m 'Record unchanged-component reproduction and source-linked evidence checks'
+          AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH" push origin "HEAD:refs/heads/$BRANCH"
+          git rev-parse HEAD

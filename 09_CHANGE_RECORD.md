@@ -1,34 +1,30 @@
-# Publication change record: 7 October 2026
+# Change and execution disclosure: 7 October 2026
 
-Post-request disclosure for P8/P9. It is not a historical system-run receipt or an ANDEKS determination.
+Prior reviewed package: `b61e2159a7c10a7ce3a604f4c972a671cc9025f6`. Initial package: `329b46add38a1770b484bdf90e9db458407a15e1`.
 
-## Compared publication
+## Original request identity
 
-Initial reviewed evidence-package commit: `329b46add38a1770b484bdf90e9db458407a15e1`.
+| Privately reviewed original | SHA-256 |
+|---|---|
+| 06.10.2026_ANDEKS_OmarAGI_RCC_Bounded_Evidence_Request_v1.0_EN_EXTERNAL.pdf | 9ff401dd93c9ee952575be1664cb8fa7637574c133d002b0b385dad3aa944b3a |
+| 05.10.2026_ANDEKS_OmarAGI_RCC_Assessment_Object_Confirmation_Record_v1.0_EN_EXTERNAL.pdf | 219f95a6d377e9f6d9b938a08f0a31c1cc925b5abf70aa51666db27c6b8c78df |
 
-This revision aligns the index with all 45 items in Evidence Request sections 6-12. It replaces the initial unavailable-request disclaimer, fixes the E/F coverage interpretation, separates R/H/D state identities, preserves final BBEH metrics and explicitly identifies unfilled relations.
+## This revision
 
-## Actual request basis
+Recovered two necessary excerpts from the June committed operational source, compared selected declarations to the existing current-source excerpt, and added a source-derived conditional proof/control-flow argument. The entire initial frozen source file is not claimed recovered.
 
-| Original document, reviewed privately | SHA-256 | Relevant sections |
-|---|---|---|
-| `06.10.2026_ANDEKS_OmarAGI_RCC_Bounded_Evidence_Request_v1.0_EN_EXTERNAL.pdf` | `9ff401dd93c9ee952575be1664cb8fa7637574c133d002b0b385dad3aa944b3a` | 3-5 object/rules; 6-12 A-F/P; 13-18 presentation, gaps, changes and transfer; 19-22 intake and review boundary |
-| `05.10.2026_ANDEKS_OmarAGI_RCC_Assessment_Object_Confirmation_Record_v1.0_EN_EXTERNAL.pdf` | `219f95a6d377e9f6d9b938a08f0a31c1cc925b5abf70aa51666db27c6b8c78df` | 4-5 object/C-01; 8 open relations; 10-11 changes and non-substitution |
+Added **new execution of unchanged existing verifier/adoption components**, with newly disclosed controlled inputs. This is a P8 new run artifact at component scope, not an old production trace, not a fresh BBEH run, and not a newly created implementation. Source declarations and predicates are compiled unchanged; the separate runner supplies standard-library imports and test inputs. Candidate generation and the full solver/product are not executed.
 
-The request records counterparty confirmation on 6 October 2026. These PDF identities are supplied for correspondence; the assessor-authored documents/private emails are not republished or converted into OmarAGI system evidence.
+Added new analysis of all stored original failed-admission rows and patched fallback rows. These are data checks, not new model calls. Patched fallback selection is read from its actual final-source field; an absent patched gate flag is not invented. The first analysis-reader attempt failed on that absent field; the reader was corrected, not the stored artifact.
 
-## P9: what changed, and when
+Updated A-F/P mappings to the actual operational component and enclosing returned state. The R synthetic demo and D completion helpers remain separately labeled supplementary evidence rather than silently filling another path's gaps.
 
-Effective publication version: the Git commit containing this file and its finalized artifact register/checksum manifest. Index changes take effect at that publication, not retroactively at the source run dates.
+## P9: mechanism versus evidence surface
 
-Changed: object/state mapping, exact item cross-reference, upstream influence explanation, bypass scope, missing-relation labels, public provenance explanation and publication integrity tooling/metadata.
+Changed evidence surface: added source selections, source comparison, controlled component-execution records, static/stored-data analysis, explanatory mapping and integrity metadata. Effective times and executing revision/run IDs are in the generated records and Git history.
 
-Unchanged by this task: every pre-existing file under `evidence/`, original source acquisition and transformation records, original source repositories, thresholds, routes, verifiers, adoption logic and stored run outcomes. The publication check compares these paths to the initial package commit and fails if they differ.
+**Unchanged by this task:** original source repositories, every previously published historical evidence file, original acquisition and redaction metadata, thresholds, verifiers, routing rules, gate bodies and original run outcomes. Finalization compares all previously protected files with the prior package and stops on a mismatch.
 
-No fresh model call, benchmark, new runtime case or execution of assessed source is required for this index repair. Static checks of stored records are new publication checks, not historical behavior.
+Prior wording that no assessed code was executed described earlier packaging checks. It does not describe this new, explicitly labeled component reproduction. No mechanism change is hidden behind that old wording.
 
-## What a source pin does not establish
-
-The audit's source-head reads matched the two source pins. That observation does not establish the full history of every deployed configuration, branch or persistent state after 6 October. Such changes beyond the inspected boundary are `NOT OBSERVABLE` here (G06). G01 also remains open until the already agreed object is explicitly linked to one source/state identity.
-
-A changed explanation is not a material change to the assessed mechanism, but its effect on the evidence presentation is disclosed. Whether any independently identified mechanism change requires a new constitution decision remains with ANDEKS.
+No claim is made about uninspected deployments or shared stores outside the identified source/value boundary. Whether a scope clarification matches the already constituted object remains independently assessable; no historical agreement or assessor acceptance is fabricated.

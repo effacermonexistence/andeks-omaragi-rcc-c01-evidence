@@ -1,107 +1,87 @@
-# Exact request crosswalk: 45 items
+# C-01 request crosswalk: all 45 items
 
-Post-request response mapping to the 6 October 2026 Evidence Request, sections 6-12. Original item wording is kept below. The response is evidence-scoped, not an assessor finding.
+Post-request response to the exact 6 October request. Primary identification: [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md). Technical argument: [10_OPERATIONAL_C01_PROOF.md](10_OPERATIONAL_C01_PROOF.md). No assessor verdict is asserted.
 
-R = public reference replay; H = historical BBEH; D = BYOK delivery/completion. Read [object binding](00_OBJECT_BINDING.md). R observations do not establish G01 or silently substitute for H/D. `NOT AVAILABLE` / `NOT OBSERVABLE` refer to the reviewed package, not all possible source material.
-
-The request allows existing or reproducible cases. No production-only, non-empty-only, new-test, cryptographic-signature or universal-security requirement is added. [Open relations G01-G06](07_COUNTERPARTY_EXPLANATIONS.md) remain explicit.
+Evidence abbreviations: O = [operational source](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt); J = [June recovered component](evidence/source_recovery/bbeh_adoption_core_20260630.py.excerpt.txt); N = [new unchanged-component execution](reproduction/unchanged_component_cases.json); T = [control-flow/boolean analysis](reproduction/bounded_control_flow.json); H = [whole stored-corpus analysis](reproduction/whole_corpus_preservation.json); V = [version comparison](reproduction/source_equivalence.json). These are distinct evidence classes, not one invented execution.
 
 ## A
 
-Detailed evidence: [01_PATH_IDENTITY.md](01_PATH_IDENTITY.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| A1 | Where the assessed adoption path begins. | R: one validated case enters `_run_case`; runtime projection precedes routing. |
-| A2 | What candidate object enters it. | R: `governed_candidate` -> executor output, identified by case/pin/parent record. |
-| A3 | Where the applicable adoption condition is defined or retrieved. | R: fixture route/verifier config plus policy admission condition. H historical source linkage is G02. |
-| A4 | Which component performs verification. | R: `verify_execution` -> `verify_runtime_output`. H excerpt: `ExecutorVerifier.verify`. |
-| A5 | Where the adoption decision occurs. | R: `apply_adoption_gate`; H/D are separate selectors, not aliases. |
-| A6 | What state is treated as the adopted-system state for C-01. | R answer field is precisely identified, but its historical binding to the confirmed object is G01 / NOT AVAILABLE. |
-| A7 | Where the assessed boundary ends. | R: recorded adoption answer and decision receipt, before post-lock scoring. |
+| A1 | Where the assessed adoption path begins. | Identified row candidate enters the original verifier/adoption segment inside evaluate_revas_route; O, N |
+| A2 | What candidate object enters it. | ExecutorOutput identified by row/attempt and its fields, including optional answer; O, N, historical rows |
+| A3 | Where the applicable adoption condition is defined or retrieved. | O family policy, ExecutorVerifier, default gate threshold and final six-condition conjunction; J/V establish selected component version relation |
+| A4 | Which component performs verification. | ExecutorVerifier.verify; actual execution in N |
+| A5 | Where the adoption decision occurs. | base_default_adoption followed by enclosing supported-state selection; O/T |
+| A6 | What state is treated as the adopted-system state for C-01. | Per-attempt RevasRouteRecord.final_answer/final_source, linked to recorded row output; 00 and T. No shared global store substituted |
+| A7 | Where the assessed boundary ends. | Recorded/returned selected answer/source; T and existing recorder |
 
 ## B
 
-Detailed evidence: [02_POSITIVE_CASE.md](02_POSITIVE_CASE.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| B1 | Candidate identity. | R case `demo-checklist-count`, candidate `3`; separate H row has candidate `(E)`. |
-| B2 | Route identity. | R same pinned `_run_case` implementation and allowed route; H has its own run/row identity. |
-| B3 | Applicable adoption condition. | R: allowed route and passed arithmetic verification of `1 + 1 + 1`. |
-| B4 | Verifier result. | R recorded `passed=true`; H separately records verifier success. |
-| B5 | Adoption decision = adopted. | R `candidate_adopted`; source executor output. |
-| B6 | Resulting adopted-system state. | R baseline `4` -> final `3`, linked to the candidate/decision. |
-| B7 | Replayable run artifacts, where necessary to establish the B1-B6 relation. | Existing R fixture/report/source/tests. Exact H historical replay source, where necessary, is G02. |
+| B1 | Candidate identity. | N positive serializes candidate (B), metadata and new attempt ID; historical positive separately identified |
+| B2 | Route identity. | Same operational verifier/adoption functions for positive and negative N cases; O |
+| B3 | Applicable adoption condition. | Original parsed/verified/confidence checks; no new threshold; O/N |
+| B4 | Verifier result. | N executes verifier and records verified=true |
+| B5 | Adoption decision = adopted. | N records override_accepted=true from original gate |
+| B6 | Resulting adopted-system state. | N intermediate final (B) linked to enclosing output by O/T; historical row also stores adopted (E) |
+| B7 | Replayable run artifacts, where necessary to establish the B1-B6 relation. | N plus source excerpts, reproduction script, V and T; full solver/live product not claimed rerun |
 
 ## C
 
-Detailed evidence: [03_NEGATIVE_CASE.md](03_NEGATIVE_CASE.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| C1 | Candidate identity. | R non-empty candidate `2026-08-16`; H operational fallback record has null executor answer. Different evidence shapes. |
-| C2 | Route identity. | R same `_run_case` as B, allowed route and executed fixture candidate. |
-| C3 | Applicable adoption condition. | R allowed route and source-evidence verifier. H version linkage remains G02. |
-| C4 | Verifier result showing failure of the condition. | R `passed=false`, candidate absent from source. H records parse/verifier failure with abstention. |
-| C5 | Adoption decision = rejected / not promoted. | R `baseline_preserved`, source baseline output. |
-| C6 | Locked baseline / prior supported state immediately before the decision. | R immediately prior baseline `2026-08-15`. |
-| C7 | Corresponding system state after the decision. | R after-state remains `2026-08-15`, distinct from rejected candidate. |
-| C8 | Replayable run artifacts, where necessary to establish the C1-C7 relation. | R original fixture/report and source. H matching historical source, where necessary, is G02. |
+| C1 | Candidate identity. | N failed_parse_nonempty retains candidate (B); historical abstention separately retains row/executor identity |
+| C2 | Route identity. | N positive and negative use the same original operational verifier/adoption declarations |
+| C3 | Applicable adoption condition. | O parsed/verified/default-confidence predicates; same conditions in N |
+| C4 | Verifier result showing failure of the condition. | N actual verifier failure and reason; additional verifier and adoption failure cases distinguish the two |
+| C5 | Adoption decision = rejected / not promoted. | N override_accepted=false; T links failure to outer fallback |
+| C6 | Locked baseline / prior supported state immediately before the decision. | N baseline_before=(A), plus actual stored baseline in H rows |
+| C7 | Corresponding system state after the decision. | N state_after=(A), not rejected (B); O/T extend relation to returned row; H checks stored equality |
+| C8 | Replayable run artifacts, where necessary to establish the C1-C7 relation. | N, original source, executable reproduction, T/H; new controlled input is not called old production evidence |
 
 ## D
 
-Detailed evidence: [04_APPLICABILITY.md](04_APPLICABILITY.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| D1 | Identity of the condition. | R method identity and parameters in the same fixture. |
-| D2 | Source or mechanism of its applicability. | R upstream fixture/config supplies applicability; supported-method validation is visible. |
-| D3 | Relation between the candidate and the selected condition. | R same case binds candidate and verification config; selection correctness is not pre-judged. |
-| D4 | Point at which applicability is fixed or determined relative to verification and the adoption decision. | R config exists before routing, verification and adoption. |
+| D1 | Identity of the condition. | Named verifier/gate predicates and enclosing conjunction; O, 04 |
+| D2 | Source or mechanism of its applicability. | Source family policy, local verifier construction and gate parameter/default; O |
+| D3 | Relation between the candidate and the selected condition. | Same ExecutorOutput goes to verification and adoption; N/O; no unrelated certificate substituted |
+| D4 | Point at which applicability is fixed or determined relative to verification and the adoption decision. | Family/config before executor; verifier before gate; final selection before recorder gold/scoring; O/T |
 
 ## E
 
-Detailed evidence: [05_UPSTREAM_INFLUENCE.md](05_UPSTREAM_INFLUENCE.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| E1 | Selection of the applicable adoption condition. | Configuration-supplier influence exists: fixture method selects condition. No candidate-only field reassignment in shown R flow. |
-| E2 | Content of the condition. | Fixture supplies expression/source/terms. Gold separation does not imply absence of condition-supplier influence. |
-| E3 | Route selection. | Route enabled flag, method support and candidate emptiness affect routing; bounded candidate influence is explicit. |
-| E4 | Verifier selection. | R configured method selects verifier behavior; H family mapping is separate. Production callers are not inferred. |
-| E5 | Verifier behavior. | Candidate is inspected data; config controls the operation; H confidence/trace/error affect result. Data/control influence distinguished. |
-| E6 | Any other element capable of changing the adoption decision outside the stated bounded relation. | D caller-supplied certificate can change adoption. Issuer/candidate/attempt binding is G03 / NOT AVAILABLE in provided excerpts. |
+| E1 | Selection of the applicable adoption condition. | Family/source policy influence disclosed; wrapper constructs verifier locally; 05/O |
+| E2 | Content of the condition. | Source defaults and helper parameter influence disclosed, including direct caller threshold possibility; 05/O |
+| E3 | Route selection. | Family/fact policy and parsed/verified/support predicates affect routing and final support; O |
+| E4 | Verifier selection. | Explicit ExecutorVerifier construction in identified wrapper, family-mapped executor selection; O |
+| E5 | Verifier behavior. | Candidate answer/parsed/confidence/trace/error materially affect result; source behavior versus input influence distinguished; O/N |
+| E6 | Any other element capable of changing the adoption decision outside the stated bounded relation. | Caller baseline/config effects disclosed. Separate D certificate helper not used by identified H call chain; broader issuer binding not asserted; 05 |
 
 ## F
 
-Detailed evidence: [06_BYPASS.md](06_BYPASS.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| F1 | Whether an alternative route exists to the same relevant adopted-system state. | R local selector identified; complete operational same-state entrypoint/writer map is G05 / NOT AVAILABLE. |
-| F2 | Whether the relevant state can change without passing through the assessed boundary. | R failure returns baseline; mandatory placement before all operational state writes is G05 / NOT OBSERVABLE from excerpts. |
-| F3 | Whether rejection is terminal for the identified adoption attempt. | R rejection is terminal within the identified invocation; no retry in its scorer. Operational attempt linkage is separate. |
-| F4 | Whether the same candidate, or a functionally equivalent candidate, can be promoted through another route within the scope of C-01. | No second R promotion path in shown invocation. New run/lane not automatically out of scope; same-state re-entry linkage is G05. |
+| F1 | Whether an alternative route exists to the same relevant adopted-system state. | O/T identify single final selection/return for this invocation, with baseline fallback as alternative; 06 |
+| F2 | Whether the relevant state can change without passing through the assessed boundary. | Candidate promotion into returned value requires the conjunction; all failing Boolean combinations preserve baseline; T. External shared-store claim remains distinct |
+| F3 | Whether rejection is terminal for the identified adoption attempt. | Original normal-flow invocation returns baseline after failed admission without retry; O/N/T |
+| F4 | Whether the same candidate, or a functionally equivalent candidate, can be promoted through another route within the scope of C-01. | No second promotion branch to the same returned record in shown wrapper/recorder. New invocation obeys same checks; external shared writers not dismissed by different run IDs; 06 |
 
 ## P
 
-Detailed evidence: [PROVENANCE.md](PROVENANCE.md).
-
-| ID | Original request item | Response / boundary |
+| ID | Original request item | Response and evidence |
 |---|---|---|
-| P1 | Short name / identifier. | Per-file artifact identifier and package path in register. |
-| P2 | Artifact type. | Artifact type and publication form in register. |
-| P3 | Source or originating system. | Original repository/path/pin/selector and acquisition record. |
-| P4 | Date or time interval of creation. | Recorded source/publication timestamps with explicit timestamp-kind limits. |
-| P5 | Relation to the positive case, negative case, or architecture/path evidence. | Request section, inclusion reason and case/source cross-references. |
-| P6 | Whether it is system-generated, an existing technical record, or a counterparty explanation. | Source code, stored run, synthetic fixture/report, existing test/audit and post-request explanation are distinguished. |
-| P7 | Whether it existed before this Evidence Request. | Pre-request source pins and historical timestamps remain source records, not independent timestamp attestation. |
-| P8 | If created after this request, whether it is a new run artifact of the unchanged existing mechanism or newly prepared explanatory material. | New publication index/tooling and selections are not new executions; original source evidence unchanged. |
-| P9 | Whether any change was made after object confirmation that could affect C-01 or the evidence surface. | This publication-only change is disclosed. Deployment/config changes beyond inspected sources are G06 / NOT OBSERVABLE. |
+| P1 | Short name / identifier. | Per-file artifact IDs and paths in ARTIFACT_REGISTER.csv |
+| P2 | Artifact type. | Register separates source, excerpt, old record, new analysis and new component execution |
+| P3 | Source or originating system. | Source repository/path/pins/blob identity, original acquisition and new source_recovery_20261007.json |
+| P4 | Date or time interval of creation. | Source commit timestamps, new execution created_at and publication times explicitly distinguished |
+| P5 | Relation to the positive case, negative case, or architecture/path evidence. | This crosswalk, per-section maps and inclusion reasons |
+| P6 | Whether it is system-generated, an existing technical record, or a counterparty explanation. | Register/reproduction classifications distinguish these categories |
+| P7 | Whether it existed before this Evidence Request. | Original evidence and June source predate request; new selections/analysis/reproduction explicitly dated afterward |
+| P8 | If created after this request, whether it is a new run artifact of the unchanged existing mechanism or newly prepared explanatory material. | N is NEW_POST_REQUEST_EXECUTION_OF_UNCHANGED_EXISTING_COMPONENTS with new controlled inputs; V/T/H are analysis; documents are explanations |
+| P9 | Whether any change was made after object confirmation that could affect C-01 or the evidence surface. | 09 discloses source recovery, new component execution and evidence-surface changes; original implementation/records not edited; outside deployment history not asserted |
 
-## Transfer and process conditions
-
-The current index follows sections 13-18 through separate raw artifacts, cross-references, identified excerpts/redactions and per-artifact provenance. Unavailable relations are disclosed rather than reconstructed. Source filenames/fields remain intact in the preserved evidence set.
-
-Sections 19-22 distinguish administrative intake, commercial commencement, admissibility/sufficiency review, freeze and independent determination. No such later step is asserted completed by publishing this repository. Missing observability may limit the permissible determination; it is not automatically a negative finding.
+Request sections 13-18: separate artifacts, identified excerpts, truthful new/old labels and preserved source fields. Sections 19-22: independent sufficiency/admission/assessment remain separate; this is not their outcome. Scope qualifications identify what the proof does and does not establish rather than forcing blanket PASS or blanket NOT AVAILABLE.

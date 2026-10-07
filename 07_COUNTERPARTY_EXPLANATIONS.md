@@ -1,32 +1,22 @@
-# Counterparty explanations and open relations
+# Source recovery, completed checks and retained limits
 
-Post-request explanation from the publishing side. Not an ANDEKS finding or admission decision.
+This revision does more than label missing evidence. It recovers original source, compares operational components, executes unchanged components with new disclosed inputs, checks all stored rows and links the observed results to the enclosing output selection.
 
-## Request basis now reviewed
+| Earlier issue | Actual repair | Remaining boundary |
+|---|---|---|
+| G01: generic claim to implementation | A1-A7 now identify the operational executor/verifier/adoption path, source pin, attempt and final-answer/source fields instead of substituting the R demo | Current implementation identification is explanatory under section 14, not a claim that exact function names were in the original email or already accepted by ANDEKS |
+| G02: source version | June committed declarations/functions recovered and mechanically compared with selected current declarations | Whole initial pre-run frozen file and all solver bodies are not claimed byte-identical; family-policy changes remain disclosed |
+| G03: D certificate caller binding | E now follows the actual operational H call chain, which computes its verifier locally and does not use that separate D certificate | D's issuer/caller binding is not established and is not used to prove the identified H output relation |
+| G04: nonempty rejected candidate | New dated execution of the original operational verifier/adoption components supplies a nonempty failure and baseline-preservation record, alongside historical fallback evidence | New controlled component inputs are not old production traces; no synthetic R record is relabeled operational |
+| G05: mandatory output gate | Source-derived final-assignment/return/recorder links and the 64-combination support-expression analysis replace reliance on a route matrix | Arbitrary shared external stores, all deployments and code tampering are not thereby proved protected |
+| G06: post-confirmation change | Publication change and new unchanged-component execution are separately dated; original acquired evidence bytes remain protected | No assertion about uninspected deployment/configuration history outside the identified source/value boundary |
 
-The original 6 October 2026 Bounded Evidence Request and 5 October 2026 Assessment Object Confirmation Record were available for this revision. Their filenames, hashes and relevant sections are listed in [09_CHANGE_RECORD.md](09_CHANGE_RECORD.md). The earlier statement that the complete request was unavailable describes the initial publication, not this revised mapping. Third-party PDFs and private email correspondence are not republished here.
+The prior gap register was based on missing package links, but some wording also treated a pre-existing historical code-binding statement or a production-only nonempty case as mandatory. Those extra requirements are not in the request. They are not preserved as artificial blockers; actual source and current explanatory mapping replace them.
 
-## Explicit gap register
+The request permits existing or reproducible cases and distinguishes new executions of unchanged mechanisms (P8). The new reproduction exercises existing failure/success branches; it does not change thresholds, routing, verifiers or the assessed implementation. It is not a fresh benchmark or independent assessment.
 
-These statuses refer to the reviewed package, not absence everywhere in OmarAGI. They do not automatically refute C-01.
+All original 500-row outcomes remain intact. Final patched offline state stays 177 beneficial flips and zero regressions; the earlier intermediate run stays separately visible. Baseline preservation after failed admission does not assert truth of every baseline or correctness of every accepted candidate.
 
-| Gap | Request IDs | Exact missing or unobservable relation | Status |
-|---|---|---|---|
-| G01 | A6; applicability of A-F | Historical binding from the confirmed generic object to one exact repository/function/version/attempt/state identity | NOT AVAILABLE in the reviewed source chain; R is the primary reference read-through, not a substituted constituted object |
-| G02 | A3; B7; C3; C8; D1-D4 for H where necessary | Exact historical executor source matching the recorded June hash, linked to the selected historical run/repair rather than the later September excerpt | NOT AVAILABLE as a matched historical source in this package; the later excerpt and version difference remain disclosed |
-| G03 | E6; D2-D3/F where D is included | Certificate issuer/caller chain and binding to the candidate and attempt used by the D helper | NOT AVAILABLE in the provided excerpts; a helper predicate alone does not establish origin/binding |
-| G04 | C1/C4 for a particular H evidence shape | Complete operational non-empty-candidate verifier-failure record with corresponding before/after state | NOT AVAILABLE in the acquired package; not an additional mandatory criterion. Existing R rejection and H abstention/fallback remain distinct valid evidence classes |
-| G05 | F1; F2; F4; operational F3 where required | All relevant entrypoints/writers to the same bounded operational canonical state, mandatory gate call relation and in-scope re-entry | Writer linkage NOT AVAILABLE; mandatory bypass scope NOT OBSERVABLE from the current excerpts alone |
-| G06 | P9 | Post-confirmation deployed configuration/source/state changes outside the pinned source and publication trees | NOT OBSERVABLE from this repository. This revision changes publication metadata only and does not declare all deployments unchanged |
+The original [source acquisition](provenance/source_acquisition.json), [new recovery metadata](provenance/source_recovery_20261007.json), [new source equivalence](reproduction/source_equivalence.json), [component execution](reproduction/unchanged_component_cases.json), [control-flow analysis](reproduction/bounded_control_flow.json) and [stored-row audit](reproduction/whole_corpus_preservation.json) identify each evidence class.
 
-No gate, verifier, threshold, route or new demonstration is added to conceal these gaps. Existing evidence, if later identified, must retain its original version, origin and temporal class.
-
-## Interpretation boundaries
-
-R's synthetic status does not automatically disqualify a case, and it does not turn the case into an H production log. H's null executor answer is abstention, not an invented non-empty candidate. Preservation of an incorrect baseline is still preservation, not proof of truth.
-
-The final patched BBEH result is 177 positive flips / zero regressions on 500 stored rows. The initial accepted_B=1 remains historical, not the final state. Neither that count nor a 51-cell policy matrix establishes every relation in C-01 by itself.
-
-Configuration and candidate data can influence routing/verification as documented in E; gold/scorer separation is only one separation relation. New runs are not excluded from bypass analysis merely because they have different IDs. A returned content hash is not authenticated immutable storage.
-
-Evidence requested, evidence provided, evidence admitted, evidence sufficient and positive determination remain different states. Receipt and separate commercial commencement are not represented as completed by this publication.
+No independent positive determination, assessor acceptance, payment or receipt is claimed. Technical evidence and its exact boundaries are now supplied rather than replaced by those later procedural statuses.
