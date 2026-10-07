@@ -1,24 +1,32 @@
-# Counterparty explanations and assessment questions
+# Counterparty explanations and open relations
 
-**Post-request explanation by the publishing side. Not an ANDEKS finding, acceptance, or quotation from an unavailable request document.**
+Post-request explanation from the publishing side. Not an ANDEKS finding or admission decision.
 
-| Possible interpretation | Evidence-grounded distinction |
-|---|---|
-| A rejection label alone proves state preservation | No. C1 supplies baseline, candidate, failed verifier, selected source and final value; C2 supplies actual baseline/fallback equality after abstention. |
-| The public reference examples are production cases | No. They are preserved, explicitly synthetic pre-request examples. The BBEH rows are separate historical operational evidence. |
-| Every baseline-preserving output is correct | No. The operational negative BBEH row preserves `12` even though post-lock gold is `13`. C-01 concerns non-promotion/state preservation, not omniscience. |
-| Zero final regressions means the original run never regressed | No. Original run: accepted_B=1. Final patched offline replay: accepted_B=0. Both remain available. |
-| The final BBEH score is new clean public proof | No. It is a pre-existing post-development / patched offline artifact and retains its claim restrictions. |
-| A good post-lock grade authorizes adoption | The reference path excludes the scorer from runtime; the certificate gate preserves baseline without certification, even if the candidate grade is higher. |
-| 51 guarded cells means 51 fresh live-provider tests | No. The historical audit explicitly says the fresh external-provider matrix was not executed. |
-| There is only one OmarAGI route | No. Multiple routes exist; each bounded canonical path retains its own adoption condition. |
-| A decision SHA-256 proves an untamperable ledger | No. It is a content receipt; independent authenticated persistence is not established by this source alone. |
-| Publishing private-source links makes evidence public | No. This package contains local public copies, excerpts, hashes and a register. Private source identity is recorded as text, not used as the evidence access path. |
+## Request basis now reviewed
 
-## Explicit remaining questions
+The original 6 October 2026 Bounded Evidence Request and 5 October 2026 Assessment Object Confirmation Record were available for this revision. Their filenames, hashes and relevant sections are listed in [09_CHANGE_RECORD.md](09_CHANGE_RECORD.md). The earlier statement that the complete request was unavailable describes the initial publication, not this revised mapping. Third-party PDFs and private email correspondence are not republished here.
 
-1. No acquired trace records a **production non-empty candidate** failing its runtime verifier with the complete same-attempt before/after canonical state. The existing synthetic explicit failure and historical operational abstention are not silently merged to fill this gap.
-2. Full ANDEKS Bounded Evidence Request v1.0 was not supplied as a separate original document. A–F mapping follows the task supplied by the owner; no exact assessor-authored wording or acceptance is invented.
-3. The historical audit is structural and has a declared test scope. It is not independent certification, full-production coverage or future-system assurance.
+## Explicit gap register
 
-No new experiment, change of threshold, router, verifier, log or assessment-only demonstration was used to answer these questions. If additional existing records are later disclosed, their provenance and proof class must remain separate.
+These statuses refer to the reviewed package, not absence everywhere in OmarAGI. They do not automatically refute C-01.
+
+| Gap | Request IDs | Exact missing or unobservable relation | Status |
+|---|---|---|---|
+| G01 | A6; applicability of A-F | Historical binding from the confirmed generic object to one exact repository/function/version/attempt/state identity | NOT AVAILABLE in the reviewed source chain; R is the primary reference read-through, not a substituted constituted object |
+| G02 | A3; B7; C3; C8; D1-D4 for H where necessary | Exact historical executor source matching the recorded June hash, linked to the selected historical run/repair rather than the later September excerpt | NOT AVAILABLE as a matched historical source in this package; the later excerpt and version difference remain disclosed |
+| G03 | E6; D2-D3/F where D is included | Certificate issuer/caller chain and binding to the candidate and attempt used by the D helper | NOT AVAILABLE in the provided excerpts; a helper predicate alone does not establish origin/binding |
+| G04 | C1/C4 for a particular H evidence shape | Complete operational non-empty-candidate verifier-failure record with corresponding before/after state | NOT AVAILABLE in the acquired package; not an additional mandatory criterion. Existing R rejection and H abstention/fallback remain distinct valid evidence classes |
+| G05 | F1; F2; F4; operational F3 where required | All relevant entrypoints/writers to the same bounded operational canonical state, mandatory gate call relation and in-scope re-entry | Writer linkage NOT AVAILABLE; mandatory bypass scope NOT OBSERVABLE from the current excerpts alone |
+| G06 | P9 | Post-confirmation deployed configuration/source/state changes outside the pinned source and publication trees | NOT OBSERVABLE from this repository. This revision changes publication metadata only and does not declare all deployments unchanged |
+
+No gate, verifier, threshold, route or new demonstration is added to conceal these gaps. Existing evidence, if later identified, must retain its original version, origin and temporal class.
+
+## Interpretation boundaries
+
+R's synthetic status does not automatically disqualify a case, and it does not turn the case into an H production log. H's null executor answer is abstention, not an invented non-empty candidate. Preservation of an incorrect baseline is still preservation, not proof of truth.
+
+The final patched BBEH result is 177 positive flips / zero regressions on 500 stored rows. The initial accepted_B=1 remains historical, not the final state. Neither that count nor a 51-cell policy matrix establishes every relation in C-01 by itself.
+
+Configuration and candidate data can influence routing/verification as documented in E; gold/scorer separation is only one separation relation. New runs are not excluded from bypass analysis merely because they have different IDs. A returned content hash is not authenticated immutable storage.
+
+Evidence requested, evidence provided, evidence admitted, evidence sufficient and positive determination remain different states. Receipt and separate commercial commencement are not represented as completed by this publication.

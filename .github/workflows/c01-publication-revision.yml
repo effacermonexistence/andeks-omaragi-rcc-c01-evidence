@@ -1,0 +1,47 @@
+name: C01 publication revision
+on:
+  push:
+    branches: [c01-request-alignment-20261007]
+permissions:
+  contents: read
+jobs:
+  publication:
+    if: github.repository == 'effacermonexistence/andeks-omaragi-rcc-c01-evidence' && contains(github.event.head_commit.message, 'Align C-01 request mapping')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Read exact revision and initial package
+        env:
+          REPO: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -eu
+          git init .
+          git remote add origin "https://github.com/$REPO.git"
+          git fetch --no-tags --depth=1 origin "$REVISION"
+          git checkout -b "$BRANCH" FETCH_HEAD
+          git fetch --no-tags --depth=1 origin 329b46add38a1770b484bdf90e9db458407a15e1
+      - name: Refresh index metadata and check stored evidence only
+        run: |
+          set -eu
+          python3 scripts/refresh_publication_metadata.py
+          python3 scripts/verify_package.py
+          git diff --exit-code 329b46add38a1770b484bdf90e9db458407a15e1 -- evidence/ provenance/source_acquisition.json provenance/public_copy_transformations.json scripts/verify_package.py
+      - name: Commit only finalized publication metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ARTIFACT_REGISTER.csv PACKAGE_SHA256SUMS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Finalize C-01 publication metadata after stored-artifact checks'
+            AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+            git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH" push origin "HEAD:refs/heads/$BRANCH"
+          fi
+          git rev-parse HEAD

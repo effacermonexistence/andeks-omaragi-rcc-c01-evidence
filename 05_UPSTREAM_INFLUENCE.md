@@ -1,33 +1,30 @@
-# E · Candidate, route, verifier, adoption and scorer separation
+# E: upstream influence, item by item
 
-**Status: post-request source mapping, not a fresh experimental validation.**
+Post-request mapping of existing code/records. Influence is described, not presumed absent and not characterized as an independent positive or negative finding. Gold/scorer separation answers only part of E.
 
-## Public reference path
+## E1-E6
 
-| Property | Pre-existing source/record |
-|---|---|
-| `post_lock_scoring` excluded from runtime projection | [policy.py L79–93](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L79-L93) |
-| `target_accessed=false` in verifier result | [verification source](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L209-L288), [positive](evidence/positive_case/demo-checklist-count.record.json), [negative](evidence/negative_case/demo-release-date.record.json) |
-| Route/execute/verify/adopt occur before lock/scoring | [engine.py](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py#L77-L116) |
-| `locked_before_scoring=true`, `scorer_accessed=false`, `gold_accessed=false` | [lock implementation](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L314-L345) and preserved records |
-| Changed target cannot change final answer, adoption result or decision hash | [existing target-mutation test](evidence/path_identity/public_replay/tests/test_replay.py#L197-L223) |
+| ID | Existing influence and separation | Evidence and remaining limit |
+|---|---|---|
+| E1 | R's upstream fixture supplies `runtime_verification.method`; the candidate string does not assign that field in the shown flow | [fixture](evidence/path_identity/public_replay/samples/public_demo_replay.json), [policy](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py). No claim that every production config producer is LLM-independent. |
+| E2 | The fixture supplies `expression`, `source_text` or `required_terms`; these determine the condition's content | Same fixture/policy. `post_lock_scoring` is excluded from the runtime projection, but that does not remove configuration-supplier influence. |
+| E3 | `route_request.enabled`, supported method and candidate emptiness affect routing. Candidate content therefore has a bounded influence through the non-empty check | `decide_route` in the same policy. H's family/config input also affects executor selection. |
+| E4 | R chooses verifier behavior by the configured method; H chooses executors through family mapping and uses `ExecutorVerifier` | Same policy and [H excerpt](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt). Historical version and production caller linkage remain separate. |
+| E5 | Candidate is verification data; configured method/evidence controls the operation. H's parser, confidence, trace and error fields affect verification/adoption | Same sources. Data influencing a result is not the same claim as candidate text rewriting verifier code. No universal absence-of-influence assertion. |
+| E6 | D's helper accepts a caller-supplied certificate dictionary and checks admission flags; that input can change its branch | [D gate excerpt](evidence/bypass/benchmark_replay_harness.py.excerpt.txt). Issuer/caller chain and binding of the certificate to this exact candidate/attempt: G03, `NOT AVAILABLE` in the provided excerpts. |
 
-The last item is an existing test definition and the committed example is an existing record. Neither is presented as a newly run test. The receipt is a deterministic hash of an in-memory decision payload, **not authenticated immutable storage or proof against arbitrary mutation by an outside caller**.
+G03 is not an allegation that a certificate was forged or a demand to add signatures. It records a missing relation where D is part of the agreed assessment path. For R, no live LLM is invoked in the reference executor; this fact is not projected onto H or D.
 
-## Historical BBEH sequence
+## What the scorer-separation artifacts actually show
 
-[Original runner L238–247](evidence/upstream_influence/run_bbeh500_full_gold_blind.py#L238-L247): baseline model call → executor/route evaluation → assignment of final answer/source → first access to `gold(row)` → post-lock score calculation.
+R's [engine](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py) calls route, execution, verification and adoption before constructing a decision receipt and invoking scoring. The runtime projection omits `post_lock_scoring`. Stored [positive](evidence/positive_case/demo-checklist-count.record.json) and [negative](evidence/negative_case/demo-release-date.record.json) records include the corresponding visibility fields.
 
-[Freeze manifest](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_freeze_manifest.json), [executed manifest](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_manifest_executed.json) and [row records](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl) preserve `gold_visible_before_final_lock=false` / `gold_hidden_until_after_final_lock=true` and `scorer_visible_to_route_executor_adoption=false` as recorded fields. They are corroborated by the code ordering, not claimed to be independent observation of hidden execution state.
+The existing [target-mutation test](evidence/path_identity/public_replay/tests/test_replay.py) changes the post-lock target while requiring the same answer, adoption result and decision hash. It is an existing test definition, not a newly executed experiment.
 
-The initial generation and final offline patch have different proof labels. Development access to BBEH and the post-run repair remain visible. `accepted_B=0` in the final replay is not relabeled as a clean unseen live result.
+The receipt is SHA-256 of an in-memory decision payload. In the preserved code, `score_after_decision_lock` checks `status == locked`; its returned `lock_verified=true` does not itself mean a cryptographic hash recomputation or authenticated persistence occurred. Package integrity tooling can separately recompute stored receipt hashes.
 
-## Uncertified BYOK candidates
+H's [runner](evidence/upstream_influence/run_bbeh500_full_gold_blind.py) assigns final answer/source before accessing `gold(row)` and scoring. Recorded flags and manifests are source evidence, not independent observation of all inaccessible execution state. The historical execution, pre-request repair and later source snapshot remain separate.
 
-The [preserved gate excerpt](evidence/bypass/benchmark_replay_harness.py.excerpt.txt) accepts a qualifying pre-score certificate or copies the baseline into canonical output. Candidate grades remain diagnostic fields. The [existing test](evidence/bypass/test_byok_zero_downlift_global_gate.py#L192-L247) explicitly checks that a higher candidate grade without a certificate cannot promote it, and that a qualifying certificate can adopt even with a zero candidate grade.
+D's existing [tests](evidence/bypass/test_byok_zero_downlift_global_gate.py) cover higher post-score candidate grades without a certificate and qualifying certificates without a positive grade. The [adoption-lock text](evidence/upstream_influence/benchmark_gold_blind_adoption_lock.md) and [text-presence test](evidence/upstream_influence/test_benchmark_gold_blind_adoption_lock.py) are policy evidence, not proof that every runtime complies.
 
-The [historical adoption-lock document](evidence/upstream_influence/benchmark_gold_blind_adoption_lock.md) prohibits scorer-visible row selection. Its [existing test](evidence/upstream_influence/test_benchmark_gold_blind_adoption_lock.py) checks policy text; it is not sufficient on its own to prove all runtimes complied.
-
-## Completion audit is not row-selection evidence
-
-The [BYOK audit](evidence/bypass/audit_report.md) uses final-vs-baseline accounting to block completion/publication when evidence is missing or regression is positive. That downstream audit does **not** use correctness to choose the better answer row-by-row. Keep this status gate separate from the pre-score adoption gate.
+A post-run zero-downlift completion check may reject publication based on outcome accounting without choosing a row winner. That downstream status is not evidence that a prior candidate was never adopted. See [F](06_BYPASS.md).

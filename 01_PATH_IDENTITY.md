@@ -1,39 +1,29 @@
-# A · Path identity
+# A: path identity
 
-**Status: post-request evidence mapping, not newly generated runtime evidence.**
+Post-request mapping. Read [00_OBJECT_BINDING.md](00_OBJECT_BINDING.md) before treating an evidence path as the constituted object.
 
-## P1 — identified public reference replay
+## A1-A7: primary reference read-through R
 
-Source pin: `effacermonexistence/omaragi-reliability-replay @ f141fd09217279ca48f2cfbecc532fed8ecaa6e9`.
+Source: `omaragi-reliability-replay @ f141fd09217279ca48f2cfbecc532fed8ecaa6e9`. The primary case pair is `demo-checklist-count` and `demo-release-date`, selected from the same existing fixture/report and same `_run_case` implementation.
 
-Start: one validated case passed to [`_run_case`](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py#L77-L116). End: that case's `adoption_gate_result.final_answer` and `decision_lock`, subsequently reported/scored without a second adoption choice.
-
-| State/component | Existing identity | Evidence |
+| ID | Identified element | Preserved evidence |
 |---|---|---|
-| Prior baseline | `runtime_case.baseline_output` | [Runtime projection](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L79-L93) |
-| Candidate entry | `governed_candidate` from validated fixture → `execute_candidate.output` | [Executor](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L128-L151) |
-| Applicability | `route_request.enabled`, supported verifier method, non-empty candidate | [Route](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L96-L125) |
-| Verification | `verify_execution` → `verify_runtime_output`, using task evidence | [Verifier](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L209-L288) |
-| Adoption condition | `router_result.allowed AND runtime_verifier_result.passed` | [Gate](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L291-L311) |
-| Adopted output | Passing branch: executor output; failing branch: string baseline output | Same gate |
-| Decision receipt | Serialized baseline/route/executor/verifier/adoption payload → SHA-256 | [Lock](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py#L314-L345) |
-| Downstream scorer | Called only after lock construction | [Engine ordering](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py#L77-L116) |
+| A1 | One validated case enters `_run_case`; runtime fields are projected before routing | [engine.py](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py) |
+| A2 | `governed_candidate` -> `execute_candidate.output`; case ID plus source pin and parent record identify the attempt | [fixture](evidence/path_identity/public_replay/samples/public_demo_replay.json), [policy.py](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py) |
+| A3 | `route_request`, `runtime_verification` and the policy's `allowed AND passed` condition | Same fixture and policy |
+| A4 | `verify_execution` -> `verify_runtime_output` | Same policy |
+| A5 | `apply_adoption_gate` selects executor output or baseline | Same policy |
+| A6 | In R, `adoption_gate_result.final_answer`, subsequently copied to the returned case's `final_answer`; not a whole-machine state | Same engine/policy and [complete report](evidence/path_identity/public_replay/examples/example_report.json) |
+| A7 | Adoption result and decision payload receipt; subsequent scoring does not reselect the answer in this invocation | Same engine and policy |
 
-The preserved call order is:
+A6 identifies R exactly; it does **not** establish the historical binding between R and the already confirmed C-01 object. That binding is G01 in the [gap register](07_COUNTERPARTY_EXPLANATIONS.md).
 
-```text
-Baseline → Router → Executor → Runtime Verifier → Adoption Gate
-→ Decision Lock → Post-lock Scorer → Scored Artifact
-```
+The ordinary sequence is baseline -> route -> executor -> runtime verifier -> adoption gate -> decision receipt -> post-lock scorer. The receipt hashes a payload; it is not an independently authenticated immutable ledger. Baseline preservation does not imply baseline correctness.
 
-P1's state boundary is the **canonical answer for one replay case**, not the whole machine, account, model memory, database or all OmarAGI deployments. Baseline preservation does not imply that the baseline is correct. The loader explicitly requires `synthetic: true`; see [engine](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py#L41-L47) and [original public boundary](evidence/path_identity/public_replay/PUBLIC_LOGIC_BOUNDARY.md).
+## H and D are supporting paths, not interchangeable stages of R
 
-## P2 — historical BBEH adoption records
+H's [original runner](evidence/upstream_influence/run_bbeh500_full_gold_blind.py) assigns baseline and evaluates the route before final answer/source assignment and scoring. Its [stored rows](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl) identify historical outcomes. The [executor excerpt](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt) is from the later source pin; no equality with the historical executor hash is asserted.
 
-The [preserved runner](evidence/upstream_influence/run_bbeh500_full_gold_blind.py#L238-L247) assigns `base_answer`, evaluates the route, and assigns `final_answer/final_source` before loading gold and scoring. Stored rows include baseline/candidate/final, parser/verifier/shape/route fields and fallback source.
+D's [certificate/fallback excerpt](evidence/bypass/benchmark_replay_harness.py.excerpt.txt) returns row-level `final_omar`; the [control/completion excerpt](evidence/bypass/app.py.excerpt.txt) also writes a summary receipt and evaluates completion/publication status. These states are not R's case output or a retroactive replacement of H's recorded adoption.
 
-[Existing implementation excerpt](evidence/path_identity/bbeh_executor_backed_routing.py.excerpt.txt) preserves the input types, verifier, family applicability and `base_default_adoption` / `evaluate_revas_route` source at the source-2 pin. The latter source includes later family-level hardening; it is **not claimed to be byte-identical to the June execution's recorded executor hash**.
-
-## P3 — bounded canonical BYOK completion/delivery
-
-[Certificate/fallback source excerpt](evidence/bypass/benchmark_replay_harness.py.excerpt.txt), [control completion excerpt](evidence/bypass/app.py.excerpt.txt), and [existing matrix audit](evidence/bypass/audit_report.md) identify the separate baseline/candidate/canonical-output and completion-status layers. A failed publication/completion audit is not retroactively called a pre-score row-verifier decision. See [F](06_BYPASS.md).
+For all three, a complete inventory of writers to an independently persisted shared canonical state is not supplied merely by identifying a local return value. See [F1-F4](06_BYPASS.md).

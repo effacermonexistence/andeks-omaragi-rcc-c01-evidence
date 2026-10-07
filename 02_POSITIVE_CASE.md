@@ -1,43 +1,25 @@
-# B · Positive case
+# B: positive case
 
-**Status: post-request selection and explanation of existing records. No case was generated now.**
+Post-request selection of pre-existing records. No new candidate or execution was created. R and H remain separate paths under [object binding](00_OBJECT_BINDING.md).
 
-## B1 — original public replay record
+## B1-B7: R case `demo-checklist-count`
 
-Case `demo-checklist-count` is already in the [original fixture](evidence/path_identity/public_replay/samples/public_demo_replay.json) and [committed original report](evidence/path_identity/public_replay/examples/example_report.json). It is explicitly synthetic.
+| ID | Requested relation | Existing response |
+|---|---|---|
+| B1 | Candidate identity | `governed_candidate=3`, case `demo-checklist-count` |
+| B2 | Route identity | R's pinned `_run_case`; `route_allowed`, bounded arithmetic verification |
+| B3 | Applicable adoption condition | Allowed route and passed `arithmetic_expression`; configured expression `1 + 1 + 1` |
+| B4 | Verifier result | `passed=true`, `target_accessed=false` |
+| B5 | Adopted decision | `candidate_adopted`, `source=executor_output` |
+| B6 | Resulting state | Baseline `4` -> final `3`, the selected candidate |
+| B7 | Replayable artifacts where necessary | Existing fixture, complete report, policy/engine and test source; not a newly run test receipt |
 
-| Required element | Preserved value |
-|---|---|
-| Pre-decision baseline | `4` |
-| Candidate | `3` |
-| Route | enabled; `route_allowed`; bounded arithmetic verifier |
-| Applicable condition | route allowed and verifier passes |
-| Condition evidence | `runtime_verification.method=arithmetic_expression`; expression `1 + 1 + 1` |
-| Verifier result | `passed=true`; `target_accessed=false` |
-| Adoption | `candidate_adopted`; `source=executor_output` |
-| Resulting adopted answer | `3` |
-| Receipt | `locked_before_scoring=true`; `scorer_accessed=false`; decision hash below |
+[Selected fixture](evidence/positive_case/demo-checklist-count.fixture.json), [selected record](evidence/positive_case/demo-checklist-count.record.json), [complete parent fixture](evidence/path_identity/public_replay/samples/public_demo_replay.json), [complete parent report](evidence/path_identity/public_replay/examples/example_report.json), [engine](evidence/path_identity/public_replay/omaragi_reliability_replay/engine.py), [policy](evidence/path_identity/public_replay/omaragi_reliability_replay/policy.py).
 
-Decision hash: `bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad`.
+The stored decision hash is `bf33ee98ea374e8497e1df47700c211381ed9fc9b0fa3973a2325ba2ad831aad`. The record binds baseline, candidate, verifier, adoption and final answer, rather than supplying only an isolated successful verifier result. The fixture explicitly labels these cases synthetic; that classification is retained.
 
-[Selected fixture object](evidence/positive_case/demo-checklist-count.fixture.json) · [Selected recorded case, including ordered event log](evidence/positive_case/demo-checklist-count.record.json).
+## Separate historical operational corroboration H
 
-## B2 — existing executed BBEH row
+[BBEH row](evidence/positive_case/bbeh_full_boolean_expressions_0035_2ed600e2a1.json), row index 1 / JSONL line 2, records baseline `(A)`, executor `(E)`, `boolean_expression_parser`, parser/verifier/shape success, `adoption_gate_accepts=true`, final source `executor_override_accepted` and final answer `(E)`. Its parent is [the historical outputs file](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl). Its trace records A-D false and E true.
 
-Historical row `bbeh_full_boolean_expressions_0035_2ed600e2a1`, zero-based index `1`, JSONL line `2`:
-
-| Required element | Stored value |
-|---|---|
-| Baseline locked before scoring | `(A)` |
-| Executor candidate | `(E)` |
-| Route / executor | `solver_friendly` / `boolean_expression_parser` |
-| Applicability/support | `REVAS_override_supported=true` |
-| Parser / verifier / answer shape | all `true` |
-| Adoption gate | `adoption_gate_accepts=true` |
-| Adopted source | `executor_override_accepted` |
-| Adopted answer | `(E)` |
-| Upstream separation flags | `gold_hidden_until_after_final_lock=true`; `scorer_visible_to_route_executor_adoption=false` |
-
-[Selected unchanged historical row](evidence/positive_case/bbeh_full_boolean_expressions_0035_2ed600e2a1.json) and [complete original outputs](evidence/negative_case/bbeh_history/bbeh500_full_gold_blind_run_outputs.jsonl). The trace records `A: False` through `E: True`. In the final patched offline artifact this row still has `patched_final_answer=(E)` and `patched_final_source=executor_override_accepted`.
-
-This is operational historical corroboration, not a fresh ANDEKS experiment or independent proof that the verifier is correct for all inputs. Source records describe the run as post-development reproduction and keep `claim_allowed=false`.
+This supports that historical recorded chain. It is not the R execution, a new clean holdout, or a universal verifier-correctness result. The later patched offline artifact retains this row's adopted answer. B7's exact historical replay, if needed for the agreed object, additionally requires the matching historical executor version; that link remains G02, not silently replaced by the September excerpt.

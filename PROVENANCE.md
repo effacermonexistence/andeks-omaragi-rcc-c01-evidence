@@ -1,36 +1,40 @@
-# Provenance
+# Provenance and P1-P9
 
-## Source pins
+## Original source identities remain unchanged
 
-| Source | Pinned commit | Git author and committer timestamp | Access during acquisition |
+| Source | Pinned commit | Git author/committer timestamp | Access at initial acquisition |
 |---|---|---|---|
 | `effacermonexistence/omaragi-reliability-replay` | `f141fd09217279ca48f2cfbecc532fed8ecaa6e9` | `2026-08-30T01:13:34Z` | Public |
 | `effacermonexistence/omar-benchmark-replay-live-source` | `8976dc12c2d398dd59e4e193c41fa36749dee996` | `2026-09-01T19:09:24Z` | Private |
 
-Acquisition used authenticated GitHub API reads of pinned commits, trees and blobs. Every acquired blob was checked against its Git blob SHA-1 and byte count; SHA-256 was computed for the source and public copy. Neither source repository was edited. Source-2 private checkout contents outside the authorized evidence set are not published.
+The original [source acquisition record](provenance/source_acquisition.json) records authenticated pinned source acquisition, Git blob identity, byte counts, SHA-256 values and source-path timestamps. It and [copy transformations](provenance/public_copy_transformations.json) are preserved unchanged by this revision. The two source repositories are not edited.
 
-The [acquisition record](provenance/source_acquisition.json) maps every evidence file to the pin, original path, last path-changing commit before that pin, date, original blob hash and SHA-256. **Git commit timestamps are source-record timestamps, not independently authenticated event times.** Embedded run times are separate recorded fields. Acquiring a file today does not change its historical event time.
+## P1-P9 response
 
-## Pre-existing versus post-request
+| ID | Where supplied / boundary |
+|---|---|
+| P1 | `artifact_id`, `package_path` in [ARTIFACT_REGISTER.csv](ARTIFACT_REGISTER.csv) |
+| P2 | `artifact_type`, `publication_form` distinguish copy, excerpt, selected record and index |
+| P3 | `original_repository`, `original_path`, `pinned_source_commit`, source selector and acquisition record |
+| P4 | `original_timestamp` and `timestamp_kind`. Git source-record times are not authenticated historical event times; embedded run timestamps remain separate |
+| P5 | `andeks_section`, `reason_for_inclusion`, selected record pointers and [45-item crosswalk](08_REQUIREMENT_CROSSWALK.md) |
+| P6 | Technical source, stored operational record, synthetic reference fixture/report, audit/test definition and counterparty index are expressly distinguished. Existing test source is not a new passing test receipt |
+| P7 | Historical evidence is fixed at the recorded pre-request pins; this is source-record provenance, not independent timestamp attestation |
+| P8 | New documents, excerpts/selections and publication tooling are post-request representations of existing evidence, not new runs. No assessed mechanism is executed by metadata refresh |
+| P9 | [09_CHANGE_RECORD.md](09_CHANGE_RECORD.md) identifies this publication-only change and earlier snapshot distinctions. Deployed changes outside inspected sources are G06 / NOT OBSERVABLE, not presumed absent |
 
-- Original code, fixtures, report records, audit files and tests are **pre-existing source evidence** at the named pins, both earlier than the request date `2026-10-06`.
-- README, A–F mappings, counterparty explanations, this provenance page, disclosure record, artifact register, hash manifest and integrity tooling are **post-request publication/index material**.
-- Selected JSON objects are post-request selections of unchanged pre-existing objects; they are not newly run cases. Their exact parent pointer/JSONL line is in the register.
-- Source excerpts are post-request documentary selections of verbatim source lines. They are labeled excerpts, not whole originals or deployable replacement code.
-- Redacted JSON copies retain original filenames but are explicitly labeled in the register and [disclosure record](DISCLOSURE.md). The only redaction is a private local workspace prefix; original/public hashes differ and both are recorded.
+## Historical versions
 
-## Historical source-version distinctions
+The original BBEH run records accepted_B=1 and its executor hash. The later pre-request offline repair records accepted_B=0. The September executor excerpt has additional family-level hardening and is not asserted byte-identical to the June executor. The July BYOK audit's source hashes belong to its own repair snapshot, not automatically to the September excerpts.
 
-The initial BBEH run files record their executor hash and original accepted_B=1. The later pre-request offline repair file records final accepted_B=0. The implementation at the September pin includes additional family-level hardening. Its file hash is not assumed identical to the June run's executor hash.
+## Publication forms
 
-The July BYOK audit's `hashes` object records its own earlier repair snapshot, while this package's source excerpts come from the September pin. Register hashes establish those identities separately; no false one-to-one hash match is claimed.
+Preserved source copies remain byte-identical. Selected JSON objects retain their original parent pointers but have post-request file serialization. Verbatim excerpts retain source ranges and are not standalone executable substitutes. Three original JSON files have only the private workspace prefix redacted, as documented in [DISCLOSURE.md](DISCLOSURE.md); original/public hashes remain distinct.
 
-## Register and manifest rules
+## Current register and checksum rules
 
-[ARTIFACT_REGISTER.csv](ARTIFACT_REGISTER.csv) covers all tracked files, including index material. Original source path, pinned commit and source hash apply only where a historical source exists. Index-only files have no fabricated source pin. `ARTIFACT_REGISTER.csv` uses `SELF_REFERENCE_EXCLUDED` for its own hash cell; [PACKAGE_SHA256SUMS.txt](PACKAGE_SHA256SUMS.txt) includes its final actual hash and excludes only itself. The manifest's register hash cell is `MANIFEST_SELF_EXCLUDED` to avoid circular hashing.
+The artifact register covers every tracked publication file. Pre-existing E rows and their source metadata are preserved. Changed/new index rows receive current publication timestamps and hashes; no historical source pin or execution time is invented for them. The register's own hash/byte cells use `SELF_REFERENCE_EXCLUDED`; the checksum manifest's register hash is `MANIFEST_SELF_EXCLUDED`. The checksum manifest hashes the final register but excludes itself.
 
-The acquisition transcript, full private source API responses and unpublished source originals remain outside this public repository. Hashes prove byte identity of the published package, not historical authenticity, full corpus completeness or RCC efficacy.
+`scripts/refresh_publication_metadata.py` only refreshes post-request index rows and checksum metadata and refuses altered pre-existing evidence. `scripts/verify_package.py` separately checks existing stored artifacts, hashes, linked selected records, receipt hashes and stored BBEH counts. Such checks do not run RCC, call model providers, rerun the original tests or constitute an independent assessment.
 
-## No new mechanism or experiment
-
-No assessed source code was edited or executed. No benchmark was rerun; no provider call was spent; no new runtime case was constructed. Package integrity checks only parse existing stored records, match selected objects, count stored row outcomes, verify hashes and check publication links. They are publication checks, not new assessment evidence or newly executed source tests.
+The initial publication remains identifiable at `329b46add38a1770b484bdf90e9db458407a15e1`. Git history, current manifest and the change record distinguish its index from this revision; source artifacts are not rewritten to fit the revised explanation.
